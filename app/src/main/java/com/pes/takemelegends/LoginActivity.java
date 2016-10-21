@@ -3,6 +3,7 @@ package com.pes.takemelegends;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,8 +25,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         Button buttonTwitter = (Button)findViewById(R.id.button_twitter);
         buttonTwitter.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -59,5 +58,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+
+        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+        //myIntent.putExtra("key", value); //Optional parameters
+        LoginActivity.this.startActivity(myIntent);
     }
 }
