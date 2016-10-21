@@ -3,6 +3,7 @@ package com.pes.takemelegends;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         switch (view.getId()) {
             case  R.id.button_facebook:
             {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             }
 
@@ -45,7 +49,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         }
 
-        Context context = this;
+        /*Context context = this;
         new AlertDialog.Builder(context)
                 .setTitle("Login")
                 .setMessage("Are you sure you want to login?")
@@ -58,6 +62,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                .show();*/
     }
 }
