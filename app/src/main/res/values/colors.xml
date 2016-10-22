@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimary">#f1f1f1</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff0004</color>
     <color name="colorFacebook">#3b5998</color>
     <color name="colorGoogle">#db3236</color>
     <color name="colorTwitter">#00aced</color>
     <color name="main_ambar">#ffc200</color>
+    <color name="selected_ambar">#ffe282</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
 </resources>

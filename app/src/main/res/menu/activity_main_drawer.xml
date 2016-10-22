@@ -3,20 +3,20 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_lupe"
             android:icon="@drawable/ic_lupe_white"
             android:title="@string/buscar_eventos"
             android:checked="true"/>
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile_white"
             android:title="@string/mi_perfil" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_market"
             android:icon="@drawable/ic_market_white"
             android:title="@string/exchange" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_calendar"
             android:icon="@drawable/ic_calendar_white"
             android:title="@string/eventos" />
     </group>
