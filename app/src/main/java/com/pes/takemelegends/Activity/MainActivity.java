@@ -2,6 +2,8 @@ package com.pes.takemelegends.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,10 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.pes.takemelegends.Fragment.EventsViewPagerFragment;
 import com.pes.takemelegends.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Fragment feed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,13 @@ public class MainActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
         header.setBackgroundColor(getResources().getColor(R.color.white));
+
+        //Mostrem el feed al conectar
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (feed == null) feed = new EventsViewPagerFragment();
+        transaction.replace(R.id.fragment_container,feed);
+        transaction.addToBackStack("eventsFeed");
+        transaction.commit();
     }
 
     @Override
@@ -75,19 +87,22 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-            Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
-            //myIntent.putExtra("key", value); //Optional parameters
-            MainActivity.this.startActivity(myIntent);
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_lupe) {
+            if (feed == null) feed = new EventsViewPagerFragment();
+            transaction.replace(R.id.fragment_container,feed);
+            transaction.addToBackStack("eventsFeed");
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_profile) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_market) {
 
-        } 
+        } else if (id == R.id.nav_calendar) {
+
+        }
+
+        transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

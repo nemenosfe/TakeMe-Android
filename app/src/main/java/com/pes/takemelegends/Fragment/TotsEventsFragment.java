@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 
 import com.pes.takemelegends.R;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EventPagerFragment extends Fragment {
+public class TotsEventsFragment extends Fragment {
 
 
-    public EventPagerFragment() {
+    public TotsEventsFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +24,7 @@ public class EventPagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event_pager, container, false);
+        return inflater.inflate(R.layout.fragment_tots_events, container, false);
     }
 
 }
