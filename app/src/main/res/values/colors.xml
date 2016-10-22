@@ -7,5 +7,8 @@
     <color name="colorGoogle">#db3236</color>
     <color name="colorTwitter">#00aced</color>
     <color name="main_ambar">#ffc200</color>
+    <color name="selected_ambar">#ffe282</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
 </resources>
