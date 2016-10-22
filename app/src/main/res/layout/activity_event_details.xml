@@ -37,18 +37,40 @@
                 android:paddingTop="@dimen/activity_vertical_margin">
 
                 <TextView
-                    android:text="Type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView5"
-                    android:layout_alignParentRight="true"/>
-
-                <TextView
                     android:text="Name of the event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textEventName"
-                    android:layout_alignParentLeft="true" />
+                    android:layout_alignParentLeft="true"
+
+                    android:textSize="24sp"
+                    android:layout_alignBottom="@+id/buttonAsistire" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonAsistire"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/button_asistire"
+                    android:drawableLeft="@drawable/ic_add" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dip"
+                    android:background="#FF00FF00"
+                    android:layout_below="@+id/buttonAsistire"
+                    android:id="@+id/layoutDivider1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"></LinearLayout>
+
+                <TextView
+                    android:text="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textDescription"
+                    android:layout_below="@+id/layoutDivider1" />
+
             </RelativeLayout>
 
         </LinearLayout>
