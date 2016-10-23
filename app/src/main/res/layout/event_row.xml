@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/colorPrimary"
+    android:baselineAligned="false">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+
+            <ImageView
+                app:layout_widthPercent="40%"
+                app:layout_heightPercent="100%"
+                android:src="@drawable/ic_menu_send"
+                android:id="@+id/imageEvent"/>
+
+            <android.support.percent.PercentRelativeLayout
+                app:layout_widthPercent="60%"
+                app:layout_heightPercent="100%"
+                android:layout_toRightOf="@+id/imageEvent">
+
+                <LinearLayout
+                    app:layout_widthPercent="100%"
+                    app:layout_heightPercent="70%"
+                    android:orientation="vertical"
+                    android:id="@+id/infoRow">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_marginRight="50dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/type"
+                        android:textSize="12dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/orange_border_bottom"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/title"
+                        android:textSize="16dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/location"
+                        android:textSize="13dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/date"
+                        android:textSize="13dp"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    app:layout_heightPercent="30%"
+                    android:id="@+id/buttonsRow"
+                    android:layout_below="@+id/infoRow"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/takesBtn"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:background="@color/selected_ambar"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="-4dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/asistentsBtn"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:background="@color/selected_ambar"
+                        android:layout_toLeftOf="@+id/takesBtn"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="-4dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/shareBtn"
+                        android:src="@drawable/ic_share"
+                        android:background="@color/selected_ambar"
+                        android:layout_toLeftOf="@+id/asistentsBtn"
+                        android:layout_marginRight="3dp"/>
+
+                </RelativeLayout>
+            </android.support.percent.PercentRelativeLayout>
+
+        </android.support.percent.PercentRelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
