@@ -1,0 +1,117 @@
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.pes.takemelegends.Fragment.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        app:layout_heightPercent="12%"
+        android:orientation="vertical"
+        android:id="@+id/infoUser"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nombre"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginTop="-5dp"/>
+
+    </LinearLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        app:layout_heightPercent="15%"
+        android:layout_below="@+id/infoUser"
+        android:gravity="center"
+        android:background="@drawable/tiny_shadow"
+        android:paddingBottom="10dp">
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            app:layout_heightPercent="30%"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/takesEvents">
+
+            <TextView
+                app:layout_widthPercent="50%"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:id="@+id/totalTakes"/>
+
+            <TextView
+                app:layout_widthPercent="50%"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:id="@+id/totalEvents"
+                android:layout_toRightOf="@+id/totalTakes"/>
+
+        </android.support.percent.PercentRelativeLayout>
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            app:layout_heightPercent="40%"
+            android:id="@+id/progressLayout"
+            android:layout_below="@+id/takesEvents">
+
+            <TextView
+                app:layout_widthPercent="20%"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/main_ambar"
+                android:textStyle="bold"
+                android:id="@+id/currentLvl"/>
+
+            <ProgressBar
+                app:layout_widthPercent="60%"
+                android:layout_height="match_parent"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                android:id="@+id/progressLvl"
+                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/currentLvl"/>
+
+            <TextView
+                app:layout_widthPercent="20%"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:textStyle="bold"
+                android:id="@+id/nextLvl"/>
+
+        </android.support.percent.PercentRelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            app:layout_heightPercent="30%"
+            android:gravity="center"
+            android:id="@+id/nExp"
+            android:layout_gravity="center"
+            android:layout_below="@+id/progressLayout"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/logrosContainer"
+        app:layout_heightPercent="73%"
+        android:layout_width="match_parent">
+
+    </FrameLayout>
+
+</android.support.percent.PercentRelativeLayout>
