@@ -4,6 +4,7 @@ package com.pes.takemelegends.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ public class ProfileFragment extends Fragment {
 
     private TextView username, name, currentLvl, nextLvl, nExp, totalTakes, totalEvents;
     private ProgressBar expBar;
+    private LogrosFragment logros;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -48,6 +50,11 @@ public class ProfileFragment extends Fragment {
                 getResources().getColor(R.color.main_ambar),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        logros = new LogrosFragment();
+        transaction.replace(R.id.logrosContainer,logros);
+        transaction.addToBackStack("logros");
+        transaction.commit();
         return rootView;
     }
 

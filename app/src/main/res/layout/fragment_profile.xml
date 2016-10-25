@@ -38,7 +38,8 @@
         android:layout_below="@+id/infoUser"
         android:gravity="center"
         android:background="@drawable/tiny_shadow"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:id="@+id/expLayout">
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
@@ -110,7 +111,8 @@
     <FrameLayout
         android:id="@+id/logrosContainer"
         app:layout_heightPercent="73%"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_below="@+id/expLayout">
 
     </FrameLayout>
 

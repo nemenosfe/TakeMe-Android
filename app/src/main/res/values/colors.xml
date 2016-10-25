@@ -10,5 +10,6 @@
     <color name="selected_ambar">#ffe282</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="success">#ff22aa</color>
 
 </resources>
