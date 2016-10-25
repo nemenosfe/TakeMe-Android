@@ -13,12 +13,12 @@
         android:layout_marginBottom="7dp">
 
         <RelativeLayout
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:id="@+id/takes"
             android:background="@drawable/white_circle"
-            android:layout_margin="10dp">
+            android:layout_margin="7dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -30,22 +30,26 @@
         
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="74dp"
             android:orientation="vertical"
             android:layout_toRightOf="@+id/takes">
 
             <TextView
                 android:layout_width="match_parent"
                 app:layout_heightPercent="50%"
-                android:textSize="13sp"
-                android:id="@+id/descriptionLogro"/>
+                android:textSize="17sp"
+                android:id="@+id/titleLogro"
+                android:gravity="bottom"/>
 
             <TextView
                 android:layout_width="match_parent"
                 app:layout_heightPercent="50%"
-                android:textSize="17sp"
-                android:id="@+id/titleLogro"
-                android:layout_below="@+id/descriptionLogro"/>
+                android:textSize="13sp"
+                android:id="@+id/descriptionLogro"
+                android:layout_below="@+id/titleLogro"
+                android:gravity="top"/>
+
+
 
         </android.support.percent.PercentRelativeLayout>
 

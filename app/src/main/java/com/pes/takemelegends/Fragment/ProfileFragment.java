@@ -1,8 +1,10 @@
 package com.pes.takemelegends.Fragment;
 
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ public class ProfileFragment extends Fragment {
     private TextView username, name, currentLvl, nextLvl, nExp, totalTakes, totalEvents;
     private ProgressBar expBar;
     private LogrosFragment logros;
+    private FloatingActionButton mFab;
 
     public ProfileFragment() {
         // Required empty public constructor

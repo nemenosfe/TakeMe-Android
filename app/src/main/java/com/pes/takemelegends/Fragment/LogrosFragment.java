@@ -1,7 +1,9 @@
 package com.pes.takemelegends.Fragment;
 
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ public class LogrosFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+    private FloatingActionButton mFab;
 
     public LogrosFragment() {
         // Required empty public constructor
@@ -33,6 +36,9 @@ public class LogrosFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_logros, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.logrosRecyclerView);
+        mFab = (FloatingActionButton) rootView.findViewById(R.id.fabBtn);
+
+        mFab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.main_ambar)));
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
