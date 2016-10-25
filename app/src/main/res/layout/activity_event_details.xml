@@ -58,18 +58,97 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="2dip"
-                    android:background="#FF00FF00"
+                    android:background="@color/main_ambar"
                     android:layout_below="@+id/buttonAsistire"
                     android:id="@+id/layoutDivider1"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"></LinearLayout>
+                    android:layout_marginBottom="10dp"/>
 
                 <TextView
-                    android:text="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
+                    android:text="@string/text_lorem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textDescription"
-                    android:layout_below="@+id/layoutDivider1" />
+                    android:layout_below="@+id/layoutDivider1"
+                />
+
+
+                <TextView
+                    android:id="@+id/textDate"
+                    android:layout_below="@+id/textDescription"
+                    android:text="@string/text_date"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/textEventDate"
+                    android:layout_below="@+id/textDescription"
+                    android:layout_toRightOf="@id/textDate"
+                    android:text="Viernes, 5 de Octubre, 2016"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/textTime"
+                    android:layout_below="@+id/textDate"
+                    android:text="@string/text_time"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                />
+
+
+                <TextView
+                    android:id="@+id/textEventTime"
+                    android:layout_below="@+id/textDate"
+                    android:layout_toRightOf="@id/textTime"
+                    android:text="15:00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                 />
+
+                <TextView
+                    android:id="@+id/textAdress"
+                    android:layout_below="@+id/textTime"
+                    android:text="@string/text_adress"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/textEventAdress"
+                    android:layout_below="@+id/textTime"
+                    android:layout_toRightOf="@id/textAdress"
+                    android:text="Idhana Nova, Portugal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                />
+
+
+                <LinearLayout
+                    android:id="@+id/layoutDivider2"
+                    android:layout_below="@+id/textAdress"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dip"
+                    android:background="@color/main_ambar"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
 
             </RelativeLayout>
 
