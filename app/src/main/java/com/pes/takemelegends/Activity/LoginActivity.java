@@ -31,7 +31,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         switch (view.getId()) {
             case  R.id.button_facebook:
             {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
                 startActivity(intent);
                 finish();
                 break;
