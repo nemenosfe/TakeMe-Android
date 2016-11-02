@@ -41,60 +41,87 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textEventName"
-                    android:layout_alignParentLeft="true"
-
+                    android:layout_centerHorizontal="true"
+                    style="@style/h1"
                     android:textSize="24sp"
-                    android:layout_alignBottom="@+id/buttonAsistire" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonAsistire"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/button_asistire"
-                    android:drawableLeft="@drawable/ic_add" />
+                    />
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="2dip"
                     android:background="@color/main_ambar"
-                    android:layout_below="@+id/buttonAsistire"
+                    android:layout_below="@+id/textEventName"
                     android:id="@+id/layoutDivider1"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"/>
 
-                <TextView
-                    android:text="@string/text_lorem"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textDescription"
                     android:layout_below="@+id/layoutDivider1"
-                />
+                    android:gravity="center_horizontal"
+                    android:id="@+id/layoutActions"
+                    >
+
+                    <ImageButton
+                        android:id="@+id/buttonTickets"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/ic_ticket" />
+
+                    <ImageButton
+                        android:id="@+id/buttonShare"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/ic_share_green" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonAsistire"
+                        android:text="@string/button_asistire"
+                        android:drawableLeft="@drawable/ic_add" />
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dip"
+                    android:background="@color/main_ambar"
+                    android:layout_below="@+id/layoutActions"
+                    android:id="@+id/layoutDivider2"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
 
 
                 <TextView
                     android:id="@+id/textDate"
-                    android:layout_below="@+id/textDescription"
+                    android:layout_below="@+id/layoutDivider2"
                     android:text="@string/text_date"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
+                    style="@style/p"
                     />
 
 
                 <TextView
                     android:id="@+id/textEventDate"
-                    android:layout_below="@+id/textDescription"
+                    android:layout_below="@+id/layoutDivider2"
                     android:layout_toRightOf="@id/textDate"
                     android:text="Viernes, 5 de Octubre, 2016"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
+                    style="@style/p"
                     />
-
 
                 <TextView
                     android:id="@+id/textTime"
@@ -105,7 +132,8 @@
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
-                />
+                    style="@style/p"
+                    />
 
 
                 <TextView
@@ -116,7 +144,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
-                 />
+                    style="@style/p"
+                    />
 
                 <TextView
                     android:id="@+id/textAdress"
@@ -127,6 +156,7 @@
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
+                    style="@style/p"
                     />
 
                 <TextView
@@ -137,11 +167,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
-                />
+                    style="@style/p"
+                    />
 
 
                 <LinearLayout
-                    android:id="@+id/layoutDivider2"
+                    android:id="@+id/layoutDivider3"
+                    android:layout_below="@+id/textAdress"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dip"
+                    android:background="@color/main_ambar"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+
+                <TextView
+                    android:text="@string/text_lorem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textDescription"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    style="@style/p"
+                    android:layout_below="@+id/layoutDivider3"
+                />
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/layoutDivider4"
                     android:layout_below="@+id/textAdress"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
