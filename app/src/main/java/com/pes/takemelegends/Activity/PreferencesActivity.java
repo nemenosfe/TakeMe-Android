@@ -1,5 +1,6 @@
 package com.pes.takemelegends.Activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -9,6 +10,8 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class PreferencesActivity extends Activity implements View.OnClickListener {
+public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     List<String> allCities = new ArrayList<String>();
@@ -38,6 +41,11 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
+        toolbar.setTitle("");
 
         TextView textPreferencesTimetableFrom = (TextView)findViewById(R.id.preferencesTimetableFrom);
         textPreferencesTimetableFrom.setOnClickListener(this);
