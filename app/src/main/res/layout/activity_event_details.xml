@@ -22,11 +22,29 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/logo_jpg"
                 android:id="@+id/imageView4" />
+
+            <TextView
+                android:text="1990\nTakes"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/textTakes"
+                android:gravity="center_horizontal"
+                android:padding="12dp"
+                android:background="@drawable/button_grey_radius"
+                android:layout_alignParentRight="true"
+                android:textSize="18sp"
+                />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
