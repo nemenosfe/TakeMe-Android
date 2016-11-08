@@ -49,7 +49,7 @@ public class MarketFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        String[] dummy = {"Nivel 1"};
+        Integer[] dummy = {1, 2, 3, 4, 5, 6, 7, 8};
         MarketAdapter marketAdapter = new MarketAdapter(dummy);
 
         recyclerView.setAdapter(marketAdapter);
@@ -57,7 +57,7 @@ public class MarketFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         userTV.setText("oscarSeGa");
-        lvlTV.setText("Level 3");
+        lvlTV.setText("Nivel 3");
         takesTV.setText("777 takes");
 
         return rootview;

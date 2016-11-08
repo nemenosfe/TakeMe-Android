@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,9 +12,9 @@ import com.pes.takemelegends.R;
 
 public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder> {
 
-    private String[] itemsData;
+    private Integer[] itemsData;
 
-    public MarketAdapter(String[] itemsData) {
+    public MarketAdapter(Integer[] itemsData) {
         this.itemsData = itemsData;
     }
 
@@ -26,7 +27,11 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(MarketAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.level.setText("Level 3");
+        // Necessitem el current level del user, fin a linkar amb API estara hardcoded a 3
+        Integer level = 3;
+        viewHolder.level.setText("Nivel " + itemsData[position]);
+        if (level < itemsData[position]) viewHolder.lock.setImageResource(R.drawable.ic_lock_close);
+        else viewHolder.lock.setImageResource(R.drawable.ic_lock_open);
     }
 
     @Override
@@ -42,7 +47,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             level = (TextView) itemLayoutView.findViewById(R.id.lvl);
-
+            lock = (ImageView) itemLayoutView.findViewById(R.id.lock);
         }
     }
 
