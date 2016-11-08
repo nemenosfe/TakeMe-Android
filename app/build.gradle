@@ -56,6 +56,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.16.1'
     compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.loopj.android:android-async-http:1.4.9'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile('com.twitter.sdk.android:twitter:2.1.1@aar') {
