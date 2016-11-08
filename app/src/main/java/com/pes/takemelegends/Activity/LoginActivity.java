@@ -20,6 +20,7 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import io.fabric.sdk.android.Fabric;
 
 import static android.R.attr.data;
+import static com.pes.takemelegends.R.id.button;
 
 public class LoginActivity extends Activity {
 
@@ -27,6 +28,7 @@ public class LoginActivity extends Activity {
     private static final String TWITTER_KEY = "3BHl3HDnSPuOEz4h8udLjZ1an";
     private static final String TWITTER_SECRET = "gCwOn4hM5xiC07KJXpONWZUw0moyz5OhP92GYFZRxveCImCtBK";
     private TwitterLoginButton loginButton;
+    private Button buttonFacebook;
 
 
     @Override
@@ -37,14 +39,24 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
 
-        Button buttonFacebook = (Button) findViewById(R.id.button_facebook);
+        buttonFacebook = (Button) findViewById(R.id.button_facebook);
         //buttonFacebook.setOnClickListener(this);
 
         Button buttonGoogle = (Button) findViewById(R.id.button_google);
+        buttonGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         //buttonGoogle.setOnClickListener(this);
 
         Button buttonTwitter = (Button) findViewById(R.id.twitter_login_button);
         //buttonTwitter.setOnClickListener(this);
+
+
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
@@ -53,6 +65,7 @@ public class LoginActivity extends Activity {
                 // The TwitterSession is also available through:
                 // Twitter.getInstance().core.getSessionManager().getActiveSession()
                 TwitterSession session = result.data;
+                //session.
                 // TODO: Remove toast and use the TwitterSession's userID
                 // with your app's user model
                 String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
