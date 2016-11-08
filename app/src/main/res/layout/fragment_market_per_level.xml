@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.pes.takemelegends.Activity.MarketPerLevelActivity">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/info"
+        android:background="@color/white"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            app:layout_widthPercent="33%"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:gravity="center"
+            android:textStyle="bold"/>
+
+        <TextView
+            app:layout_widthPercent="34%"
+            android:layout_height="wrap_content"
+            android:id="@+id/currentLvl"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/username"
+            android:textStyle="bold"/>
+
+        <TextView
+            app:layout_widthPercent="33%"
+            android:layout_height="wrap_content"
+            android:id="@+id/totalTakes"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/currentLvl"
+            android:textStyle="bold"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/logrosRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/info"/>
+
+
+</RelativeLayout>
