@@ -1,4 +1,4 @@
-package com.pes.takemelegends.Fragment;
+package com.pes.takemelegends.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 import com.pes.takemelegends.R;
 
-public class EventDetailsFragment extends Activity implements View.OnClickListener {
+public class EventDetailsActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

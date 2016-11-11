@@ -1,6 +1,5 @@
 package com.pes.takemelegends.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,7 +21,7 @@ import com.pes.takemelegends.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment feed, profile, market;
+    private Fragment feed, profile, market, eventDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
