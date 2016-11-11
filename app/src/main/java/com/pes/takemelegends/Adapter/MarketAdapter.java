@@ -49,6 +49,8 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
             level = (TextView) itemLayoutView.findViewById(R.id.lvl);
             lock = (ImageView) itemLayoutView.findViewById(R.id.lock);
         }
+
+
     }
 
 }

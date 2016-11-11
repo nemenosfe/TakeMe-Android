@@ -40,7 +40,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
 
-        buttonFacebook = (Button) findViewById(R.id.button_facebook);
+        //buttonFacebook = (Button) findViewById(R.id.button_facebook);
         //buttonFacebook.setOnClickListener(this);
 
         Button buttonGoogle = (Button) findViewById(R.id.button_google);

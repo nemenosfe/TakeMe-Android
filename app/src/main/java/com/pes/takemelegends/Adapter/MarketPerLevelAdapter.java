@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,13 +41,17 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView level;
-        public ImageView lock;
+        public TextView productName, productDesc, productTakes;
+        public ImageView productImage;
+        public ImageButton productBtn;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            level = (TextView) itemLayoutView.findViewById(R.id.lvl);
-            lock = (ImageView) itemLayoutView.findViewById(R.id.lock);
+            productName = (TextView) itemLayoutView.findViewById(R.id.productName);
+            productDesc = (TextView) itemLayoutView.findViewById(R.id.productDescription);
+            productTakes = (TextView) itemLayoutView.findViewById(R.id.productTakes);
+            productBtn = (ImageButton) itemLayoutView.findViewById(R.id.productBuy);
+            productImage = (ImageView) itemLayoutView.findViewById(R.id.productImage);
         }
     }
 
