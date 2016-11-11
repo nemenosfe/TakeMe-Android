@@ -44,6 +44,14 @@
     <string name="text_time">Hora:</string>
     <string name="text_adress">Dirección</string>
 
+    <string name="text_historial">Historial</string>
+    <string name="text_check_in">Check-in</string>
+    <string name="text_was_at_time">Realizado a las:</string>
+    <string name="text_historic">Historial</string>
+    <string name="text_no_reward_obtained">Recompensa no adquirida</string>
+    <string name="text_from">De</string>
+    <string name="text_to">a</string>
+
 
     <string name="facebook_app_id">306462863070758</string>
 
