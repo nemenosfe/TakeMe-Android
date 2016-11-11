@@ -66,7 +66,9 @@ public class LoginActivity extends Activity {
                 // The TwitterSession is also available through:
                 // Twitter.getInstance().core.getSessionManager().getActiveSession()
                 TwitterSession session = result.data;
-                TwitterAuthClient authClient = new TwitterAuthClient();
+                String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                /*TwitterAuthClient authClient = new TwitterAuthClient();
                 authClient.requestEmail(session, new Callback<String>() {
                     @Override
                     public void success(Result<String> result) {
@@ -74,15 +76,15 @@ public class LoginActivity extends Activity {
                         //session.
                         // TODO: Remove toast and use the TwitterSession's userID
                         // with your app's user model
-                        String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),result.toString(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void failure(TwitterException exception) {
                         // Do something on failure
+                        Toast.makeText(getApplicationContext(),exception.toString(), Toast.LENGTH_LONG).show();
                     }
-                });
+                });*/
             }
 
             @Override
