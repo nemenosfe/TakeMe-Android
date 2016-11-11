@@ -15,6 +15,7 @@ import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import io.fabric.sdk.android.Fabric;
@@ -65,11 +66,25 @@ public class LoginActivity extends Activity {
                 // The TwitterSession is also available through:
                 // Twitter.getInstance().core.getSessionManager().getActiveSession()
                 TwitterSession session = result.data;
-                //session.
-                // TODO: Remove toast and use the TwitterSession's userID
-                // with your app's user model
                 String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                /*TwitterAuthClient authClient = new TwitterAuthClient();
+                authClient.requestEmail(session, new Callback<String>() {
+                    @Override
+                    public void success(Result<String> result) {
+                        // Do something with the result, which provides the email address
+                        //session.
+                        // TODO: Remove toast and use the TwitterSession's userID
+                        // with your app's user model
+                        Toast.makeText(getApplicationContext(),result.toString(), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        // Do something on failure
+                        Toast.makeText(getApplicationContext(),exception.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });*/
             }
 
             @Override

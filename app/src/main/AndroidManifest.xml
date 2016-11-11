@@ -22,16 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".Activity.EventDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
+
         <activity android:name=".Activity.PreferencesActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="e5b822c18ac5a4b9720af27a769107face66907d" />
+            android:value="e5b822c18ac5a4b9720af27a769107face66907d"
+            />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
