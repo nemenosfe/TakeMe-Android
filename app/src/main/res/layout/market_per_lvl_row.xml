@@ -10,15 +10,36 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="wrap_content"
+            app:layout_widthPercent="25%"
             android:layout_height="wrap_content"
-            android:id="@+id/prova"/>
+            android:id="@+id/productImage"/>
 
         <LinearLayout
             app:layout_widthPercent="50%"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/productName"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/productDescription"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/productTakes"/>
+
         </LinearLayout>
+
+        <ImageButton
+            app:layout_widthPercent="50%"
+            android:layout_height="match_parent"
+            android:id="@+id/productBuy"/>
     </android.support.percent.PercentRelativeLayout>
 
 </RelativeLayout>

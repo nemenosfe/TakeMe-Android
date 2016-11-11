@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Activity;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,30 +20,28 @@ import com.pes.takemelegends.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MarketPerLevelActivity extends Fragment {
+public class MarketPerLevelActivity extends Activity {
 
 
     public MarketPerLevelActivity() {
         // Required empty public constructor
     }
 
-    private View rootview;
     private TextView userTV, lvlTV, takesTV;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        rootview = inflater.inflate(R.layout.fragment_market_per_level, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.market_per_lvl_row);
 
-        userTV = (TextView) rootview.findViewById(R.id.username);
-        lvlTV = (TextView) rootview.findViewById(R.id.currentLvl);
-        takesTV = (TextView) rootview.findViewById(R.id.totalTakes);
-        recyclerView = (RecyclerView) rootview.findViewById(R.id.logrosRecyclerView);
+        userTV = (TextView) findViewById(R.id.username);
+        lvlTV = (TextView) findViewById(R.id.currentLvl);
+        takesTV = (TextView) findViewById(R.id.totalTakes);
+        recyclerView = (RecyclerView) findViewById(R.id.rewardsRecyclerView);
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         DividerItemDecorator dividerItemDecoration = new DividerItemDecorator(recyclerView.getContext(),
@@ -59,8 +58,6 @@ public class MarketPerLevelActivity extends Fragment {
         userTV.setText("oscarSeGa");
         lvlTV.setText("Nivel 3");
         takesTV.setText("777 takes");
-
-        return rootview;
     }
 
 }

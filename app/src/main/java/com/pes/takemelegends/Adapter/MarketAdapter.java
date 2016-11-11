@@ -63,6 +63,8 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
         public void onClick(View view) {
             Log.v("asdfasdf", String.valueOf(getLayoutPosition()));
         }
+
+
     }
 
 }

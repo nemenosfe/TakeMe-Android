@@ -39,7 +39,7 @@
     </android.support.percent.PercentRelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/logrosRecyclerView"
+        android:id="@+id/rewardsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
