@@ -33,7 +33,6 @@ public class MapActivity extends Activity {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (map == null) map = new MapFragment();
         transaction.replace(R.id.mapContainer, map, "map");
-        transaction.addToBackStack("eventsFeed");
         transaction.commit();
     }
 }

@@ -104,11 +104,19 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_calendar) {
 
         }
-
         transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void exchangeTakes() {
+        //getFragmentManager().popBackStack();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (market == null) market = new MarketFragment();
+        transaction.replace(R.id.fragment_container,market);
+        transaction.addToBackStack("market");
+        transaction.commit();
     }
 }

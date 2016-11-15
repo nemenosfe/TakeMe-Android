@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Fragment;
 
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pes.takemelegends.Activity.LoginActivity;
+import com.pes.takemelegends.Activity.MainActivity;
+import com.pes.takemelegends.Activity.PreferencesActivity;
+import com.pes.takemelegends.Activity.RewardsActivity;
 import com.pes.takemelegends.Adapter.LogroAdapter;
 import com.pes.takemelegends.Adapter.RewardsAdapter;
 import com.pes.takemelegends.R;
@@ -40,6 +45,13 @@ public class RewardsFragment extends Fragment {
         mFab = (FloatingActionButton) rootView.findViewById(R.id.fabBtn);
 
         mFab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.main_ambar)));
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).exchangeTakes();
+                getActivity().getFragmentManager().popBackStack();
+            }
+        });
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 

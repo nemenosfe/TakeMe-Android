@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="74dp"
-    android:background="@drawable/oval_logro"
-    android:layout_marginTop="10dp"
+    android:background="@drawable/oval_reward"
+    android:layout_marginTop="5dp"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="5dp">
 
     <RelativeLayout
         android:layout_width="60dp"
@@ -34,27 +34,29 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:id="@+id/rewardName"
+            android:layout_marginBottom="-2dp"
+            android:layout_marginRight="20dp"
             android:gravity="bottom"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:id="@+id/rewardDescription"
             android:layout_below="@+id/rewardName"
+            android:layout_marginRight="20dp"
             android:gravity="top"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textSize="12sp"
             android:layout_below="@+id/rewardDescription"
             android:id="@+id/rewardTakes"
+            android:layout_marginRight="20dp"
             android:layout_centerVertical="true"/>
-
-
-
     </RelativeLayout>
 
 </RelativeLayout>
