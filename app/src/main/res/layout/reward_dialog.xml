@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/cardview_shadow_start_color"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/info"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_ticket"
+            android:id="@+id/imageProduct"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clauer RCDE"
+            android:id="@+id/nameProduct"
+            android:layout_toRightOf="@+id/imageProduct"
+            android:layout_centerVertical="true"
+            android:paddingLeft="25dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/price"
+        android:layout_below="@+id/info"
+        android:text="300 takes"/>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/price"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            app:layout_widthPercent="40%"
+            app:layout_marginLeftPercent="5%"
+            android:layout_height="wrap_content"
+            android:id="@+id/apply"
+            android:text="Confirmar"/>
+
+        <Button
+            app:layout_widthPercent="40%"
+            android:layout_height="wrap_content"
+            android:id="@+id/deny"
+            android:layout_toRightOf="@+id/apply"
+            app:layout_marginLeftPercent="5%"
+            android:text="Denegar"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
+
+</RelativeLayout>
