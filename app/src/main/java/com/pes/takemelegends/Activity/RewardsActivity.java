@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pes.takemelegends.Adapter.MarketPerLevelAdapter;
@@ -16,6 +18,7 @@ public class RewardsActivity extends AppCompatActivity {
     private TextView userTV, lvlTV, takesTV;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+    private ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,15 @@ public class RewardsActivity extends AppCompatActivity {
         lvlTV = (TextView) findViewById(R.id.currentLvl);
         takesTV = (TextView) findViewById(R.id.totalTakes);
         recyclerView = (RecyclerView) findViewById(R.id.rewardsRecyclerView);
+        backBtn= (ImageButton) findViewById(R.id.backBtn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStack();
+                finish();
+            }
+        });
 
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);

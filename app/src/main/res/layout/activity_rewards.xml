@@ -7,13 +7,29 @@
     android:layout_height="match_parent"
     tools:context="com.pes.takemelegends.Activity.RewardsActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/main_ambar">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_arrow"
+            android:background="@null"/>
+
+    </android.support.v7.widget.Toolbar>
+
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/info"
         android:background="@color/white"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/toolbar">
 
         <TextView
             app:layout_widthPercent="33%"
