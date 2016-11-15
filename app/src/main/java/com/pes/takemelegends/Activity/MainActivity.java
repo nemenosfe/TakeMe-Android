@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (feed == null) feed = new EventsViewPagerFragment();
         transaction.replace(R.id.fragment_container,feed);
-        transaction.addToBackStack("eventsFeed");
         transaction.commit();
     }
 

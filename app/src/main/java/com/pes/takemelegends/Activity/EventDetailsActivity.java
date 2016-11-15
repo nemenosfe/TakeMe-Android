@@ -1,15 +1,22 @@
 package com.pes.takemelegends.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.pes.takemelegends.R;
 
 public class EventDetailsActivity extends Activity implements View.OnClickListener {
+
+    private static final int RECORD_REQUEST_CODE = 101;
 
     private ImageButton buttonShare, mapBtn;
     @Override
@@ -41,9 +48,51 @@ public class EventDetailsActivity extends Activity implements View.OnClickListen
             }
             case R.id.mapBtn:
             {
-                Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
-                startActivity(intent);
-                break;
+                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP){
+                    checkPermissions();
+                } else{
+                    Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
+                    startActivity(intent);
+                    break;
+
+                }
+            }
+        }
+    }
+
+    private void checkPermissions() {
+        if (ContextCompat.checkSelfPermission(EventDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(EventDetailsActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(EventDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        RECORD_REQUEST_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case RECORD_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
+                    startActivity(intent);
+                    break;
+
+                } else {
+
+                    Toast toast = Toast.makeText(EventDetailsActivity.this, "DENIED", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return;
             }
         }
     }
