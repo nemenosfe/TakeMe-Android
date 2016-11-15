@@ -90,6 +90,12 @@
                         android:background="@drawable/ic_action_name" />
 
                     <ImageButton
+                        android:id="@+id/mapBtn"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/ic_how_to_arrive"/>
+
+                    <ImageButton
                         android:id="@+id/buttonShare"
                         android:layout_width="45dp"
                         android:layout_height="45dp"

@@ -11,19 +11,23 @@ import com.pes.takemelegends.R;
 
 public class EventDetailsActivity extends Activity implements View.OnClickListener {
 
+    private ImageButton buttonShare, mapBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
 
-        ImageButton buttonShare = (ImageButton)findViewById(R.id.buttonShare);
+        buttonShare = (ImageButton)findViewById(R.id.buttonShare);
+        mapBtn = (ImageButton) findViewById(R.id.mapBtn);
+
+        mapBtn.setOnClickListener(this);
         buttonShare.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case  R.id.buttonShare:
+            case R.id.buttonShare:
             {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
@@ -33,6 +37,12 @@ public class EventDetailsActivity extends Activity implements View.OnClickListen
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share using"));
 
+                break;
+            }
+            case R.id.mapBtn:
+            {
+                Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
+                startActivity(intent);
                 break;
             }
         }
