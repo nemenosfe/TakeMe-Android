@@ -42,8 +42,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp" />
+            android:layout_marginTop="30dp" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <com.twitter.sdk.android.core.identity.TwitterLoginButton
+            android:id="@+id/twitter_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal" />
+
+        <!--
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_google"
+            android:text="@string/login_google"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:background="@drawable/button_google"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@drawable/ic_google"
+            android:drawablePadding="20dp"
+            android:textColor="@android:color/background_light"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:drawableTint="#fff"
+            android:gravity="center_vertical" />
+-->
 
         <!--
                 <Button
@@ -66,25 +98,6 @@
                     android:gravity="center_vertical" />
                 -->
 
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_google"
-            android:text="@string/login_google"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:background="@drawable/button_google"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:drawableLeft="@drawable/ic_google"
-            android:drawablePadding="20dp"
-            android:textColor="@android:color/background_light"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:layout_gravity="center_horizontal"
-            android:drawableTint="#fff"
-            android:gravity="center_vertical" />
-
-
         <!--<Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -104,14 +117,6 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical" />
             -->
-        <com.twitter.sdk.android.core.identity.TwitterLoginButton
-            android:id="@+id/twitter_login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
-
-
-
 
     </LinearLayout>
 
