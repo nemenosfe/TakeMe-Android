@@ -26,23 +26,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/logo_jpg"
-                android:id="@+id/imageView4" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/logo_jpg"
+                    android:id="@+id/imageView4" />
 
-            <TextView
-                android:text="1990\nTakes"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:id="@+id/textTakes"
-                android:gravity="center_horizontal"
-                android:padding="12dp"
-                android:background="@drawable/button_grey_radius"
-                android:layout_alignParentRight="true"
-                android:textSize="18sp"
-                />
+                <TextView
+                    android:text="1990\nTakes"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/textTakes"
+                    android:gravity="center_horizontal"
+                    android:padding="13dp"
+                    android:background="@drawable/button_grey_radius"
+                    android:layout_alignParentRight="true"
+                    android:textSize="18sp"
+                    />
 
             </RelativeLayout>
 
@@ -87,7 +87,7 @@
                         android:id="@+id/buttonTickets"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:background="@drawable/ic_ticket" />
+                        android:background="@drawable/ic_action_name" />
 
                     <ImageButton
                         android:id="@+id/buttonShare"
@@ -100,6 +100,9 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/buttonAsistire"
                         android:text="@string/button_asistire"
+                        android:paddingBottom="0dp"
+                        android:paddingTop="0dp"
+
                         android:drawableLeft="@drawable/ic_add" />
 
                 </LinearLayout>
@@ -209,7 +212,7 @@
                     android:paddingRight="20dp"
                     style="@style/p"
                     android:layout_below="@+id/layoutDivider3"
-                />
+                    />
 
 
 

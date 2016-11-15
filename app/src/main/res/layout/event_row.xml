@@ -18,9 +18,9 @@
             android:layout_height="140dp">
 
             <ImageView
+                android:scaleType="centerCrop"
                 app:layout_widthPercent="40%"
                 app:layout_heightPercent="100%"
-                android:src="@drawable/ic_menu_send"
                 android:id="@+id/imageEvent"/>
 
             <android.support.percent.PercentRelativeLayout

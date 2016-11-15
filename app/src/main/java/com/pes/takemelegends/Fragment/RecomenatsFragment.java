@@ -37,7 +37,7 @@ public class RecomenatsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         String[] dummy = {"Festival", "BOOM Festival 2016","Portugal", "16/10/2016 - 20:45h"};
-        EventAdapter totsAdapter = new EventAdapter(dummy);
+        EventAdapter totsAdapter = new EventAdapter(dummy, getActivity());
 
         recyclerView.setAdapter(totsAdapter);
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            app:layout_widthPercent="25%"
+            android:layout_height="wrap_content"
+            android:id="@+id/productImage"
+            android:layout_centerVertical="true"/>
+
+        <LinearLayout
+            app:layout_widthPercent="50%"
+            android:id="@+id/infoReward"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@+id/productImage">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/productName"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/productDescription"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/productTakes"/>
+
+        </LinearLayout>
+
+        <ImageButton
+            app:layout_widthPercent="25%"
+            android:layout_height="wrap_content"
+            android:id="@+id/productBuy"
+            android:layout_toRightOf="@+id/infoReward"
+            android:background="@null"
+            android:layout_centerVertical="true"/>
+    </android.support.percent.PercentRelativeLayout>
+
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package com.pes.takemelegends.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -7,14 +9,19 @@ import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pes.takemelegends.Activity.EventDetailsActivity;
+import com.pes.takemelegends.Activity.PreferencesActivity;
 import com.pes.takemelegends.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Oscar on 22/10/2016.
@@ -23,9 +30,13 @@ import com.pes.takemelegends.R;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private String[] itemsData;
+    private Context context;
+    private final String imageUrl = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
 
-    public EventAdapter(String[] itemsData) {
+    public EventAdapter(String[] itemsData, Context context) {
+
         this.itemsData = itemsData;
+        this.context = context;
     }
 
     @Override
@@ -41,6 +52,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         viewHolder.titleTV.setText(itemsData[1]);
         viewHolder.location.setText(itemsData[2]);
         viewHolder.date.setText(itemsData[3]);
+        Picasso.with(context).load(imageUrl).into(viewHolder.eventImage);
 
         Spannable spannable = new SpannableString("1240"+"\n"+"asistentes");
         //spannable.setSpan(new RelativeSizeSpan(1.2f), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -58,13 +70,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         return itemsData.length;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView typeTV, titleTV, takesBtn, asistentsBtn, location, date;
-        public ImageButton shareBtn;
+        TextView typeTV, titleTV, takesBtn, asistentsBtn, location, date;
+        ImageButton shareBtn;
+        ImageView eventImage;
+        private final Context context;
 
-        public ViewHolder(View itemLayoutView) {
+        ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
+
+            context = itemLayoutView.getContext();
+
             typeTV = (TextView) itemLayoutView.findViewById(R.id.type);
             titleTV = (TextView) itemLayoutView.findViewById(R.id.title);
             takesBtn = (TextView) itemLayoutView.findViewById(R.id.takesBtn);
@@ -72,6 +89,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             shareBtn = (ImageButton) itemLayoutView.findViewById(R.id.shareBtn);
             location = (TextView) itemLayoutView.findViewById(R.id.location);
             date = (TextView) itemLayoutView.findViewById(R.id.date);
+            eventImage = (ImageView) itemLayoutView.findViewById(R.id.imageEvent);
+            itemLayoutView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.v("asdfasdf", String.valueOf(getLayoutPosition()));
+            Intent intent = new Intent(context, EventDetailsActivity.class);
+            intent.putExtra("id", getLayoutPosition());
+            context.startActivity(intent);
         }
     }
 }
