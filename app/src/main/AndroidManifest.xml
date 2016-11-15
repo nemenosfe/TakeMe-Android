@@ -25,8 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-
 
 <!--
         <activity
@@ -57,19 +55,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
-=======
-        <activity
-            android:name=".Activity.EventDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Activity.PreferencesActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activity.RewardsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">></activity>
->>>>>>> 0d05c8908b01266dfefae742360804a142103b42
 
         <meta-data
             android:name="io.fabric.ApiKey"
