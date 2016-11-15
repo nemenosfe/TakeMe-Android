@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pes.takemelegends.Adapter.EventPageAdapter;
+import com.pes.takemelegends.Adapter.MyEventPageAdapter;
 import com.pes.takemelegends.R;
 
 /**
@@ -40,7 +41,7 @@ public class MyEventsFragment extends Fragment {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        final PagerAdapter adapter = new EventPageAdapter(
+        final PagerAdapter adapter = new MyEventPageAdapter(
                 getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

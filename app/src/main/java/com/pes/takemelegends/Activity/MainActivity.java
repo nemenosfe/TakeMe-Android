@@ -15,13 +15,14 @@ import android.view.MenuItem;
 
 import com.pes.takemelegends.Fragment.EventsViewPagerFragment;
 import com.pes.takemelegends.Fragment.MarketFragment;
+import com.pes.takemelegends.Fragment.MyEventsFragment;
 import com.pes.takemelegends.Fragment.ProfileFragment;
 import com.pes.takemelegends.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment feed, profile, market, eventDetails;
+    private Fragment feed, profile, market, myEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,9 @@ public class MainActivity extends AppCompatActivity
             transaction.replace(R.id.fragment_container,market);
             transaction.addToBackStack("market");
         } else if (id == R.id.nav_calendar) {
-
+            if (myEvents == null) myEvents = new MyEventsFragment();
+            transaction.replace(R.id.fragment_container,myEvents);
+            transaction.addToBackStack("myEvents");
         }
 
         transaction.commit();
