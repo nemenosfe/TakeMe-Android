@@ -15,55 +15,74 @@
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp">
+            android:layout_height="120dp">
 
             <ImageView
                 android:scaleType="centerCrop"
-                app:layout_widthPercent="40%"
+                app:layout_widthPercent="35%"
                 app:layout_heightPercent="100%"
+                android:layout_margin="4dp"
                 android:id="@+id/imageEvent"/>
 
             <android.support.percent.PercentRelativeLayout
-                app:layout_widthPercent="60%"
+                app:layout_widthPercent="65%"
                 app:layout_heightPercent="100%"
-                android:layout_toRightOf="@+id/imageEvent">
+                android:layout_toRightOf="@+id/imageEvent"
+                android:layout_marginLeft="15dp">
 
-                <LinearLayout
+                <RelativeLayout
                     app:layout_widthPercent="100%"
-                    app:layout_heightPercent="70%"
-                    android:orientation="vertical"
+                    app:layout_heightPercent="65%"
                     android:id="@+id/infoRow">
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/circle_gray"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_marginRight="50dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/type"
-                        android:textSize="12dp"
+                        android:textSize="12sp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="2dp"
                         android:background="@drawable/orange_border_bottom"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/title"
-                        android:textSize="16dp"
-                        android:textStyle="bold"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_below="@+id/type"
+                        android:layout_marginBottom="-3dp"
+                        android:includeFontPadding="false"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/location"
-                        android:textSize="13dp"/>
+                        android:textSize="13sp"
+                        android:layout_below="@+id/title"
+                        android:layout_marginBottom="-3dp"
+                        android:includeFontPadding="false"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/date"
-                        android:textSize="13dp"/>
+                        android:textSize="13sp"
+                        android:layout_below="@+id/location"
+                        android:layout_marginBottom="-3dp"
+                        android:includeFontPadding="false"/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    app:layout_heightPercent="30%"
+                    app:layout_heightPercent="35%"
                     android:id="@+id/buttonsRow"
                     android:layout_below="@+id/infoRow"
                     android:layout_marginBottom="5dp">
@@ -73,7 +92,7 @@
                         android:layout_height="match_parent"
                         android:id="@+id/takesBtn"
                         android:textColor="@color/white"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:background="@color/selected_ambar"
                         android:layout_alignParentEnd="true"
                         android:layout_marginLeft="3dp"
