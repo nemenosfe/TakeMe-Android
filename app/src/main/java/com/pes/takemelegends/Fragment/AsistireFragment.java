@@ -36,7 +36,8 @@ public class AsistireFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        String[] dummy = {"Festival", "BOOM Festival 2016","Portugal", "16/10/2016 - 20:45h"};
+        String[] dummy = {"Festival", "BOOM Festival 2016","Portu" +
+                "gal", "16/10/2016 - 20:45h"};
         EventAdapter totsAdapter = new EventAdapter(dummy, getActivity());
 
         recyclerView.setAdapter(totsAdapter);

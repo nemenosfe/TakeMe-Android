@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -8,6 +9,7 @@ import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pes.takemelegends.Activity.EventDetailsActivity;
+import com.pes.takemelegends.Activity.PreferencesActivity;
 import com.pes.takemelegends.R;
 import com.squareup.picasso.Picasso;
 
@@ -66,14 +70,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         return itemsData.length;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView typeTV, titleTV, takesBtn, asistentsBtn, location, date;
         ImageButton shareBtn;
         ImageView eventImage;
+        private final Context context;
 
         ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
+
+            context = itemLayoutView.getContext();
+
             typeTV = (TextView) itemLayoutView.findViewById(R.id.type);
             titleTV = (TextView) itemLayoutView.findViewById(R.id.title);
             takesBtn = (TextView) itemLayoutView.findViewById(R.id.takesBtn);
@@ -82,6 +90,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             location = (TextView) itemLayoutView.findViewById(R.id.location);
             date = (TextView) itemLayoutView.findViewById(R.id.date);
             eventImage = (ImageView) itemLayoutView.findViewById(R.id.imageEvent);
+            itemLayoutView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.v("asdfasdf", String.valueOf(getLayoutPosition()));
+            Intent intent = new Intent(context, EventDetailsActivity.class);
+            intent.putExtra("id", getLayoutPosition());
+            context.startActivity(intent);
         }
     }
 }

@@ -37,11 +37,12 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp" />
 
-        <com.facebook.login.widget.LoginButton
+        <!--<com.facebook.login.widget.LoginButton
             android:id="@+id/button_facebook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+<<<<<<< HEAD
             android:layout_marginTop="30dp" />
 
         <com.google.android.gms.common.SignInButton
@@ -76,6 +77,10 @@
             android:drawableTint="#fff"
             android:gravity="center_vertical" />
 -->
+=======
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />-->
+>>>>>>> 0d05c8908b01266dfefae742360804a142103b42
 
         <!--
                 <Button

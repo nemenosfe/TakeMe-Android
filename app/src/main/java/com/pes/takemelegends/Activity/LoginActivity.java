@@ -61,7 +61,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         //        .build();
 
 
-        buttonFacebook = (Button) findViewById(R.id.button_facebook);
+        //buttonFacebook = (Button) findViewById(R.id.button_facebook);
         //buttonFacebook.setOnClickListener(this);
 
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
