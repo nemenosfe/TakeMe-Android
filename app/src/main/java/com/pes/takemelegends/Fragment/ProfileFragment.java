@@ -17,9 +17,9 @@ import com.pes.takemelegends.R;
 
 public class ProfileFragment extends Fragment {
 
-    private TextView username, name, currentLvl, nextLvl, nExp, totalTakes, totalEvents;
+    private TextView name, currentLvl, nextLvl, nExp, totalTakes, totalEvents;
     private ProgressBar expBar;
-    private LogrosFragment logros;
+    private ProfileViewPagerFragment logros;
     private FloatingActionButton mFab;
 
     public ProfileFragment() {
@@ -32,7 +32,6 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        username = (TextView) rootView.findViewById(R.id.username);
         name = (TextView) rootView.findViewById(R.id.nombre);
         currentLvl = (TextView) rootView.findViewById(R.id.currentLvl);
         nextLvl = (TextView) rootView.findViewById(R.id.nextLvl);
@@ -41,20 +40,19 @@ public class ProfileFragment extends Fragment {
         totalTakes = (TextView) rootView.findViewById(R.id.totalTakes);
         expBar = (ProgressBar) rootView.findViewById(R.id.progressLvl);
 
-        username.setText("oscarSeGa");
         name.setText("Óscar Serrano García");
         currentLvl.setText("lvl3");
         nextLvl.setText("lvl4");
         nExp.setText("777/1000 px");
-        totalEvents.setText("33 eventos");
-        totalTakes.setText("777 takes");
+        totalEvents.setText("33\neventos");
+        totalTakes.setText("777\ntakes");
         expBar.setProgress(77);
         expBar.getProgressDrawable().setColorFilter(
                 getResources().getColor(R.color.main_ambar),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        logros = new LogrosFragment();
+        logros = new ProfileViewPagerFragment();
         transaction.replace(R.id.logrosContainer,logros);
         transaction.addToBackStack("logros");
         transaction.commit();

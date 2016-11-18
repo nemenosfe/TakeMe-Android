@@ -43,7 +43,6 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
         viewHolder.productDesc.setText("description del cauer rcde");
         viewHolder.productTakes.setText("300 takes");
         viewHolder.productImage.setImageResource(R.drawable.ic_ticket);
-        viewHolder.productBtn.setImageResource(R.drawable.ic_facebook);
     }
 
     @Override

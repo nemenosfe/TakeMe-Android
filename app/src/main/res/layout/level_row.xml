@@ -18,7 +18,7 @@
             android:id="@+id/lvl"
             android:layout_toRightOf="@+id/lock"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp"
+            android:paddingLeft="25dp"
             android:textStyle="bold"/>
 
         <ImageView

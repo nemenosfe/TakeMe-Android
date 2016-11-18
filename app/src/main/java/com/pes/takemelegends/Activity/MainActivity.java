@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (feed == null) feed = new EventsViewPagerFragment();
         transaction.replace(R.id.fragment_container,feed);
-        transaction.addToBackStack("eventsFeed");
         transaction.commit();
     }
 
@@ -108,11 +107,19 @@ public class MainActivity extends AppCompatActivity
             transaction.replace(R.id.fragment_container,myEvents);
             transaction.addToBackStack("myEvents");
         }
-
         transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void exchangeTakes() {
+        //getFragmentManager().popBackStack();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (market == null) market = new MarketFragment();
+        transaction.replace(R.id.fragment_container,market);
+        transaction.addToBackStack("market");
+        transaction.commit();
     }
 }

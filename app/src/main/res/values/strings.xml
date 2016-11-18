@@ -4,6 +4,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="logros_ganados">Logros ganados</string>
+    <string name="cangeados">Premios cangeados</string>
+
     <string name="text_wellcome_user">¡Bienvenido usuario!</string>
     <string name="text_main_preferences">Gustos principales</string>
     <string name="text_location">Ubicación</string>
