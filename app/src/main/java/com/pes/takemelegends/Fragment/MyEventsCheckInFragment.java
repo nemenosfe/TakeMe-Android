@@ -10,17 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pes.takemelegends.Adapter.EventAdapter;
+import com.pes.takemelegends.Adapter.EventCheckInAdapter;
 import com.pes.takemelegends.Adapter.EventHistorialAdapter;
 import com.pes.takemelegends.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyEventsHistorialFragment extends Fragment {
+public class MyEventsCheckInFragment extends Fragment {
 
 
-    public MyEventsHistorialFragment() {
+    public MyEventsCheckInFragment() {
         // Required empty public constructor
     }
 
@@ -32,14 +32,14 @@ public class MyEventsHistorialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_my_events_historial, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_my_events_check_in, container, false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.historialRecyclerView);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.checkInRecyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         String[] dummy = {"Festival", "BOOM Festival 2016","Portugal", "16/10/2016 - 20:45h"};
-        EventHistorialAdapter totsAdapter = new EventHistorialAdapter(dummy, getActivity());
+        EventCheckInAdapter totsAdapter = new EventCheckInAdapter(dummy, getActivity());
 
         recyclerView.setAdapter(totsAdapter);
 

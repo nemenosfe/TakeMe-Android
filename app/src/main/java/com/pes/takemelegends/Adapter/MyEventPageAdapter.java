@@ -5,6 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.pes.takemelegends.Fragment.AsistireFragment;
+import com.pes.takemelegends.Fragment.MyEventsCheckInFragment;
+import com.pes.takemelegends.Fragment.MyEventsFragment;
+import com.pes.takemelegends.Fragment.MyEventsHistorialFragment;
 import com.pes.takemelegends.Fragment.RecomenatsFragment;
 import com.pes.takemelegends.Fragment.TotsEventsFragment;
 
@@ -29,10 +32,10 @@ public class MyEventPageAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                TotsEventsFragment tab1 = new TotsEventsFragment();
+                MyEventsHistorialFragment tab1 = new MyEventsHistorialFragment();
                 return tab1;
             case 1:
-                AsistireFragment tab2 = new AsistireFragment();
+                MyEventsCheckInFragment tab2 = new MyEventsCheckInFragment();
                 return tab2;
             default:
                 return null;
