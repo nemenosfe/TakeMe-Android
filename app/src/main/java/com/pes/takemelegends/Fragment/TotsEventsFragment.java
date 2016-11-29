@@ -63,7 +63,9 @@ public class TotsEventsFragment extends Fragment {
                         String category = event.isNull("categories") ? "" : event.getString("categories");
                         String title = event.isNull("title") ? "" : event.getString("title");
                         String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
-                        events.add(new String[]{category, title, "Spain", startTime});
+                        String id = event.getString("id");
+                        String image = event.getJSONObject("images").getJSONObject("medium").getString("url");
+                        events.add(new String[]{category, title, "Spain", startTime, id, image});
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

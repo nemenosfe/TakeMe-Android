@@ -33,7 +33,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     private List<String[]> itemsData;
     private Context context;
-    private final String imageUrl = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
 
     public EventAdapter(List<String[]> itemsData, Context context) {
         this.itemsData = itemsData;
@@ -48,11 +47,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        viewHolder.typeTV.setText(itemsData.get(position)[0]);
-        viewHolder.titleTV.setText(itemsData.get(position)[1]);
-        viewHolder.location.setText(itemsData.get(position)[2]);
-        viewHolder.date.setText(itemsData.get(position)[3]);
-        Picasso.with(context).load(imageUrl).into(viewHolder.eventImage);
+        String[] data = itemsData.get(position);
+        viewHolder.typeTV.setText(data[0]);
+        viewHolder.titleTV.setText(data[1]);
+        viewHolder.location.setText(data[2]);
+        viewHolder.date.setText(data[3]);
+        viewHolder.id.setText(data[4]);
+        Picasso.with(context).load(data[5]).into(viewHolder.eventImage);
 
         Spannable spannable = new SpannableString("1240"+"\n"+"asistentes");
         //spannable.setSpan(new RelativeSizeSpan(1.2f), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -72,7 +73,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView typeTV, titleTV, takesBtn, asistentsBtn, location, date;
+        TextView typeTV, titleTV, takesBtn, asistentsBtn, location, date, id;
         ImageButton shareBtn;
         ImageView eventImage;
         private final Context context;
@@ -82,6 +83,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
             context = itemLayoutView.getContext();
 
+            id = (TextView) itemLayoutView.findViewById(R.id.event_id);
             typeTV = (TextView) itemLayoutView.findViewById(R.id.type);
             titleTV = (TextView) itemLayoutView.findViewById(R.id.title);
             takesBtn = (TextView) itemLayoutView.findViewById(R.id.takesBtn);
@@ -95,9 +97,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         @Override
         public void onClick(View view) {
-            Log.v("asdfasdf", String.valueOf(getLayoutPosition()));
             Intent intent = new Intent(context, EventDetailsActivity.class);
-            intent.putExtra("id", getLayoutPosition());
+            intent.putExtra("id", id.getText().toString());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
     }
