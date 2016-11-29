@@ -4,6 +4,7 @@ public class ControllerFactory {
 
     private static ControllerFactory instance;
     private EventController eventController;
+    private AchievementController achievementController;
 
     public static ControllerFactory getInstance() {
         if (instance == null) {
@@ -15,5 +16,10 @@ public class ControllerFactory {
     public EventController getEventController() {
         if (eventController == null) eventController = new EventController();
         return eventController;
+    }
+
+    public AchievementController getAchievementController() {
+        if (achievementController == null) achievementController = new AchievementController();
+        return achievementController;
     }
 }
