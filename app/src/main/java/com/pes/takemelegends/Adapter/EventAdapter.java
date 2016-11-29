@@ -23,18 +23,19 @@ import com.pes.takemelegends.Activity.PreferencesActivity;
 import com.pes.takemelegends.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 /**
  * Created by Oscar on 22/10/2016.
  */
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
-    private String[] itemsData;
+    private List<String[]> itemsData;
     private Context context;
     private final String imageUrl = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
 
-    public EventAdapter(String[] itemsData, Context context) {
-
+    public EventAdapter(List<String[]> itemsData, Context context) {
         this.itemsData = itemsData;
         this.context = context;
     }
@@ -42,16 +43,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public EventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_row, parent, false);
-        ViewHolder viewHolder = new ViewHolder(itemLayoutView);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        viewHolder.typeTV.setText(itemsData[0]);
-        viewHolder.titleTV.setText(itemsData[1]);
-        viewHolder.location.setText(itemsData[2]);
-        viewHolder.date.setText(itemsData[3]);
+        viewHolder.typeTV.setText(itemsData.get(position)[0]);
+        viewHolder.titleTV.setText(itemsData.get(position)[1]);
+        viewHolder.location.setText(itemsData.get(position)[2]);
+        viewHolder.date.setText(itemsData.get(position)[3]);
         Picasso.with(context).load(imageUrl).into(viewHolder.eventImage);
 
         Spannable spannable = new SpannableString("1240"+"\n"+"asistentes");
@@ -67,7 +67,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        return itemsData.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

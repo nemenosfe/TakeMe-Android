@@ -10,12 +10,11 @@ public class EventController {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static void getAllEvents(AsyncHttpResponseHandler responseHandler) {
-        RequestParams params = new RequestParams();
-        client.get(BASE_URL, params, responseHandler);
+    public void getAllEvents(AsyncHttpResponseHandler responseHandler) {
+        client.get(BASE_URL, responseHandler);
     }
 
-    public static void getEventsByCategory(AsyncHttpResponseHandler responseHandler, String category) {
+    public void getEventsByCategory(AsyncHttpResponseHandler responseHandler, String category) {
         RequestParams params = new RequestParams();
         params.add("category", category);
         client.get(BASE_URL, params, responseHandler);
