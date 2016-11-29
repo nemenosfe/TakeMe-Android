@@ -18,6 +18,8 @@ import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -53,6 +55,19 @@ public class TotsEventsFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 List<String[]> events = new ArrayList<>();
+                JSONArray eventArray = response.optJSONObject("events").optJSONArray("event");
+                for (int i = 0; i < eventArray.length(); i++) {
+                    try {
+                        JSONObject event = eventArray.getJSONObject(i);
+                        //TODO: Obtenir categoria de la API
+                        String category = event.isNull("categories") ? "" : event.getString("categories");
+                        String title = event.isNull("title") ? "" : event.getString("title");
+                        String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
+                        events.add(new String[]{category, title, "Spain", startTime});
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 EventAdapter totsAdapter = new EventAdapter(events, getActivity());
                 recyclerView.setAdapter(totsAdapter);
             }
