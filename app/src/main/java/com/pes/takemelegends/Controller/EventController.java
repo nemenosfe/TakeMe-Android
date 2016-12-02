@@ -16,6 +16,20 @@ public class EventController {
         client.get(URLResources.EVENTS_URL, params, responseHandler);
     }
 
+    public void getEventInfo(AsyncHttpResponseHandler responseHandler, String id) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        params.add("appkey", URLResources.APP_KEY);
+        client.get(URLResources.EVENTS_URL, responseHandler);
+    }
+
+    public void getEventsUser(AsyncHttpResponseHandler responseHandler, String token) {
+        RequestParams params = new RequestParams();
+        params.add("id", token);
+        params.add("appkey", URLResources.APP_KEY);
+        client.get(URLResources.EVENTS_URL, responseHandler);
+    }
+
     public void getEventsByCategory(AsyncHttpResponseHandler responseHandler, String category) {
         RequestParams params = new RequestParams("category", category);
         client.get(URLResources.EVENTS_URL, params, responseHandler);
