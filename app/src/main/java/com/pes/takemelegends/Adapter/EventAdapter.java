@@ -23,18 +23,18 @@ import com.pes.takemelegends.Activity.PreferencesActivity;
 import com.pes.takemelegends.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 /**
  * Created by Oscar on 22/10/2016.
  */
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
-    private String[] itemsData;
+    private List<String[]> itemsData;
     private Context context;
-    private final String imageUrl = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
 
-    public EventAdapter(String[] itemsData, Context context) {
-
+    public EventAdapter(List<String[]> itemsData, Context context) {
         this.itemsData = itemsData;
         this.context = context;
     }
@@ -42,24 +42,25 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public EventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_row, parent, false);
-        ViewHolder viewHolder = new ViewHolder(itemLayoutView);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        viewHolder.typeTV.setText(itemsData[0]);
-        viewHolder.titleTV.setText(itemsData[1]);
-        viewHolder.location.setText(itemsData[2]);
-        viewHolder.date.setText(itemsData[3]);
-        Picasso.with(context).load(imageUrl).into(viewHolder.eventImage);
+        String[] data = itemsData.get(position);
+        viewHolder.typeTV.setText(data[0]);
+        viewHolder.titleTV.setText(data[1]);
+        viewHolder.location.setText(data[2]);
+        viewHolder.date.setText(data[3]);
+        viewHolder.id.setText(data[4]);
+        Picasso.with(context).load(data[5]).into(viewHolder.eventImage);
 
-        Spannable spannable = new SpannableString("1240"+"\n"+"asistentes");
+        Spannable spannable = new SpannableString(data[6]+"\n"+"asistentes");
         //spannable.setSpan(new RelativeSizeSpan(1.2f), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable.setSpan(new RelativeSizeSpan(0.6f), 5, 15, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.asistentsBtn.setText(spannable);
 
-        Spannable spannable2 = new SpannableString("696"+"\n"+"takes");
+        Spannable spannable2 = new SpannableString(data[7]+"\n"+"takes");
         //spannable2.setSpan(new RelativeSizeSpan(1.2f), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable2.setSpan(new RelativeSizeSpan(0.6f), 4, 9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.takesBtn.setText(spannable2);
@@ -67,12 +68,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        return itemsData.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView typeTV, titleTV, takesBtn, asistentsBtn, location, date;
+        TextView typeTV, titleTV, takesBtn, asistentsBtn, location, date, id;
         ImageButton shareBtn;
         ImageView eventImage;
         private final Context context;
@@ -82,6 +83,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
             context = itemLayoutView.getContext();
 
+            id = (TextView) itemLayoutView.findViewById(R.id.event_id);
             typeTV = (TextView) itemLayoutView.findViewById(R.id.type);
             titleTV = (TextView) itemLayoutView.findViewById(R.id.title);
             takesBtn = (TextView) itemLayoutView.findViewById(R.id.takesBtn);
@@ -95,9 +97,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         @Override
         public void onClick(View view) {
-            Log.v("asdfasdf", String.valueOf(getLayoutPosition()));
             Intent intent = new Intent(context, EventDetailsActivity.class);
-            intent.putExtra("id", getLayoutPosition());
+            intent.putExtra("id", id.getText().toString());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
     }

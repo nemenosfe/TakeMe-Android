@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import com.pes.takemelegends.Adapter.EventAdapter;
 import com.pes.takemelegends.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -36,8 +39,9 @@ public class AsistireFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        String[] dummy = {"Festival", "BOOM Festival 2016","Portu" +
-                "gal", "16/10/2016 - 20:45h"};
+        List<String[]> dummy = new ArrayList<>();
+        dummy.add(new String[]{"Festival", "BOOM Festival 2016","Portu" +
+                "gal", "16/10/2016 - 20:45h"});
         EventAdapter totsAdapter = new EventAdapter(dummy, getActivity());
 
         recyclerView.setAdapter(totsAdapter);
