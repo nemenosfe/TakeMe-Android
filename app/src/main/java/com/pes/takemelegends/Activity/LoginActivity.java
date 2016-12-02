@@ -120,6 +120,18 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 Log.d("TwitterKit", "Login with Twitter failure", exception);
             }
         });
+
+
+
+        Button buttonDirecte = (Button) findViewById(R.id.buttonDirecte);
+        buttonDirecte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 
