@@ -13,6 +13,14 @@ public class EventController {
         client.get(URLResources.EVENTS_URL, responseHandler);
     }
 
+    public void getEventInfo(AsyncHttpResponseHandler responseHandler, String id) {
+        RequestParams params = new RequestParams();
+        params.add("id", id);
+        client.get(URLResources.EVENTS_URL, responseHandler);
+    }
+
+    public void getEventsUser(AsyncHttpResponseHandler responseHandler, String id)
+
     public void getEventsByCategory(AsyncHttpResponseHandler responseHandler, String category) {
         RequestParams params = new RequestParams();
         params.add("category", category);
