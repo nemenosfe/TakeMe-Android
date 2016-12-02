@@ -41,7 +41,7 @@ public class RecomenatsFragment extends Fragment {
 
         List<String[]> dummy = new ArrayList<>();
         dummy.add(new String[]{"Festival", "BOOM Festival 2016","Portu" +
-                "gal", "16/10/2016 - 20:45h"});
+                "gal", "16/10/2016 - 20:45h", "id", "imageUrl", "35", "350"});
         EventAdapter totsAdapter = new EventAdapter(dummy, getActivity());
 
         recyclerView.setAdapter(totsAdapter);

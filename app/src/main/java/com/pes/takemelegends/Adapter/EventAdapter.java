@@ -57,12 +57,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         Spannable spannable = new SpannableString(data[6]+"\n"+"asistentes");
         //spannable.setSpan(new RelativeSizeSpan(1.2f), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannable.setSpan(new RelativeSizeSpan(0.6f), 5, 15, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        int start = data[6].length();
+        int end = start + 10;
+        spannable.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.asistentsBtn.setText(spannable);
 
         Spannable spannable2 = new SpannableString(data[7]+"\n"+"takes");
+        start = data[7].length();
+        end = start + 5;
         //spannable2.setSpan(new RelativeSizeSpan(1.2f), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannable2.setSpan(new RelativeSizeSpan(0.6f), 4, 9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable2.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.takesBtn.setText(spannable2);
     }
 
