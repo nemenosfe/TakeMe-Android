@@ -11,15 +11,10 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar">
+        android:id="@+id/toolbar"
+        android:title="Configuración">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Take Me Legends"
-            android:textColor="@color/white"
-            style="@style/h2"
-            android:gravity="center"/>
+
 
     </android.support.v7.widget.Toolbar>
 
@@ -233,62 +228,6 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/text_timetable_friday_to_sundays" />
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:text="@string/text_timetable"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingTop="5dp"
-                        android:id="@+id/textView10"
-                        style="@style/p"
-                        />
-
-                    <TextView
-                        android:text="00:00"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/preferencesTimetableFrom"
-                        android:background="@drawable/button_takeme_grey"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-
-
-                         />
-
-                    <TextView
-                        android:text="-"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView11"
-                        android:padding="5dp"
-                        android:layout_gravity="right"
-                        style="@style/p"
-                        />
-
-                    <TextView
-                        android:text="23:59"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/preferencesTimetableTo"
-                        android:background="@drawable/button_takeme_grey"
-                        android:layout_gravity="right"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        />
-
-
-
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -314,6 +253,7 @@
             android:textAllCaps="false"
             android:layout_margin="5dp"
             android:background="@drawable/button_takeme_grey"
+            style="@style/h1white"
             />
 
         <Button
@@ -325,6 +265,7 @@
             android:textAllCaps="false"
             android:layout_margin="5dp"
             android:background="@drawable/button_takeme"
+            style="@style/h1"
             />
     </LinearLayout>
 

@@ -3,10 +3,13 @@ package com.pes.takemelegends.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -34,6 +37,10 @@ public class MarketFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Cambiar takes");
+        setHasOptionsMenu(true);
+
         // Inflate the layout for this fragment
         rootview = inflater.inflate(R.layout.fragment_market, container, false);
 
@@ -61,6 +68,13 @@ public class MarketFragment extends Fragment {
         takesTV.setText("777 takes");
 
         return rootview;
+    }
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_settings);
+        item.setVisible(false);
     }
 
 }

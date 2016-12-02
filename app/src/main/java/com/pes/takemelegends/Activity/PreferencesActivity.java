@@ -42,16 +42,11 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
-        toolbar.setTitle("");
-
-        TextView textPreferencesTimetableFrom = (TextView)findViewById(R.id.preferencesTimetableFrom);
-        textPreferencesTimetableFrom.setOnClickListener(this);
-
-        TextView textPreferencesTimetableTo = (TextView)findViewById(R.id.preferencesTimetableTo);
-        textPreferencesTimetableTo.setOnClickListener(this);
+        getSupportActionBar().setTitle("Configuración");
 
         Button buttonSkip= (Button)findViewById(R.id.button_skip);
         buttonSkip.setOnClickListener(this);
@@ -76,67 +71,68 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         allCategories.add("Televisión");
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.preferencesTimetableFrom: {
-
-                TextView txtFrom = (TextView) findViewById(R.id.preferencesTimetableFrom);
-
-                SimpleDateFormat sdf = new SimpleDateFormat("hh:ss");
-                Date date = null;
-                try {
-                    date = sdf.parse((String) txtFrom.getText());
-                } catch (ParseException e) {
-                }
-
-                Calendar mcurrentTime = Calendar.getInstance();
-                mcurrentTime.setTime(date);
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(PreferencesActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        TextView txtFrom = (TextView) findViewById(R.id.preferencesTimetableFrom);
-                        txtFrom.setText(selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-
-                break;
-            }
-
-            case R.id.preferencesTimetableTo: {
-
-                TextView txtTo = (TextView) findViewById(R.id.preferencesTimetableTo);
-
-
-                SimpleDateFormat sdf = new SimpleDateFormat("hh:ss");
-                Date date = null;
-                try {
-                    date = sdf.parse((String) txtTo.getText());
-                } catch (ParseException e) {
-                }
-
-                Calendar mcurrentTime = Calendar.getInstance();
-                mcurrentTime.setTime(date);
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(PreferencesActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        TextView txtTo = (TextView) findViewById(R.id.preferencesTimetableTo);
-                        txtTo.setText(selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-                break;
-            }
+//            case R.id.preferencesTimetableFrom: {
+//
+//                TextView txtFrom = (TextView) findViewById(R.id.preferencesTimetableFrom);
+//
+//                SimpleDateFormat sdf = new SimpleDateFormat("hh:ss");
+//                Date date = null;
+//                try {
+//                    date = sdf.parse((String) txtFrom.getText());
+//                } catch (ParseException e) {
+//                }
+//
+//                Calendar mcurrentTime = Calendar.getInstance();
+//                mcurrentTime.setTime(date);
+//                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+//                int minute = mcurrentTime.get(Calendar.MINUTE);
+//                TimePickerDialog mTimePicker;
+//                mTimePicker = new TimePickerDialog(PreferencesActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                        TextView txtFrom = (TextView) findViewById(R.id.preferencesTimetableFrom);
+//                        txtFrom.setText(selectedHour + ":" + selectedMinute);
+//                    }
+//                }, hour, minute, true);//Yes 24 hour time
+//                mTimePicker.setTitle("Select Time");
+//                mTimePicker.show();
+//
+//                break;
+//            }
+//
+//            case R.id.preferencesTimetableTo: {
+//
+//                TextView txtTo = (TextView) findViewById(R.id.preferencesTimetableTo);
+//
+//
+//                SimpleDateFormat sdf = new SimpleDateFormat("hh:ss");
+//                Date date = null;
+//                try {
+//                    date = sdf.parse((String) txtTo.getText());
+//                } catch (ParseException e) {
+//                }
+//
+//                Calendar mcurrentTime = Calendar.getInstance();
+//                mcurrentTime.setTime(date);
+//                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+//                int minute = mcurrentTime.get(Calendar.MINUTE);
+//                TimePickerDialog mTimePicker;
+//                mTimePicker = new TimePickerDialog(PreferencesActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                        TextView txtTo = (TextView) findViewById(R.id.preferencesTimetableTo);
+//                        txtTo.setText(selectedHour + ":" + selectedMinute);
+//                    }
+//                }, hour, minute, true);//Yes 24 hour time
+//                mTimePicker.setTitle("Select Time");
+//                mTimePicker.show();
+//                break;
+//            }
 
             case R.id.text_selected_cities: {
 
