@@ -38,7 +38,7 @@ public class MarketFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Cambiar takes");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.exchange));
         setHasOptionsMenu(true);
 
         // Inflate the layout for this fragment
@@ -68,13 +68,6 @@ public class MarketFragment extends Fragment {
         takesTV.setText("777 takes");
 
         return rootview;
-    }
-
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.action_settings);
-        item.setVisible(false);
     }
 
 }

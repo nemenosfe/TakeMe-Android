@@ -1,5 +1,6 @@
 package com.pes.takemelegends.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -25,7 +26,7 @@ import com.pes.takemelegends.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment feed, profile, market, myEvents;
+    private Fragment feed, profile, market, myEvents, preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,35 +66,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_settings);
-        SearchView searchView =
-                (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(MainActivity.this, "main activity", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -120,6 +90,10 @@ public class MainActivity extends AppCompatActivity
             if (myEvents == null) myEvents = new MyEventsFragment();
             transaction.replace(R.id.fragment_container,myEvents);
             transaction.addToBackStack("myEvents");
+        } else if (id == R.id.settings) {
+            Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
+            startActivity(intent);
+            finish();
         }
         transaction.commit();
 
