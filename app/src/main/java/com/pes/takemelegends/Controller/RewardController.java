@@ -35,7 +35,7 @@ public class RewardController {
         RequestParams params = new RequestParams();
         params.add("appKey", URLResources.APP_KEY);
         params.put("page_size",99); //TODO: BOTAVIO confirmar que 99 en string i no en int
-        
+
         //TODO: BOTAVIO add uid params
         client.get(URLResources.REWARDS_URL, params, new JsonHttpResponseHandler() {
             @Override

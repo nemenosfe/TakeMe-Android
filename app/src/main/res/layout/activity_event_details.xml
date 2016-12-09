@@ -87,29 +87,39 @@
                         android:id="@+id/buttonTickets"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:background="@drawable/ic_action_name" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_ticket" />
 
                     <ImageButton
                         android:id="@+id/mapBtn"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:background="@drawable/ic_how_to_arrive"/>
 
                     <ImageButton
                         android:id="@+id/buttonShare"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:background="@drawable/ic_share_green" />
 
                     <Button
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/buttonAsistire"
                         android:text="@string/button_asistire"
                         android:paddingBottom="0dp"
                         android:paddingTop="0dp"
-
-                        android:drawableLeft="@drawable/ic_add" />
+                        android:paddingRight="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/button_assistire"
+                        android:drawableLeft="@drawable/ic_add_black" />
 
                 </LinearLayout>
 
