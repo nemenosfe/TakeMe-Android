@@ -20,6 +20,12 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/*
+GET 	/rewards/ 	    appkey 	        Veure la llista total de recompenses
+GET 	/rewards/user/ 	appkey + token 	Veure les recompenses d'un usuari
+POST 	/rewards/user/ 	appkey + token 	Compra d'una recompensa per un usuari
+ */
+
 public class RewardController {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
@@ -28,7 +34,10 @@ public class RewardController {
     public void getRewards() {
         RequestParams params = new RequestParams();
         params.add("appKey", URLResources.APP_KEY);
-        client.get(URLResources.EVENTS_URL, params, new JsonHttpResponseHandler() {
+        params.put("page_size",99); //TODO: BOTAVIO confirmar que 99 en string i no en int
+        
+        //TODO: BOTAVIO add uid params
+        client.get(URLResources.REWARDS_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray rewardsArray = response.optJSONArray("rewards");
@@ -49,7 +58,27 @@ public class RewardController {
 
     }
 
-    public void getUserRewards(AsyncHttpResponseHandler responseHandler) {
+    public void getUserRewards() {
+        RequestParams params = new RequestParams();
+        params.add("appKey", URLResources.APP_KEY);
+        client.get(URLResources.REWARDS_USER_URL, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                JSONArray rewardsArray = response.optJSONArray("rewards");
+                for (int i = 0; i < rewardsArray.length(); i++) {
+                    try {
+                        JSONObject reward = rewardsArray.getJSONObject(i);
+                        rewardsbyLVL.get(reward.getInt("level")).add(reward);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("getRewardsFail","FAILURE");
+            }
+        });
     }
 
     public void postUserReward(){
