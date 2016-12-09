@@ -32,7 +32,7 @@ public class MyEventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Mis eventos");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.my_events));
         setHasOptionsMenu(true);
 
         // Inflate the layout for this fragment
@@ -71,9 +71,4 @@ public class MyEventsFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.action_settings);
-        item.setVisible(false);
-    }
 }

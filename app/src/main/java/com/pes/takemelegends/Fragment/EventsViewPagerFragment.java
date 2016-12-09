@@ -30,7 +30,7 @@ public class EventsViewPagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Buscar eventos");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.buscar_eventos));
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events_view_pager, container, false);

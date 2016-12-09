@@ -46,7 +46,7 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
-        getSupportActionBar().setTitle("Configuración");
+        getSupportActionBar().setTitle(getResources().getString(R.string.settings));
 
         Button buttonSkip= (Button)findViewById(R.id.button_skip);
         buttonSkip.setOnClickListener(this);
