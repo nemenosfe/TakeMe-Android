@@ -7,5 +7,6 @@ public class URLResources {
     public static final String USER_ACHIEVEMENTS_URL = ACHIEVEMENTS_URL + "/user";
     public static final String EVENTS_URL = BASE_URL + "/events";
     public static final String REWARDS_URL = BASE_URL + "/rewards";
-    public static final String REWARDS_USER_URL = BASE_URL + "/users";
+    public static final String REWARDS_USER_URL = BASE_URL + "/rewards/users";
+
 }
