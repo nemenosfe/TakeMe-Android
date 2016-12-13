@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.pes.takemelegends.Fragment.TotsEventsFragment;
 import com.pes.takemelegends.R;
 
 /**
@@ -51,7 +53,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
 
         @Override
         public void onClick(View view) {
-
+            
         }
     }
 }

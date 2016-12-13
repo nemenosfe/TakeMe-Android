@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.pes.takemelegends.Adapter.EventCheckInAdapter;
 import com.pes.takemelegends.Adapter.EventHistorialAdapter;
@@ -44,6 +46,15 @@ public class MyEventsCheckInFragment extends Fragment {
         recyclerView.setAdapter(totsAdapter);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+//        Button buttonDirecte = (Button) rootView.findViewById(R.id.checkIn);
+//        buttonDirecte.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         return rootView;
     }
