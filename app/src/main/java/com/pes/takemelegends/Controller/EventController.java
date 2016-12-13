@@ -82,4 +82,53 @@ public class EventController {
         client.post(context, URLResources.EVENTS_URL, entity, "application/json", responseHandler);
     }
 
+    public void doCheckIn(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
+        RequestParams params = new RequestParams();
+        sharedPreferences = new SharedPreferencesManager(context);
+        String token = sharedPreferences.getUserToken();
+        String uid = sharedPreferences.getUserId();
+        String provider = sharedPreferences.getUserProvider();
+        params.add("token", token);
+        params.add("appkey", URLResources.APP_KEY);
+        JSONObject body = new JSONObject();
+        StringEntity entity = null;
+        try {
+            body.put("uid", uid);
+            body.put("provider", provider);
+            body.put("checkin_done", 1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            entity = new StringEntity(body.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.post(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
+    }
+
+    public void deleteAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
+        RequestParams params = new RequestParams();
+        sharedPreferences = new SharedPreferencesManager(context);
+        String token = sharedPreferences.getUserToken();
+        String uid = sharedPreferences.getUserId();
+        String provider = sharedPreferences.getUserProvider();
+        params.add("token", token);
+        params.add("appkey", URLResources.APP_KEY);
+        JSONObject body = new JSONObject();
+        StringEntity entity = null;
+        try {
+            body.put("uid", uid);
+            body.put("provider", provider);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            entity = new StringEntity(body.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.delete(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
+    }
+
 }
