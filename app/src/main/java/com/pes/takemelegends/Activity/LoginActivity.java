@@ -17,6 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.pes.takemelegends.Controller.ControllerFactory;
+import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
@@ -26,6 +28,9 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -43,6 +48,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     private Button buttonFacebook;
     private GoogleApiClient mGoogleApiClient;
 
+    private UserController uc = ControllerFactory.getInstance().getUserController();
 
 
     @Override
@@ -55,10 +61,6 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        //mGoogleApiClient = new GoogleApiClient.Builder(this)
-        //        .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-        //        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-        //        .build();
 
 
         //buttonFacebook = (Button) findViewById(R.id.button_facebook);
@@ -153,8 +155,16 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            acct.getEmail();
             String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
+            JSONObject body = new JSONObject();
+            try {
+                body.put("uid", acct.getId());
+                body.put("provider","google");
+                body.put("name",acct.getDisplayName());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //uc.postUser(c,acct.getId(),"Google",acct.getDisplayName(),acct.getFamilyName(), acct.getEmail());
             Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
             startActivity(intent);
             finish();
