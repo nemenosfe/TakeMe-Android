@@ -51,7 +51,7 @@ public class TotsEventsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        eventController.getAllEvents(new JsonHttpResponseHandler() {
+        /*eventController.getAllEvents(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 List<String[]> events = new ArrayList<>();
@@ -85,7 +85,7 @@ public class TotsEventsFragment extends Fragment {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Toast.makeText(getActivity(), errorResponse.optString("message"), Toast.LENGTH_SHORT).show();
             }
-        }, null, null, "Future", "Barcelona", null, null, null);
+        }, null, null, "Future", "Barcelona", null, null, null);*/
         //'category','keywords','date','location','within','page_size','page_number'
 
         return rootView;
