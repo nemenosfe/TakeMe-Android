@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.pes.takemelegends.Fragment.TotsEventsFragment;
@@ -29,7 +30,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_check_in_row, parent, false);
-        EventCheckInAdapter.ViewHolder viewHolder = new EventCheckInAdapter.ViewHolder(itemLayoutView);
+        EventCheckInAdapter.ViewHolder viewHolder = new EventCheckInAdapter.ViewHolder(itemLayoutView, this.context);
         return viewHolder;
     }
 
@@ -44,16 +45,24 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        ;
 
-        ViewHolder(View itemLayoutView) {
+
+        private Context context;
+        private View itemLayoutView;
+
+        ViewHolder(View itemLayoutView, Context context) {
             super(itemLayoutView);
+            this.context = context;
+            this.itemLayoutView = itemLayoutView;
 
+            Button btnCheckIn = (Button) this.itemLayoutView.findViewById(R.id.btnCheckIn);
+            btnCheckIn.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            
+            Toast.makeText(this.context, "asdf", Toast.LENGTH_SHORT).show();
+
         }
     }
 }
