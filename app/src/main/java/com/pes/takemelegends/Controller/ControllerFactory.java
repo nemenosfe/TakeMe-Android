@@ -6,6 +6,7 @@ public class ControllerFactory {
     private EventController eventController;
     private AchievementController achievementController;
     private UserController userController;
+    private RewardController rewardController;
 
     public static ControllerFactory getInstance() {
         if (instance == null) {
@@ -17,6 +18,10 @@ public class ControllerFactory {
     public EventController getEventController() {
         if (eventController == null) eventController = new EventController();
         return eventController;
+    }
+    public RewardController getRewardController() {
+        if (rewardController == null) rewardController = new RewardController();
+        return rewardController;
     }
 
     public AchievementController getAchievementController() {
