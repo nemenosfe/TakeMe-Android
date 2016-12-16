@@ -28,17 +28,8 @@
             android:background="@drawable/logov1color"
             android:layout_marginBottom="5dp" />
 
-        <TextView
-            android:text="@string/login_with"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp" />
-
         <Button
-            android:text="Button"
+            android:text="@string/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buttonDirecte" />

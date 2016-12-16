@@ -2,8 +2,10 @@ package com.pes.takemelegends.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -19,6 +28,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +36,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class EventDetailsActivity extends Activity implements View.OnClickListener {
+public class EventDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RECORD_REQUEST_CODE = 101;
     private EventController eventController;
@@ -34,13 +44,26 @@ public class EventDetailsActivity extends Activity implements View.OnClickListen
     private ImageButton buttonShare, mapBtn;
     private TextView eventName, textEventDate, textEventTime, textEventAddress, textDescription;
     private float latitude, longitude;
+    private Context context;
+    private ImageView eventImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+        context = getApplicationContext();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
+        getSupportActionBar().setTitle(getResources().getString(R.string.settings));
+
+        eventImage = (ImageView)findViewById(R.id.eventImage);
         buttonShare = (ImageButton)findViewById(R.id.buttonShare);
         mapBtn = (ImageButton) findViewById(R.id.mapBtn);
+
+
+        Picasso.with(context).load("http://www.events.cat/wp-content/gallery/2015/exp-events-2015-001.jpg").into(eventImage);
 
         mapBtn.setOnClickListener(this);
         buttonShare.setOnClickListener(this);
