@@ -58,12 +58,14 @@
         <activity
             android:name=".Activity.PreferencesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Activity.RewardsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".Activity.MapActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -71,9 +73,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
-        <activity android:name=".Activity.MapActivity"
-            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
