@@ -42,7 +42,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private EventController eventController;
 
     private ImageButton buttonShare, mapBtn;
-    private TextView eventName, textEventDate, textEventTime, textEventAddress, textDescription;
+    private TextView eventName, textEventDate, textEventTime, textEventAddress, textDescription, textTakes;
     private float latitude, longitude;
     private Context context;
     private ImageView eventImage;
@@ -73,6 +73,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         //textEventTime = (TextView) findViewById(R.id.textEventTime);
         textEventAddress = (TextView) findViewById(R.id.textEventAdress);
         textDescription = (TextView) findViewById(R.id.textDescription);
+        textTakes = (TextView) findViewById(R.id.textTakes);
 
         eventController = ControllerFactory.getInstance().getEventController();
         Bundle extra = getIntent().getExtras();
@@ -107,6 +108,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         textEventDate.setText(startTime);
                         textDescription.setText(description);
                         textEventAddress.setText(venue);
+                        textTakes.setText(takes+"/n"+"Takes");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
