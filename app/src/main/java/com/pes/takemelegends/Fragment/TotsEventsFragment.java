@@ -55,10 +55,10 @@ public class TotsEventsFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 List<String[]> events = new ArrayList<>();
-                JSONArray eventArray = response.optJSONObject("events").optJSONArray("event");
+                JSONArray eventArray = response.optJSONArray("events");
                 for (int i = 0; i < eventArray.length(); i++) {
                     try {
-                        JSONObject event = eventArray.getJSONObject(i);
+                        JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         //TODO: Obtenir categoria de la API
                         String category = event.isNull("categories") ? "" : event.getString("categories");
                         String title = event.isNull("title") ? "" : event.getString("title");

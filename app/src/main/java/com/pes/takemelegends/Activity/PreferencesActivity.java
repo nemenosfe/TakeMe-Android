@@ -41,11 +41,11 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
+        //toolbar.setTitle(getResources().getString(R.string.settings));
         getSupportActionBar().setTitle(getResources().getString(R.string.settings));
 
         Button buttonSkip= (Button)findViewById(R.id.button_skip);

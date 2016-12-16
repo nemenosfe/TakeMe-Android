@@ -11,6 +11,14 @@
     android:paddingTop="0dp"
     tools:context="com.pes.takemelegends.Activity.EventDetailsActivity">
 
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:title="Event">
+    </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,8 +37,9 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/logo_jpg"
-                    android:id="@+id/imageView4" />
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/eventImage" />
 
                 <TextView
                     android:text="1990\nTakes"

@@ -18,7 +18,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        app:layout_heightPercent="75%"
+        app:layout_heightPercent="78%"
         android:layout_below="@+id/toolbar"
         android:id="@+id/scrollPreferences"
         android:layout_marginRight="18dp"
@@ -233,12 +233,14 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        app:layout_heightPercent="25%"
+        app:layout_heightPercent="22%"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="18dp"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:layout_below="@+id/scrollPreferences">
 
         <Button
@@ -248,6 +250,8 @@
             android:id="@+id/button_skip"
             android:layout_weight="1"
             android:textAllCaps="false"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:layout_margin="5dp"
             android:background="@drawable/button_takeme_grey"
             style="@style/h1white"
@@ -260,6 +264,8 @@
             android:id="@+id/button_save"
             android:layout_weight="1"
             android:textAllCaps="false"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:layout_margin="5dp"
             android:background="@drawable/button_takeme"
             style="@style/h1"
