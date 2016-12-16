@@ -9,6 +9,8 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,7 +20,7 @@ import android.widget.Toast;
 import com.pes.takemelegends.R;
 import com.squareup.picasso.Picasso;
 
-public class EventDetailsActivity extends Activity implements View.OnClickListener {
+public class EventDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RECORD_REQUEST_CODE = 101;
 
@@ -29,17 +31,21 @@ public class EventDetailsActivity extends Activity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_event_details);
         context = getApplicationContext();
 
-        setContentView(R.layout.activity_event_details);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
+        getSupportActionBar().setTitle(getResources().getString(R.string.settings));
 
         eventImage = (ImageView)findViewById(R.id.eventImage);
         buttonShare = (ImageButton)findViewById(R.id.buttonShare);
         mapBtn = (ImageButton) findViewById(R.id.mapBtn);
 
 
-        Picasso.with(context).load("http://www.skiheavenly.com/~/media/heavenly/images/732x260%20header%20images/events-heavenly-header.ashx").into(eventImage);
+        Picasso.with(context).load("http://www.events.cat/wp-content/gallery/2015/exp-events-2015-001.jpg").into(eventImage);
 
         mapBtn.setOnClickListener(this);
         buttonShare.setOnClickListener(this);
