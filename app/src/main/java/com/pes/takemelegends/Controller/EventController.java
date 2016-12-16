@@ -37,9 +37,10 @@ public class EventController {
 
     public void getEventInfo(AsyncHttpResponseHandler responseHandler, String id) {
         RequestParams params = new RequestParams();
-        params.add("id", id);
+        //params.add("id", id);
         params.add("appkey", URLResources.APP_KEY);
-        client.get(URLResources.EVENTS_URL, responseHandler);
+        //String url = "http://10.4.41.167:8888/events/"+id+"?appkey=7384d85615237469c2f6022a154b7e2c";
+        client.get(URLResources.EVENTS_URL+"/"+id, params, responseHandler);
     }
 
     public void getEventsUser(AsyncHttpResponseHandler responseHandler, Context context, String page_size, String page_number) {

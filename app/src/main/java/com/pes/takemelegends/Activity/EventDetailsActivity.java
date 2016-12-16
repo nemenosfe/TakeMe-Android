@@ -7,18 +7,33 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.pes.takemelegends.Controller.ControllerFactory;
+import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class EventDetailsActivity extends Activity implements View.OnClickListener {
 
     private static final int RECORD_REQUEST_CODE = 101;
+    private EventController eventController;
 
     private ImageButton buttonShare, mapBtn;
+    private TextView eventName, textEventDate, textEventTime, textEventAddress, textDescription;
+    private float latitude, longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +44,58 @@ public class EventDetailsActivity extends Activity implements View.OnClickListen
 
         mapBtn.setOnClickListener(this);
         buttonShare.setOnClickListener(this);
+
+        eventName = (TextView) findViewById(R.id.textEventName);
+        textEventDate = (TextView) findViewById(R.id.textEventDate);
+        //textEventTime = (TextView) findViewById(R.id.textEventTime);
+        textEventAddress = (TextView) findViewById(R.id.textEventAdress);
+        textDescription = (TextView) findViewById(R.id.textDescription);
+
+        eventController = ControllerFactory.getInstance().getEventController();
+        Bundle extra = getIntent().getExtras();
+        if (extra!=null) {
+            eventController.getEventInfo(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    JSONObject event = null;
+                    try {
+                        event = response.getJSONObject("event");
+                        //TODO: Obtenir categoria de la API
+                        String category = event.isNull("categories") ? "" : event.getString("categories");
+                        String title = event.isNull("title") ? "" : event.getString("title");
+                        String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
+                        String description = event.isNull("description") ? "" : event.getString("description");
+                        String venue = event.isNull("venue_name") ? "" : event.getString("venue_name");
+                        String lat = event.isNull("latitude") ? "" : event.getString("latitude");
+                        String lng = event.isNull("longitude") ? "" : event.getString("longitude");
+                        latitude = Float.valueOf(lat);
+                        longitude = Float.valueOf(lng);
+                        String id = event.getString("id");
+                        String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
+                        if (!event.isNull("image")) {
+                            JSONObject imageObject = event.getJSONObject("image");
+                            if (!imageObject.isNull("medium")) image = imageObject.getJSONObject("medium").getString("url");
+                            else if (!imageObject.isNull("thumb")) image = imageObject.getJSONObject("thumb").getString("url");
+                        }
+                        String attendances = String.valueOf(event.getInt("number_attendances"));
+                        String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
+
+                        eventName.setText(title);
+                        textEventDate.setText(startTime);
+                        textDescription.setText(description);
+                        textEventAddress.setText(venue);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.v("reposnse","fail");
+                }
+            },extra.getString("id"));
+        }
+
     }
 
     @Override
@@ -53,6 +120,8 @@ public class EventDetailsActivity extends Activity implements View.OnClickListen
                     checkPermissions();
                 } else{
                     Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
+                    intent.putExtra("latitude", latitude);
+                    intent.putExtra("longitude", longitude);
                     startActivity(intent);
                     break;
 
