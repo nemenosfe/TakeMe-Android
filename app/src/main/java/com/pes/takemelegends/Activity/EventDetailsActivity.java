@@ -52,12 +52,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_event_details);
         context = getApplicationContext();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.event_details_toolbar);
-        setSupportActionBar(toolbar);
-
-        toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
-        getSupportActionBar().setTitle(getResources().getString(R.string.event_details));
-
         eventImage = (ImageView)findViewById(R.id.eventImage);
         buttonShare = (ImageButton)findViewById(R.id.buttonShare);
         mapBtn = (ImageButton) findViewById(R.id.mapBtn);
