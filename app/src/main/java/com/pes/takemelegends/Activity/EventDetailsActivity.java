@@ -41,7 +41,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private static final int RECORD_REQUEST_CODE = 101;
     private EventController eventController;
 
-    private ImageButton buttonShare, mapBtn;
+    private ImageButton buttonShare, mapBtn, backButton;
     private TextView eventName, textEventDate, textEventAddress, textDescription, textTakes;
     private float latitude, longitude;
     private Context context;
@@ -56,6 +56,13 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         buttonShare = (ImageButton)findViewById(R.id.buttonShare);
         mapBtn = (ImageButton) findViewById(R.id.mapBtn);
 
+        backButton = (ImageButton) findViewById(R.id.event_details_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Picasso.with(context).load("http://www.events.cat/wp-content/gallery/2015/exp-events-2015-001.jpg").into(eventImage);
 
