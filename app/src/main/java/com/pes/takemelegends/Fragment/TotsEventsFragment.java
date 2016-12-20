@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Fragment;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -51,6 +52,13 @@ public class TotsEventsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Obteniendo eventos");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         eventController.getAllEvents(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -79,6 +87,7 @@ public class TotsEventsFragment extends Fragment {
                 }
                 EventAdapter totsAdapter = new EventAdapter(events, getActivity());
                 recyclerView.setAdapter(totsAdapter);
+                progressDialog.dismiss();
             }
 
             @Override
