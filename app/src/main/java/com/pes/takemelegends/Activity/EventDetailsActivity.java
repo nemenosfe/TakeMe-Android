@@ -42,7 +42,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private EventController eventController;
 
     private ImageButton buttonShare, mapBtn;
-    private TextView eventName, textEventDate, textEventTime, textEventAddress, textDescription, textTakes;
+    private TextView eventName, textEventDate, textEventAddress, textDescription, textTakes;
     private float latitude, longitude;
     private Context context;
     private ImageView eventImage;
@@ -52,11 +52,11 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_event_details);
         context = getApplicationContext();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.event_details_toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
-        getSupportActionBar().setTitle(getResources().getString(R.string.settings));
+        getSupportActionBar().setTitle(getResources().getString(R.string.event_details));
 
         eventImage = (ImageView)findViewById(R.id.eventImage);
         buttonShare = (ImageButton)findViewById(R.id.buttonShare);
@@ -70,7 +70,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
         eventName = (TextView) findViewById(R.id.textEventName);
         textEventDate = (TextView) findViewById(R.id.textEventDate);
-        //textEventTime = (TextView) findViewById(R.id.textEventTime);
         textEventAddress = (TextView) findViewById(R.id.textEventAdress);
         textDescription = (TextView) findViewById(R.id.textDescription);
         textTakes = (TextView) findViewById(R.id.textTakes);
@@ -81,11 +80,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
             eventController.getEventInfo(new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    JSONObject event = null;
+                    JSONObject event;
                     try {
                         event = response.getJSONObject("event");
-                        //TODO: Obtenir categoria de la API
-                        String category = event.isNull("categories") ? "" : event.getString("categories");
                         String title = event.isNull("title") ? "" : event.getString("title");
                         String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                         String description = event.isNull("description") ? "" : event.getString("description");
@@ -94,21 +91,13 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         String lng = event.isNull("longitude") ? "" : event.getString("longitude");
                         latitude = Float.valueOf(lat);
                         longitude = Float.valueOf(lng);
-                        String id = event.getString("id");
-                        String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
-                        if (!event.isNull("image")) {
-                            JSONObject imageObject = event.getJSONObject("image");
-                            if (!imageObject.isNull("medium")) image = imageObject.getJSONObject("medium").getString("url");
-                            else if (!imageObject.isNull("thumb")) image = imageObject.getJSONObject("thumb").getString("url");
-                        }
-                        String attendances = String.valueOf(event.getInt("number_attendances"));
                         String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
 
                         eventName.setText(title);
                         textEventDate.setText(startTime);
                         textDescription.setText(description);
                         textEventAddress.setText(venue);
-                        textTakes.setText(takes+"/n"+"Takes");
+                        textTakes.setText(takes + "\ntakes");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -116,7 +105,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    Log.v("reposnse","fail");
+                    Log.v("reponse","fail");
                 }
             },extra.getString("id"));
         }
