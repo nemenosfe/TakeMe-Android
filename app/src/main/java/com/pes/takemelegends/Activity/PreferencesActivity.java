@@ -45,7 +45,6 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         setSupportActionBar(toolbar);
 
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
-        //toolbar.setTitle(getResources().getString(R.string.settings));
         getSupportActionBar().setTitle(getResources().getString(R.string.settings));
 
         Button buttonSkip= (Button)findViewById(R.id.button_skip);
@@ -60,6 +59,12 @@ public class PreferencesActivity extends AppCompatActivity implements View.OnCli
         allCities.add("Barcelona");
         allCities.add("Madrid");
         allCities.add("Valencia");
+        allCities.add("Sevilla");
+        allCities.add("Zaragoza");
+        allCities.add("Murcia");
+        allCities.add("Palma de Mallorca");
+        allCities.add("Palma de Gran Canaria");
+        allCities.add("Bilbao");
 
         allCategories.add("Footbol");
         allCategories.add("Basquet");
