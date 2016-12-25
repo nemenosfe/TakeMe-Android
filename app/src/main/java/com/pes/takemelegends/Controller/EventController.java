@@ -105,7 +105,7 @@ public class EventController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
+        client.put(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
     }
 
     public void deleteAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {

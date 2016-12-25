@@ -18,6 +18,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -42,7 +43,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     private TwitterLoginButton loginButton;
     private Button buttonFacebook;
     private GoogleApiClient mGoogleApiClient;
-
+    private SharedPreferencesManager sharedPreferences;
 
 
     @Override
@@ -55,6 +56,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
+        sharedPreferences = new SharedPreferencesManager(this);
         //mGoogleApiClient = new GoogleApiClient.Builder(this)
         //        .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
         //        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -127,7 +129,12 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         buttonDirecte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                Intent intent;
+                if (!sharedPreferences.isFirstTime()) {
+                    intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                    sharedPreferences.setFirstTime(true);
+                }
+                else intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -10,6 +10,7 @@ public class SharedPreferencesManager {
     private static String userUid = "";
     private static String userToken = "";
     private static String userProvider = "";
+    private static Boolean firstTime = true;
     SharedPreferences sp;
 
     /**
@@ -22,6 +23,7 @@ public class SharedPreferencesManager {
         userUid = (String) getObject("userId", String.class.getSimpleName());
         userToken = (String) getObject("userToken", String.class.getSimpleName());
         userProvider = (String) getObject("userRole", String.class.getSimpleName());
+        firstTime = (Boolean) getObject("firstTime", Boolean.class.getSimpleName());
     }
 
     public String getUserToken() {
@@ -49,6 +51,11 @@ public class SharedPreferencesManager {
         setValue("userProvider",userCompanyId);
     }
 
+    public Boolean isFirstTime() { return firstTime; }
+    public void setFirstTime(Boolean firstTime) {
+        this.firstTime = firstTime;
+        setValue("firstTime", firstTime);
+    }
 
     /**
      *retrieves the object stored in the key

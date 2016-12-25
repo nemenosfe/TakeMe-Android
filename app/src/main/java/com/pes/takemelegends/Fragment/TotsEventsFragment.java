@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,7 @@ public class TotsEventsFragment extends Fragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Toast.makeText(getActivity(), errorResponse.optString("message"), Toast.LENGTH_SHORT).show();
+                Log.v("APIerror", errorResponse.optString("message"));
             }
         }, null, null, "Future", "Barcelona", null, null, null);
         //'category','keywords','date','location','within','page_size','page_number'
