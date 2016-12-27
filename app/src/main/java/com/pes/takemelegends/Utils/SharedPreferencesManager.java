@@ -11,6 +11,9 @@ public class SharedPreferencesManager {
     private static String userToken = "";
     private static String userProvider = "";
     private static Boolean firstTime = true;
+    private static String username = "";
+    private static Integer currentLevel = 0;
+    private static Integer totalTakes = 0;
     SharedPreferences sp;
 
     /**
@@ -33,6 +36,33 @@ public class SharedPreferencesManager {
     public void setUserToken(String userToken) {
         this.userToken = userToken;
         setValue("userToken",userToken);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUserName(String username) {
+        this.username = username;
+        setValue("username",username);
+    }
+
+    public Integer getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(Integer level) {
+        currentLevel = level;
+        setValue("currentLevel",level);
+    }
+
+    public Integer getTotalTakes() {
+        return totalTakes;
+    }
+
+    public void setTotalTakes(Integer takes) {
+        totalTakes = takes;
+        setValue("totalTakes",takes);
     }
 
     public String getUserId() {
