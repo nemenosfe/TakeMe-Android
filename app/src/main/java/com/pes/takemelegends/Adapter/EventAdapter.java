@@ -55,14 +55,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         viewHolder.id.setText(data[4]);
         Picasso.with(context).load(data[5]).into(viewHolder.eventImage);
 
-        Spannable spannable = new SpannableString(data[6]+"\n"+"asistentes");
+        Spannable spannable = new SpannableString(data[6]+" asistentes");
         //spannable.setSpan(new RelativeSizeSpan(1.2f), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         int start = data[6].length();
         int end = start + 11;
         spannable.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.asistentsBtn.setText(spannable);
 
-        Spannable spannable2 = new SpannableString(data[7]+"\n"+"takes");
+        Spannable spannable2 = new SpannableString(data[7]+" takes");
         start = data[7].length();
         end = start + 6;
         //spannable2.setSpan(new RelativeSizeSpan(1.2f), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -92,7 +92,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             titleTV = (TextView) itemLayoutView.findViewById(R.id.title);
             takesBtn = (TextView) itemLayoutView.findViewById(R.id.takesBtn);
             asistentsBtn = (TextView) itemLayoutView.findViewById(R.id.asistentsBtn);
-            shareBtn = (ImageButton) itemLayoutView.findViewById(R.id.shareBtn);
             location = (TextView) itemLayoutView.findViewById(R.id.location);
             date = (TextView) itemLayoutView.findViewById(R.id.date);
             eventImage = (ImageView) itemLayoutView.findViewById(R.id.imageEvent);
