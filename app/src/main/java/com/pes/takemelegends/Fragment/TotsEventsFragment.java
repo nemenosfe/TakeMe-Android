@@ -75,14 +75,14 @@ public class TotsEventsFragment extends Fragment {
                         String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                         String id = event.getString("id");
                         String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
-                        if (!event.isNull("image")) {
-                            JSONObject imageObject = event.getJSONObject("image");
+                        if (!event.isNull("images")) {
+                            JSONObject imageObject = event.getJSONObject("images");
                             if (!imageObject.isNull("medium")) image = imageObject.getJSONObject("medium").getString("url");
                             else if (!imageObject.isNull("thumb")) image = imageObject.getJSONObject("thumb").getString("url");
                         }
                         String attendances = String.valueOf(event.getInt("number_attendances"));
                         String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                        events.add(new String[]{capitalize(category), title, "Spain", startTime, id, image, attendances, takes});
+                        events.add(new String[]{category, title, "Spain", startTime, id, image, attendances, takes});
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
