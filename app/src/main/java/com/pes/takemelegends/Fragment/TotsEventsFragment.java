@@ -69,7 +69,8 @@ public class TotsEventsFragment extends Fragment {
                     try {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         //TODO: Obtenir categoria de la API
-                        String category = event.isNull("categories") ? "" : event.getString("categories");
+                        JSONObject cat = event.getJSONObject("categories");
+                        String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
                         String title = event.isNull("title") ? "" : event.getString("title");
                         String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                         String id = event.getString("id");
@@ -81,7 +82,7 @@ public class TotsEventsFragment extends Fragment {
                         }
                         String attendances = String.valueOf(event.getInt("number_attendances"));
                         String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                        events.add(new String[]{category, title, "Spain", startTime, id, image, attendances, takes});
+                        events.add(new String[]{capitalize(category), title, "Spain", startTime, id, image, attendances, takes});
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -100,6 +101,10 @@ public class TotsEventsFragment extends Fragment {
         //'category','keywords','date','location','within','page_size','page_number'
 
         return rootView;
+    }
+
+    private String capitalize(final String line) {
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }
 
 }

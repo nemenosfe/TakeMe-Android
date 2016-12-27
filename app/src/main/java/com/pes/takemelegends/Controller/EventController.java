@@ -32,6 +32,7 @@ public class EventController {
         if (page_size!=null)params.add("page_size", page_size);
         if (page_number!=null)params.add("page_number", page_number);
         params.add("appkey", URLResources.APP_KEY);
+        params.add("page_size", "50");
         client.get(URLResources.EVENTS_URL, params, responseHandler);
     }
 
