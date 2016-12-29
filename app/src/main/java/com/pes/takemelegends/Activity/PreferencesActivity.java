@@ -1,8 +1,6 @@
 package com.pes.takemelegends.Activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
@@ -10,51 +8,44 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
+public class PreferencesActivity extends Activity implements View.OnClickListener {
 
-public class PreferencesActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-    List<String> allCities = new ArrayList<String>();
-    List<String> selectedCities = new ArrayList<String>();
-    List<String> allCategories = new ArrayList<String>();
+    private List<String> allCities, selectedCities, allCategories;
+    private SharedPreferencesManager sharedPreferencesManager;
+    private Button saveButton, skipButton;
+    private TextView selectedCitiesTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
-        getSupportActionBar().setTitle(getResources().getString(R.string.settings));
+        selectedCities = new ArrayList<>();
+        allCities = new ArrayList<>();
+        allCategories = new ArrayList<>();
 
-        Button buttonSkip= (Button)findViewById(R.id.button_skip);
-        buttonSkip.setOnClickListener(this);
+        sharedPreferencesManager = new SharedPreferencesManager(this);
 
-        Button buttonSave = (Button)findViewById(R.id.button_save);
-        buttonSave.setOnClickListener(this);
+        skipButton = (Button)findViewById(R.id.button_skip);
+        saveButton = (Button)findViewById(R.id.button_save);
+        selectedCitiesTextView = (TextView)findViewById(R.id.text_selected_cities);
 
-        TextView textViewSelectedCities = (TextView)findViewById(R.id.text_selected_cities);
-        textViewSelectedCities.setOnClickListener(this);
+        saveButton.setOnClickListener(this);
+        selectedCitiesTextView.setOnClickListener(this);
+        skipButton.setOnClickListener(this);
 
         allCities.add("Barcelona");
         allCities.add("Madrid");
