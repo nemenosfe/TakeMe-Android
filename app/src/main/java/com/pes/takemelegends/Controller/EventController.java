@@ -60,28 +60,25 @@ public class EventController {
     }
 
     public void postAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
-        RequestParams params = new RequestParams();
         sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();
-        params.add("token", token);
-        params.add("appkey", URLResources.APP_KEY);
         JSONObject body = new JSONObject();
-        StringEntity entity = null;
         try {
+
+            body.put("token", token);
+            body.put("appkey", URLResources.APP_KEY);
             body.put("event_id", event_id);
             body.put("uid", uid);
             body.put("provider", provider);
+            StringEntity entity = new StringEntity(body.toString());
+            client.post(context, URLResources.EVENTS_URL+"/user", entity, "application/json", responseHandler);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-        try {
-            entity = new StringEntity(body.toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(context, URLResources.EVENTS_URL, entity, "application/json", responseHandler);
     }
 
     public void doCheckIn(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {

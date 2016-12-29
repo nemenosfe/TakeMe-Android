@@ -28,6 +28,8 @@
     <string name="pteferences_all_cities">Todas las ciudades</string>
     <string name="preferences_title">Preferencias</string>
 
+    <string name="success_asistire">Disfruta del evento!</string>
+    <string name="failure_asistire">Upps, algo ha ido mal! Vuelve a intentarlo más tarde.</string>
 
     <string name="settings">Preferencias</string>
     <string name="mi_perfil">Mi perfil</string>

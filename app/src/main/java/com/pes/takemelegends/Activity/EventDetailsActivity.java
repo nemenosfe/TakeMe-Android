@@ -42,10 +42,12 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private EventController eventController;
 
     private ImageButton buttonShare, mapBtn, backButton;
+    private Button asistire;
     private TextView eventName, textEventDate, textEventAddress, textDescription, textTakes;
     private float latitude, longitude;
     private Context context;
     private ImageView eventImage;
+    private String event_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
         eventImage = (ImageView)findViewById(R.id.eventImage);
         buttonShare = (ImageButton)findViewById(R.id.buttonShare);
+        asistire = (Button)findViewById(R.id.buttonAsistire);
         mapBtn = (ImageButton) findViewById(R.id.mapBtn);
 
         backButton = (ImageButton) findViewById(R.id.event_details_back_button);
@@ -68,6 +71,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
         mapBtn.setOnClickListener(this);
         buttonShare.setOnClickListener(this);
+        asistire.setOnClickListener(this);
 
         eventName = (TextView) findViewById(R.id.textEventName);
         textEventDate = (TextView) findViewById(R.id.textEventDate);
@@ -78,6 +82,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         eventController = ControllerFactory.getInstance().getEventController();
         Bundle extra = getIntent().getExtras();
         if (extra!=null) {
+            event_id = extra.getString("id");
             eventController.getEventInfo(new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -108,7 +113,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     Log.v("reponse","fail");
                 }
-            },extra.getString("id"));
+            }, event_id);
         }
 
     }
@@ -142,6 +147,19 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
 
                 }
             }
+            case R.id.buttonAsistire:
+                eventController.postAsistire(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Toast.makeText(EventDetailsActivity.this, getString(R.string.failure_asistire), Toast.LENGTH_SHORT).show();
+                    }
+                },this, event_id);
+                break;
         }
     }
 
