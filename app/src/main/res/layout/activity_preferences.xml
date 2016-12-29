@@ -6,25 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.pes.takemelegends.Activity.PreferencesActivity">+
+    tools:context="com.pes.takemelegends.Activity.PreferencesActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/preferences_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
-        android:title="Configuración">
-    </android.support.v7.widget.Toolbar>
+        android:background="@color/main_ambar">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:text="@string/preferences_title"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
         app:layout_heightPercent="78%"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/preferences_toolbar"
         android:id="@+id/scrollPreferences"
         android:layout_marginRight="18dp"
         android:layout_marginLeft="18dp">
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +45,7 @@
             android:orientation="vertical">
 
         <TextView
-            android:text="@string/text_wellcome_user"
+            android:text="@string/text_welcome_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView3"
@@ -50,7 +63,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="2dip"
+                    android:layout_height="2dp"
                     android:background="@color/main_ambar"
                     android:id="@+id/layoutDivider1"
                     android:layout_centerVertical="true"

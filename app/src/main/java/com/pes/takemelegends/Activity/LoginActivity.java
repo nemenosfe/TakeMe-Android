@@ -132,7 +132,6 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 Intent intent;
                 if (!sharedPreferences.isFirstTime()) {
                     intent = new Intent(LoginActivity.this, PreferencesActivity.class);
-                    intent.putExtra("skip", true);
                     sharedPreferences.setFirstTime(true);
                 }
                 else intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -164,7 +163,6 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             acct.getEmail();
             String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
             Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
-            intent.putExtra("skip", true);
             startActivity(intent);
             finish();
         } else {
