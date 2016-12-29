@@ -5,12 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.res.Resources;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
     private SharedPreferencesManager sharedPreferencesManager;
     private Button saveButton, skipButton;
     private TextView selectedCitiesTextView;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +40,28 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         allCities = new ArrayList<>();
         allCategories = new ArrayList<>();
 
+        Bundle extras = getIntent().getExtras();
+
         sharedPreferencesManager = new SharedPreferencesManager(this);
 
         skipButton = (Button)findViewById(R.id.button_skip);
         saveButton = (Button)findViewById(R.id.button_save);
+        backButton = (ImageButton) findViewById(R.id.preferences_back_button);
         selectedCitiesTextView = (TextView)findViewById(R.id.text_selected_cities);
 
         saveButton.setOnClickListener(this);
         selectedCitiesTextView.setOnClickListener(this);
-        skipButton.setOnClickListener(this);
+
+        if (extras.getBoolean("skip")) {
+            skipButton.setVisibility(View.VISIBLE);
+            backButton.setVisibility(View.INVISIBLE);
+            skipButton.setOnClickListener(this);
+        }
+        else {
+            skipButton.setVisibility(View.GONE);
+            backButton.setVisibility(View.VISIBLE);
+            backButton.setOnClickListener(this);
+        }
 
         allCities.add("Barcelona");
         allCities.add("Madrid");
@@ -221,6 +237,10 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                 startActivity(intent);
                 finish();
                 break;
+            }
+
+            case R.id.preferences_back_button: {
+                finish();
             }
         }
     }

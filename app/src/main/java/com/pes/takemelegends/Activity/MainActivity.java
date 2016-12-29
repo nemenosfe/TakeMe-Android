@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity
             transaction.addToBackStack("myEvents");
         } else if (id == R.id.settings) {
             Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
+            intent.putExtra("skip", false);
             startActivity(intent);
-            finish();
         }
         transaction.commit();
 

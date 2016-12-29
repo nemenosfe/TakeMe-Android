@@ -18,6 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageButton
+                android:visibility="invisible"
+                android:id="@+id/preferences_back_button"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back_arrow"
+                android:tint="@color/black"
+                android:background="@null"/>
+
             <TextView
                 android:layout_marginLeft="15dp"
                 android:text="@string/preferences_title"
@@ -257,6 +267,7 @@
         android:layout_below="@+id/scrollPreferences">
 
         <Button
+            android:visibility="gone"
             android:text="@string/pteferences_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
