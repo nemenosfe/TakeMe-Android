@@ -56,7 +56,7 @@ public class EventController {
         params.add("provider", provider);
         if (page_size!=null) params.add("page_size", page_size);
         if (page_number!=null) params.add("page_number", page_number);
-        client.get(context, URLResources.EVENTS_URL, params, responseHandler);
+        client.get(context, URLResources.EVENTS_URL+"/user", params, responseHandler);
     }
 
     public void postAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {

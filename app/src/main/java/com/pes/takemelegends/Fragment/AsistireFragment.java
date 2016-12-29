@@ -74,21 +74,22 @@ public class AsistireFragment extends Fragment {
                     JSONArray eventArray = present.optJSONArray("events");
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
-                        //TODO: Obtenir categoria de la API
-                        JSONObject cat = event.getJSONObject("categories");
-                        String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
-                        String title = event.isNull("title") ? "" : event.getString("title");
-                        String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
-                        String id = event.getString("id");
-                        String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
-                        if (!event.isNull("images")) {
-                            JSONObject imageObject = event.getJSONObject("images");
-                            if (!imageObject.isNull("medium")) image = imageObject.getJSONObject("medium").getString("url");
-                            else if (!imageObject.isNull("thumb")) image = imageObject.getJSONObject("thumb").getString("url");
+                        if (event != null) {
+                            JSONObject cat = event.getJSONObject("categories");
+                            String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
+                            String title = event.isNull("title") ? "" : event.getString("title");
+                            String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
+                            String id = event.getString("id");
+                            String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
+                            if (!event.isNull("images")) {
+                                JSONObject imageObject = event.getJSONObject("images");
+                                if (!imageObject.isNull("medium")) image = imageObject.getJSONObject("medium").getString("url");
+                                else if (!imageObject.isNull("thumb")) image = imageObject.getJSONObject("thumb").getString("url");
+                            }
+                            String attendances = String.valueOf(event.getInt("number_attendances"));
+                            String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
+                            events.add(new String[]{category, title, "España", startTime, id, image, attendances, takes});
                         }
-                        String attendances = String.valueOf(event.getInt("number_attendances"));
-                        String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                        events.add(new String[]{category, title, "España", startTime, id, image, attendances, takes});
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -99,21 +100,22 @@ public class AsistireFragment extends Fragment {
                     JSONArray eventArray = present.optJSONArray("events");
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
-                        //TODO: Obtenir categoria de la API
-                        JSONObject cat = event.getJSONObject("categories");
-                        String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
-                        String title = event.isNull("title") ? "" : event.getString("title");
-                        String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
-                        String id = event.getString("id");
-                        String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
-                        if (!event.isNull("images")) {
-                            JSONObject imageObject = event.getJSONObject("images");
-                            if (!imageObject.isNull("medium")) image = imageObject.getJSONObject("medium").getString("url");
-                            else if (!imageObject.isNull("thumb")) image = imageObject.getJSONObject("thumb").getString("url");
+                        if (event != null){
+                            JSONObject cat = event.getJSONObject("categories");
+                            String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
+                            String title = event.isNull("title") ? "" : event.getString("title");
+                            String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
+                            String id = event.getString("id");
+                            String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
+                            if (!event.isNull("images")) {
+                                JSONObject imageObject = event.getJSONObject("images");
+                                if (!imageObject.isNull("medium")) image = imageObject.getJSONObject("medium").getString("url");
+                                else if (!imageObject.isNull("thumb")) image = imageObject.getJSONObject("thumb").getString("url");
+                            }
+                            String attendances = String.valueOf(event.getInt("number_attendances"));
+                            String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
+                            events.add(new String[]{category, title, "España", startTime, id, image, attendances, takes});
                         }
-                        String attendances = String.valueOf(event.getInt("number_attendances"));
-                        String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                        events.add(new String[]{category, title, "España", startTime, id, image, attendances, takes});
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
