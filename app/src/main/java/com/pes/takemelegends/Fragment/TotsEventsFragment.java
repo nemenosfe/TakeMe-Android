@@ -82,7 +82,7 @@ public class TotsEventsFragment extends Fragment {
                         }
                         String attendances = String.valueOf(event.getInt("number_attendances"));
                         String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                        events.add(new String[]{category, title, "Spain", startTime, id, image, attendances, takes});
+                        events.add(new String[]{category, title, "España", startTime, id, image, attendances, takes});
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -94,8 +94,7 @@ public class TotsEventsFragment extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getActivity(), errorResponse.optString("message"), Toast.LENGTH_SHORT).show();
-                Log.v("APIerror", errorResponse.optString("message"));
+                progressDialog.dismiss();
             }
         }, null, null, "Future", "Barcelona", null, null, null);
         //'category','keywords','date','location','within','page_size','page_number'

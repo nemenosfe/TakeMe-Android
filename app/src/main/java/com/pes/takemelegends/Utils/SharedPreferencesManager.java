@@ -23,10 +23,13 @@ public class SharedPreferencesManager {
      */
     public SharedPreferencesManager(Context context) {
         sp = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        userUid = (String) getObject("userId", String.class.getSimpleName());
+        userUid = (String) getObject("userUid", String.class.getSimpleName());
         userToken = (String) getObject("userToken", String.class.getSimpleName());
-        userProvider = (String) getObject("userRole", String.class.getSimpleName());
+        userProvider = (String) getObject("userProvider", String.class.getSimpleName());
+        username = (String) getObject("username", String.class.getSimpleName());
         firstTime = (Boolean) getObject("firstTime", Boolean.class.getSimpleName());
+        currentLevel = (Integer) getObject("currentLevel", Integer.class.getSimpleName());
+        totalTakes = (Integer) getObject("totalTakes", Integer.class.getSimpleName());
     }
 
     public String getUserToken() {
@@ -76,7 +79,7 @@ public class SharedPreferencesManager {
     public String getUserProvider() {
         return userProvider;
     }
-    public void setUserCompanyId(String userCompanyId) {
+    public void setUserProvider(String userCompanyId) {
         this.userProvider = userCompanyId;
         setValue("userProvider",userCompanyId);
     }
