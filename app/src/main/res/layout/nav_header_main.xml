@@ -10,14 +10,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_marginTop="30dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:backgroundTint="@color/white">
+    android:backgroundTint="@color/main_ambar">
 
     <ImageView
         android:id="@+id/logoDrawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/logov1color" />
+        android:src="@drawable/logo_contorno" />
 
 </LinearLayout>
