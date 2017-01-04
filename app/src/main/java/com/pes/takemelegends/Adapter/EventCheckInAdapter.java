@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pes.takemelegends.Fragment.TotsEventsFragment;
 import com.pes.takemelegends.R;
 import com.pes.takemelegends.Utils.GPSTracker;
+
+import java.util.List;
 
 /**
  * Created by victorgallegobetorz on 18/11/16.
@@ -18,46 +21,61 @@ import com.pes.takemelegends.Utils.GPSTracker;
 
 public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapter.ViewHolder> {
 
-    private String[] itemsData;
+    private List<String[]> itemsData;
     private Context context;
-    private final String imageUrl = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
 
-    public EventCheckInAdapter(String[] itemsData, Context context) {
+    public EventCheckInAdapter(List<String[]> itemsData, Context context) {
 
         this.itemsData = itemsData;
         this.context = context;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EventCheckInAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_check_in_row, parent, false);
-        EventCheckInAdapter.ViewHolder viewHolder = new EventCheckInAdapter.ViewHolder(itemLayoutView, this.context);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        String[] data = itemsData.get(position);
+        if (data[0].equals("Present")) {
+            viewHolder.btnCheckIn.setBackgroundColor(context.getResources().getColor(R.color.green));
+        }
+        else viewHolder.btnCheckIn.setClickable(false);
+        viewHolder.eventName.setText(data[1]);
+        viewHolder.eventDesc.setText(data[2]);
+        viewHolder.eventDate.setText(data[3]);
+        viewHolder.takes.setText(data[4]+"\ntakes");
+        viewHolder.hours.setText(data[5]);
+        viewHolder.id.setText(data[6]);
     }
 
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        return itemsData.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-
+        TextView takes, hours, eventName, eventDesc, eventDate, id;
+        Button btnCheckIn;
         private Context context;
         private View itemLayoutView;
         private GPSTracker gps;
 
-        ViewHolder(View itemLayoutView, Context context) {
+        ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            this.context = context;
             this.itemLayoutView = itemLayoutView;
 
-            Button btnCheckIn = (Button) this.itemLayoutView.findViewById(R.id.btnCheckIn);
+            context = itemLayoutView.getContext();
+            btnCheckIn = (Button) this.itemLayoutView.findViewById(R.id.btnCheckIn);
+            takes = (TextView) itemLayoutView.findViewById(R.id.takes);
+            hours = (TextView) itemLayoutView.findViewById(R.id.hours);
+            eventName = (TextView) itemLayoutView.findViewById(R.id.eventName);
+            eventDesc = (TextView) itemLayoutView.findViewById(R.id.eventDesc);
+            eventDate = (TextView) itemLayoutView.findViewById(R.id.eventDate);
+            id = (TextView) itemLayoutView.findViewById(R.id.eventId);
             btnCheckIn.setOnClickListener(this);
         }
 

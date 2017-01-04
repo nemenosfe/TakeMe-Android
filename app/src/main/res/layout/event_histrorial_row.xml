@@ -55,7 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/small"
-                    android:id="@+id/eventDesc" />
+                    android:id="@+id/eventDesc"
+                    android:maxLines = "2"/>
 
                 <TextView
                     android:layout_width="match_parent"

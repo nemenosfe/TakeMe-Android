@@ -71,6 +71,25 @@ public class MyEventsHistorialFragment extends Fragment {
                 List<String[]> events = new ArrayList<>();
                 //Present
                 try {
+                    JSONObject present = response.getJSONObject("present");
+                    JSONArray eventArray = present.optJSONArray("events");
+                    for (int i = 0; i < eventArray.length(); i++) {
+                        JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
+                        if (event != null) {
+                            String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            String title = event.isNull("title") ? "" : event.getString("title");
+                            String description = event.isNull("description") ? "No description" : event.getString("description");
+                            String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
+                            String id = event.getString("id");
+                            String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
+                            if (checkin_done.equals("1")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id});
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //Past
+                try {
                     JSONObject present = response.getJSONObject("past");
                     JSONArray eventArray = present.optJSONArray("events");
                     for (int i = 0; i < eventArray.length(); i++) {
