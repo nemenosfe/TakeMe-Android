@@ -118,6 +118,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             @Override
             public void failure(TwitterException exception) {
                 Log.d("TwitterKit", "Login with Twitter failure", exception);
+                Toast.makeText(getApplicationContext(), "error twitter", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -158,6 +159,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             CreateUser(acct.getId(), "Google", acct.getDisplayName());
 /*=======
             Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
@@ -167,6 +169,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
 >>>>>>> cd3684981caabb9e169e8a91f6b16fa29dd5ca31*/
         } else {
             // Signed out, show unauthenticated UI.
+            Toast.makeText(getApplicationContext(), "error google", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -232,7 +235,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
-                    Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "fail" + errorResponse.toString(), Toast.LENGTH_LONG).show();
                 }
             });
         } catch (Exception e) {
