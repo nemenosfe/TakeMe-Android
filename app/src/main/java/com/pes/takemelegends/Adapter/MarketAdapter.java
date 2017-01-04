@@ -67,6 +67,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
         public void onClick(View view) {
             Intent intent = new Intent(context, RewardsActivity.class);
             intent.putExtra("id", getLayoutPosition());
+            intent.putExtra("level", getLayoutPosition()+1);
             context.startActivity(intent);
         }
 

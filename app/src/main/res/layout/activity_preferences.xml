@@ -1,30 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_preferences"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.pes.takemelegends.Activity.PreferencesActivity">+
+    tools:context="com.pes.takemelegends.Activity.PreferencesActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/preferences_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
-        android:title="Configuración">
-    </android.support.v7.widget.Toolbar>
+        android:background="@color/main_ambar">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:visibility="invisible"
+                android:id="@+id/preferences_back_button"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back_arrow"
+                android:tint="@color/black"
+                android:background="@null"/>
+
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:text="@string/preferences_title"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
-        app:layout_heightPercent="75%"
-        android:layout_below="@+id/toolbar"
+        app:layout_heightPercent="78%"
+        android:layout_below="@+id/preferences_toolbar"
         android:id="@+id/scrollPreferences"
         android:layout_marginRight="18dp"
         android:layout_marginLeft="18dp">
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +56,7 @@
             android:orientation="vertical">
 
         <TextView
-            android:text="@string/text_wellcome_user"
+            android:text="@string/text_welcome_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView3"
@@ -50,7 +74,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="2dip"
+                    android:layout_height="2dp"
                     android:background="@color/main_ambar"
                     android:id="@+id/layoutDivider1"
                     android:layout_centerVertical="true"
@@ -233,21 +257,26 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        app:layout_heightPercent="25%"
+        app:layout_heightPercent="22%"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="18dp"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:layout_below="@+id/scrollPreferences">
 
         <Button
+            android:visibility="gone"
             android:text="@string/pteferences_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_skip"
             android:layout_weight="1"
             android:textAllCaps="false"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:layout_margin="5dp"
             android:background="@drawable/button_takeme_grey"
             style="@style/h1white"
@@ -260,6 +289,8 @@
             android:id="@+id/button_save"
             android:layout_weight="1"
             android:textAllCaps="false"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:layout_margin="5dp"
             android:background="@drawable/button_takeme"
             style="@style/h1"

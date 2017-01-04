@@ -22,11 +22,13 @@ import com.pes.takemelegends.Fragment.MarketFragment;
 import com.pes.takemelegends.Fragment.MyEventsFragment;
 import com.pes.takemelegends.Fragment.ProfileFragment;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment feed, profile, market, myEvents, preferences;
+    private Fragment feed, profile, market, myEvents;
+    private SharedPreferencesManager sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
+
+        sharedPreferences = new SharedPreferencesManager(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -47,6 +51,14 @@ public class MainActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
         header.setBackgroundColor(getResources().getColor(R.color.white));
+
+        /*
+        Hasta que el login no funcione, hardcodeamos el user
+         */
+        sharedPreferences.setUserId("2");
+        sharedPreferences.setUserToken("randomToken");
+        sharedPreferences.setUserProvider("provider");
+
 
         //Mostrem el feed al conectar
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -92,8 +104,8 @@ public class MainActivity extends AppCompatActivity
             transaction.addToBackStack("myEvents");
         } else if (id == R.id.settings) {
             Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
+            intent.putExtra("skip", false);
             startActivity(intent);
-            finish();
         }
         transaction.commit();
 

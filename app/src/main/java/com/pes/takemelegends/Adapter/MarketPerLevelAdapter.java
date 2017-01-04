@@ -18,15 +18,20 @@ import com.pes.takemelegends.Activity.PreferencesActivity;
 import com.pes.takemelegends.Activity.RewardsActivity;
 import com.pes.takemelegends.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * Created by Oscar on 08/11/2016.
  */
 
 public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAdapter.ViewHolder> {
 
-    private String[] itemsData;
+    private ArrayList<JSONObject> itemsData;
 
-    public MarketPerLevelAdapter(String[] itemsData) {
+    public MarketPerLevelAdapter(ArrayList<JSONObject> itemsData) {
         this.itemsData = itemsData;
     }
 
@@ -39,15 +44,20 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
 
     @Override
     public void onBindViewHolder(MarketPerLevelAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.productName.setText("Clauer RCDE");
-        viewHolder.productDesc.setText("description del cauer rcde");
-        viewHolder.productTakes.setText("300 takes");
-        viewHolder.productImage.setImageResource(R.drawable.ic_ticket);
+        try {
+            viewHolder.productName.setText(itemsData.get(position).getString("name"));
+            viewHolder.productDesc.setText(itemsData.get(position).getString("description"));
+            viewHolder.productTakes.setText(itemsData.get(position).getString("takes"));
+            viewHolder.productImage.setImageResource(R.drawable.ic_ticket);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        return itemsData.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

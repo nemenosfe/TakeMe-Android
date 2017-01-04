@@ -48,26 +48,36 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
-        viewHolder.typeTV.setText(data[0]);
+        viewHolder.typeTV.setText(capitalize(data[0]));
         viewHolder.titleTV.setText(data[1]);
         viewHolder.location.setText(data[2]);
         viewHolder.date.setText(data[3]);
         viewHolder.id.setText(data[4]);
-        Picasso.with(context).load(data[5]).into(viewHolder.eventImage);
+        if(data[5].equals("http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg")){
+            String placeholder = "ph_"+data[0];
+            int id = context.getResources().getIdentifier(placeholder, "drawable", context.getPackageName());
+            if (id!=0) viewHolder.eventImage.setImageResource(id);
+            else Picasso.with(context).load(data[5]).into(viewHolder.eventImage);
+        }
+        else Picasso.with(context).load(data[5]).into(viewHolder.eventImage);
 
-        Spannable spannable = new SpannableString(data[6]+"\n"+"asistentes");
+        Spannable spannable = new SpannableString(data[6]+" asistentes");
         //spannable.setSpan(new RelativeSizeSpan(1.2f), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         int start = data[6].length();
         int end = start + 11;
         spannable.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.asistentsBtn.setText(spannable);
 
-        Spannable spannable2 = new SpannableString(data[7]+"\n"+"takes");
+        Spannable spannable2 = new SpannableString(data[7]+" takes");
         start = data[7].length();
         end = start + 6;
         //spannable2.setSpan(new RelativeSizeSpan(1.2f), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannable2.setSpan(new RelativeSizeSpan(0.6f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.takesBtn.setText(spannable2);
+    }
+
+    private String capitalize(final String line) {
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }
 
     @Override
@@ -92,7 +102,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             titleTV = (TextView) itemLayoutView.findViewById(R.id.title);
             takesBtn = (TextView) itemLayoutView.findViewById(R.id.takesBtn);
             asistentsBtn = (TextView) itemLayoutView.findViewById(R.id.asistentsBtn);
-            shareBtn = (ImageButton) itemLayoutView.findViewById(R.id.shareBtn);
             location = (TextView) itemLayoutView.findViewById(R.id.location);
             date = (TextView) itemLayoutView.findViewById(R.id.date);
             eventImage = (ImageView) itemLayoutView.findViewById(R.id.imageEvent);

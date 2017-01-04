@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.pes.takemelegends.Adapter.MarketAdapter;
 import com.pes.takemelegends.Adapter.LogroAdapter;
 import com.pes.takemelegends.Assets.DividerItemDecorator;
+import com.pes.takemelegends.Controller.ControllerFactory;
+import com.pes.takemelegends.Controller.RewardController;
 import com.pes.takemelegends.R;
 
 /**

@@ -2,33 +2,120 @@ package com.pes.takemelegends.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.pes.takemelegends.Controller.ControllerFactory;
+import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.squareup.picasso.Picasso;
 
-public class EventDetailsActivity extends Activity implements View.OnClickListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+
+public class EventDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RECORD_REQUEST_CODE = 101;
+    private EventController eventController;
 
-    private ImageButton buttonShare, mapBtn;
+    private ImageButton buttonShare, mapBtn, backButton;
+    private Button asistire;
+    private TextView eventName, textEventDate, textEventAddress, textDescription, textTakes;
+    private float latitude, longitude;
+    private Context context;
+    private ImageView eventImage;
+    private String event_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+        context = getApplicationContext();
 
+        eventImage = (ImageView)findViewById(R.id.eventImage);
         buttonShare = (ImageButton)findViewById(R.id.buttonShare);
+        asistire = (Button)findViewById(R.id.buttonAsistire);
         mapBtn = (ImageButton) findViewById(R.id.mapBtn);
+
+        backButton = (ImageButton) findViewById(R.id.event_details_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Picasso.with(context).load("http://www.events.cat/wp-content/gallery/2015/exp-events-2015-001.jpg").into(eventImage);
 
         mapBtn.setOnClickListener(this);
         buttonShare.setOnClickListener(this);
+        asistire.setOnClickListener(this);
+
+        eventName = (TextView) findViewById(R.id.textEventName);
+        textEventDate = (TextView) findViewById(R.id.textEventDate);
+        textEventAddress = (TextView) findViewById(R.id.textEventAdress);
+        textDescription = (TextView) findViewById(R.id.textDescription);
+        textTakes = (TextView) findViewById(R.id.textTakes);
+
+        eventController = ControllerFactory.getInstance().getEventController();
+        Bundle extra = getIntent().getExtras();
+        if (extra!=null) {
+            event_id = extra.getString("id");
+            eventController.getEventInfo(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    JSONObject event;
+                    try {
+                        event = response.getJSONObject("event");
+                        String title = event.isNull("title") ? "" : event.getString("title");
+                        String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
+                        String description = event.isNull("description") ? "" : event.getString("description");
+                        String venue = event.isNull("venue_name") ? "" : event.getString("venue_name");
+                        String lat = event.isNull("latitude") ? "" : event.getString("latitude");
+                        String lng = event.isNull("longitude") ? "" : event.getString("longitude");
+                        latitude = Float.valueOf(lat);
+                        longitude = Float.valueOf(lng);
+                        String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
+
+                        eventName.setText(title);
+                        textEventDate.setText(startTime);
+                        textDescription.setText(description);
+                        textEventAddress.setText(venue);
+                        textTakes.setText(takes + "\ntakes");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.v("reponse","fail");
+                }
+            }, event_id);
+        }
+
     }
 
     @Override
@@ -53,11 +140,26 @@ public class EventDetailsActivity extends Activity implements View.OnClickListen
                     checkPermissions();
                 } else{
                     Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
+                    intent.putExtra("latitude", latitude);
+                    intent.putExtra("longitude", longitude);
                     startActivity(intent);
                     break;
 
                 }
             }
+            case R.id.buttonAsistire:
+                eventController.postAsistire(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Toast.makeText(EventDetailsActivity.this, getString(R.string.failure_asistire), Toast.LENGTH_SHORT).show();
+                    }
+                },this, event_id);
+                break;
         }
     }
 

@@ -48,6 +48,7 @@ public class EventsViewPagerFragment extends Fragment {
         final PagerAdapter adapter = new EventPageAdapter(
                 getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

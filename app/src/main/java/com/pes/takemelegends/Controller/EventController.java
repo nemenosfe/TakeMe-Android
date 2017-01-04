@@ -32,14 +32,16 @@ public class EventController {
         if (page_size!=null)params.add("page_size", page_size);
         if (page_number!=null)params.add("page_number", page_number);
         params.add("appkey", URLResources.APP_KEY);
+        params.add("page_size", "50");
         client.get(URLResources.EVENTS_URL, params, responseHandler);
     }
 
     public void getEventInfo(AsyncHttpResponseHandler responseHandler, String id) {
         RequestParams params = new RequestParams();
-        params.add("id", id);
+        //params.add("id", id);
         params.add("appkey", URLResources.APP_KEY);
-        client.get(URLResources.EVENTS_URL, responseHandler);
+        //String url = "http://10.4.41.167:8888/events/"+id+"?appkey=7384d85615237469c2f6022a154b7e2c";
+        client.get(URLResources.EVENTS_URL+"/"+id, params, responseHandler);
     }
 
     public void getEventsUser(AsyncHttpResponseHandler responseHandler, Context context, String page_size, String page_number) {
@@ -54,32 +56,29 @@ public class EventController {
         params.add("provider", provider);
         if (page_size!=null) params.add("page_size", page_size);
         if (page_number!=null) params.add("page_number", page_number);
-        client.get(context, URLResources.EVENTS_URL, params, responseHandler);
+        client.get(context, URLResources.EVENTS_URL+"/user", params, responseHandler);
     }
 
     public void postAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
-        RequestParams params = new RequestParams();
         sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();
-        params.add("token", token);
-        params.add("appkey", URLResources.APP_KEY);
         JSONObject body = new JSONObject();
-        StringEntity entity = null;
         try {
+
+            body.put("token", token);
+            body.put("appkey", URLResources.APP_KEY);
             body.put("event_id", event_id);
             body.put("uid", uid);
             body.put("provider", provider);
+            StringEntity entity = new StringEntity(body.toString());
+            client.post(context, URLResources.EVENTS_URL+"/user", entity, "application/json", responseHandler);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-        try {
-            entity = new StringEntity(body.toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(context, URLResources.EVENTS_URL, entity, "application/json", responseHandler);
     }
 
     public void doCheckIn(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
@@ -104,7 +103,7 @@ public class EventController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
+        client.put(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
     }
 
     public void deleteAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {

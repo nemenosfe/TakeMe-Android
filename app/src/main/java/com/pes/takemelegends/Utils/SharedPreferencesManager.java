@@ -10,6 +10,10 @@ public class SharedPreferencesManager {
     private static String userUid = "";
     private static String userToken = "";
     private static String userProvider = "";
+    private static Boolean firstTime = true;
+    private static String username = "";
+    private static Integer currentLevel = 0;
+    private static Integer totalTakes = 0;
     SharedPreferences sp;
 
     /**
@@ -19,9 +23,13 @@ public class SharedPreferencesManager {
      */
     public SharedPreferencesManager(Context context) {
         sp = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        userUid = (String) getObject("userId", String.class.getSimpleName());
+        userUid = (String) getObject("userUid", String.class.getSimpleName());
         userToken = (String) getObject("userToken", String.class.getSimpleName());
-        userProvider = (String) getObject("userRole", String.class.getSimpleName());
+        userProvider = (String) getObject("userProvider", String.class.getSimpleName());
+        username = (String) getObject("username", String.class.getSimpleName());
+        firstTime = (Boolean) getObject("firstTime", Boolean.class.getSimpleName());
+        currentLevel = (Integer) getObject("currentLevel", Integer.class.getSimpleName());
+        totalTakes = (Integer) getObject("totalTakes", Integer.class.getSimpleName());
     }
 
     public String getUserToken() {
@@ -31,6 +39,33 @@ public class SharedPreferencesManager {
     public void setUserToken(String userToken) {
         this.userToken = userToken;
         setValue("userToken",userToken);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUserName(String username) {
+        this.username = username;
+        setValue("username",username);
+    }
+
+    public Integer getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(Integer level) {
+        currentLevel = level;
+        setValue("currentLevel",level);
+    }
+
+    public Integer getTotalTakes() {
+        return totalTakes;
+    }
+
+    public void setTotalTakes(Integer takes) {
+        totalTakes = takes;
+        setValue("totalTakes",takes);
     }
 
     public String getUserId() {
@@ -44,11 +79,16 @@ public class SharedPreferencesManager {
     public String getUserProvider() {
         return userProvider;
     }
-    public void setUserCompanyId(String userCompanyId) {
+    public void setUserProvider(String userCompanyId) {
         this.userProvider = userCompanyId;
         setValue("userProvider",userCompanyId);
     }
 
+    public Boolean isFirstTime() { return firstTime; }
+    public void setFirstTime(Boolean firstTime) {
+        this.firstTime = firstTime;
+        setValue("firstTime", firstTime);
+    }
 
     /**
      *retrieves the object stored in the key

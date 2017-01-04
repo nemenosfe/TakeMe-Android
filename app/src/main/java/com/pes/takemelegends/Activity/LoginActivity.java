@@ -25,6 +25,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -54,8 +55,8 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     private TwitterLoginButton loginButton;
     private Button buttonFacebook;
     private GoogleApiClient mGoogleApiClient;
-
     private UserController uc = ControllerFactory.getInstance().getUserController();
+    private SharedPreferencesManager sharedPreferences;
 
 
     @Override
@@ -68,8 +69,11 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-
-
+        sharedPreferences = new SharedPreferencesManager(this);
+        //mGoogleApiClient = new GoogleApiClient.Builder(this)
+        //        .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+        //        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+        //        .build();
         //buttonFacebook = (Button) findViewById(R.id.button_facebook);
         //buttonFacebook.setOnClickListener(this);
 
@@ -121,7 +125,13 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         buttonDirecte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                Intent intent;
+                if (!sharedPreferences.isFirstTime()) {
+                    intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                    intent.putExtra("skip", true);
+                    sharedPreferences.setFirstTime(true);
+                }
+                else intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -149,6 +159,12 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             GoogleSignInAccount acct = result.getSignInAccount();
             String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
             CreateUser(acct.getId(), "Google", acct.getDisplayName());
+/*=======
+            Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+            intent.putExtra("skip", true);
+            startActivity(intent);
+            finish();
+>>>>>>> cd3684981caabb9e169e8a91f6b16fa29dd5ca31*/
         } else {
             // Signed out, show unauthenticated UI.
         }
