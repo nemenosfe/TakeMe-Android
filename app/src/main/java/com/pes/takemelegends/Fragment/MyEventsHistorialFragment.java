@@ -76,7 +76,6 @@ public class MyEventsHistorialFragment extends Fragment {
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
-                            JSONObject cat = event.getJSONObject("categories");
                             String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "" : event.getString("description");
