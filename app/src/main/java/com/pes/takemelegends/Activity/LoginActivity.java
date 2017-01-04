@@ -2,6 +2,7 @@ package com.pes.takemelegends.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -10,6 +11,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -17,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
@@ -32,6 +37,8 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import io.fabric.sdk.android.Fabric;
 
 import static android.R.attr.data;
@@ -69,10 +76,12 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
+        // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 //.enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                .addApi(AppIndex.API).build();
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,33 +97,18 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         //buttonTwitter.setOnClickListener(this);
 
 
-
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                // The TwitterSession is also available through:
-                // Twitter.getInstance().core.getSessionManager().getActiveSession()
-                TwitterSession session = result.data;
+                TwitterSucces(result);
+            }
+
+            private void TwitterSucces(Result<TwitterSession> result) {
+                final TwitterSession session = result.data;
                 String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                /*TwitterAuthClient authClient = new TwitterAuthClient();
-                authClient.requestEmail(session, new Callback<String>() {
-                    @Override
-                    public void success(Result<String> result) {
-                        // Do something with the result, which provides the email address
-                        //session.
-                        // TODO: Remove toast and use the TwitterSession's userID
-                        // with your app's user model
-                        Toast.makeText(getApplicationContext(),result.toString(), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void failure(TwitterException exception) {
-                        // Do something on failure
-                        Toast.makeText(getApplicationContext(),exception.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });*/
+                CreateUser(String.valueOf(session.getId()),"Twitter",session.getUserName());
             }
 
             @Override
@@ -122,8 +116,6 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 Log.d("TwitterKit", "Login with Twitter failure", exception);
             }
         });
-
-
 
         Button buttonDirecte = (Button) findViewById(R.id.buttonDirecte);
         buttonDirecte.setOnClickListener(new View.OnClickListener() {
@@ -156,18 +148,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
-            JSONObject body = new JSONObject();
-            try {
-                body.put("uid", acct.getId());
-                body.put("provider","google");
-                body.put("name",acct.getDisplayName());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            //uc.postUser(c,acct.getId(),"Google",acct.getDisplayName(),acct.getFamilyName(), acct.getEmail());
-            Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
-            startActivity(intent);
-            finish();
+            CreateUser(acct.getId(), "Google", acct.getDisplayName());
         } else {
             // Signed out, show unauthenticated UI.
         }
@@ -175,47 +156,71 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        
+
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Login Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mGoogleApiClient.connect();
+        AppIndex.AppIndexApi.start(mGoogleApiClient, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(mGoogleApiClient, getIndexApiAction());
+        mGoogleApiClient.disconnect();
+    }
+
+    private void CreateUser(String uid, String provider, String name) {
+        JSONObject cli = new JSONObject();
+        StringEntity entity;
+        try {
+            cli.put("uid", uid);
+            cli.put("provider", provider);
+            cli.put("name", name);
+            entity = new StringEntity(cli.toString());
+            uc.postUser(entity, getApplicationContext(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
-
-    /*@Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case  R.id.button_facebook:
-            {
-                Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-            }
-
-            case R.id.button_google: {
-                break;
-            }
-
-            case R.id.twitter_login_button: {
-                break;
-            }
-        }
-
-        Context context = this;
-        new AlertDialog.Builder(context)
-                .setTitle("Login")
-                .setMessage("Are you sure you want to login?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-
-        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-        //myIntent.putExtra("key", value); //Optional parameters
-        LoginActivity.this.startActivity(myIntent);
-        
-                .show();*/
-
