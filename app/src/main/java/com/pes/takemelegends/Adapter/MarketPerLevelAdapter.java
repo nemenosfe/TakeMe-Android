@@ -20,6 +20,7 @@ import com.pes.takemelegends.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -81,9 +82,19 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
         @Override
         public void onClick(View view) {
             final Dialog dialog = new Dialog(context);
-            dialog.setContentView(R.layout.reward_dialog);
-            dialog.setTitle("Title...");
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+            View content =  inflater.inflate(R.layout.reward_dialog, null);
+            TextView name = (TextView) content.findViewById(R.id.nameProduct);
+            TextView price = (TextView) content.findViewById(R.id.price);
+            TextView info = (TextView) content.findViewById(R.id.infoProduct);
+            name.setText(productName.getText());
+            price.setText(productTakes.getText()+" takes");
+            info.setText(productDesc.getText());
+            dialog.setContentView(content);
+
             dialog.show();
+
+
         }
     }
 

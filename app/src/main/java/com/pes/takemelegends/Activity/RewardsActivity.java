@@ -18,7 +18,9 @@ import com.pes.takemelegends.Adapter.MarketPerLevelAdapter;
 import com.pes.takemelegends.Assets.DividerItemDecorator;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.RewardController;
+import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +52,9 @@ public class RewardsActivity extends AppCompatActivity {
         takesTV = (TextView) findViewById(R.id.totalTakes);
         recyclerView = (RecyclerView) findViewById(R.id.rewardsRecyclerView);
         backBtn= (ImageButton) findViewById(R.id.backBtn);
+        rewardController = ControllerFactory.getInstance().getRewardController();
+        SharedPreferencesManager shared = new SharedPreferencesManager(this);
+
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +64,10 @@ public class RewardsActivity extends AppCompatActivity {
             }
         });
         final Intent i = getIntent();
-        rewardController = ControllerFactory.getInstance().getRewardController();
+        rewardsbyLVL = new HashMap<Integer,ArrayList<JSONObject>>();
+        for (int j = 1; j<=10; ++j){
+            rewardsbyLVL.put(j,new ArrayList<JSONObject>());
+        }
         rewardController.getRewardsByLvl(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -93,13 +101,15 @@ public class RewardsActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("getRewardsFail","FAILURE");
+                Toast.makeText(getApplicationContext(), "faiiiiiiiiiiil", Toast.LENGTH_SHORT).show();
             }
         },getApplicationContext());
 
 
-        userTV.setText("oscarSeGa");
-        lvlTV.setText(Integer.toString(i.getIntExtra("level",0)));
-        takesTV.setText("777 takes");
+        //userTV.setText(shared.getUsername());
+        //lvlTV.setText(shared.getCurrentLevel());
+        //takesTV.setText(shared.getTotalTakes());
+        userTV.setText("a la espera de user");
+
     }
 }
