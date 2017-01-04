@@ -82,6 +82,7 @@ public class UserController {
 
     public void postUser(StringEntity body, Context context, JsonHttpResponseHandler responseHandler) {
         String url = URLResources.USERS_URL;
+        client.addHeader("Content-Type","application/x-www-form-urlencoded");
         client.post(context,url,body,"application/json",responseHandler);
     }
 
