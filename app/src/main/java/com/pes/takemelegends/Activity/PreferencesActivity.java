@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.res.Resources;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -73,14 +72,34 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         allCities.add("Palma de Gran Canaria");
         allCities.add("Bilbao");
 
-        allCategories.add("Footbol");
-        allCategories.add("Basquet");
-        allCategories.add("Todos los deportes");
-        allCategories.add("Conciertos");
-        allCategories.add("Pintura");
-        allCategories.add("Teatro");
+        allCategories.add("Música");
+        allCategories.add("Conferencias");
+        allCategories.add("Comedia");
+        allCategories.add("Educación");
+        allCategories.add("Familia");
+        allCategories.add("Festivales");
         allCategories.add("Cine");
-        allCategories.add("Televisión");
+        allCategories.add("Gastronomía");
+        allCategories.add("Recaudación de fondos");
+        allCategories.add("Arte");
+        allCategories.add("Salud");
+        allCategories.add("Vacaciones");
+        allCategories.add("Lectura");
+        allCategories.add("Museos");
+        allCategories.add("Comunidad");
+        allCategories.add("Negocios");
+        allCategories.add("Fiestas");
+        allCategories.add("Meetups");
+        allCategories.add("Actividades al aire libre");
+        allCategories.add("Artes escénicas");
+        allCategories.add("Animales");
+        allCategories.add("Política");
+        allCategories.add("Ventas");
+        allCategories.add("Ciencia");
+        allCategories.add("Religión");
+        allCategories.add("Deporte");
+        allCategories.add("Tecnología");
+        allCategories.add("Otros");
     }
 
 
