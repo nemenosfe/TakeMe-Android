@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
@@ -16,7 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pes.takemelegends.R;
-import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +24,9 @@ import java.util.List;
 public class PreferencesActivity extends Activity implements View.OnClickListener {
 
 
-    private List<String> allCities, selectedCities, allCategories;
-    private SharedPreferencesManager sharedPreferencesManager;
+    private List<String> allCities, selectedCities, allPreferences, selectedPreferences;
     private Button saveButton, skipButton;
-    private TextView selectedCitiesTextView;
+    private TextView selectedCitiesTextView, selectedPreferencesTextView;
     private ImageButton backButton;
 
     @Override
@@ -36,22 +35,21 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.activity_preferences);
 
         selectedCities = new ArrayList<>();
+        selectedPreferences = new ArrayList<>();
         allCities = new ArrayList<>();
-        allCategories = new ArrayList<>();
-
-        Bundle extras = getIntent().getExtras();
-
-        sharedPreferencesManager = new SharedPreferencesManager(this);
+        allPreferences = new ArrayList<>();
 
         skipButton = (Button)findViewById(R.id.button_skip);
         saveButton = (Button)findViewById(R.id.button_save);
         backButton = (ImageButton) findViewById(R.id.preferences_back_button);
         selectedCitiesTextView = (TextView)findViewById(R.id.text_selected_cities);
+        selectedPreferencesTextView = (TextView) findViewById(R.id.selected_preferences);
 
         saveButton.setOnClickListener(this);
         selectedCitiesTextView.setOnClickListener(this);
+        selectedPreferencesTextView.setOnClickListener(this);
 
-        if (extras.getBoolean("skip")) {
+        if (getIntent().getExtras().getBoolean("skip")) {
             skipButton.setVisibility(View.VISIBLE);
             backButton.setVisibility(View.INVISIBLE);
             skipButton.setOnClickListener(this);
@@ -72,34 +70,34 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         allCities.add("Palma de Gran Canaria");
         allCities.add("Bilbao");
 
-        allCategories.add("Música");
-        allCategories.add("Conferencias");
-        allCategories.add("Comedia");
-        allCategories.add("Educación");
-        allCategories.add("Familia");
-        allCategories.add("Festivales");
-        allCategories.add("Cine");
-        allCategories.add("Gastronomía");
-        allCategories.add("Recaudación de fondos");
-        allCategories.add("Arte");
-        allCategories.add("Salud");
-        allCategories.add("Vacaciones");
-        allCategories.add("Lectura");
-        allCategories.add("Museos");
-        allCategories.add("Comunidad");
-        allCategories.add("Negocios");
-        allCategories.add("Fiestas");
-        allCategories.add("Meetups");
-        allCategories.add("Actividades al aire libre");
-        allCategories.add("Artes escénicas");
-        allCategories.add("Animales");
-        allCategories.add("Política");
-        allCategories.add("Ventas");
-        allCategories.add("Ciencia");
-        allCategories.add("Religión");
-        allCategories.add("Deporte");
-        allCategories.add("Tecnología");
-        allCategories.add("Otros");
+        allPreferences.add(getResources().getString(R.string.preferences_music));
+        allPreferences.add(getResources().getString(R.string.preferences_conference));
+        allPreferences.add(getResources().getString(R.string.preferences_comedy));
+        allPreferences.add(getResources().getString(R.string.preferences_learning_education));
+        allPreferences.add(getResources().getString(R.string.preferences_family_fun_kids));
+        allPreferences.add(getResources().getString(R.string.preferences_festivals_parades));
+        allPreferences.add(getResources().getString(R.string.preferences_movies_film));
+        allPreferences.add(getResources().getString(R.string.preferences_food));
+        allPreferences.add(getResources().getString(R.string.preferences_fundraisers));
+        allPreferences.add(getResources().getString(R.string.preferences_art));
+        allPreferences.add(getResources().getString(R.string.preferences_support));
+        allPreferences.add(getResources().getString(R.string.preferences_holiday));
+        allPreferences.add(getResources().getString(R.string.preferences_books));
+        allPreferences.add(getResources().getString(R.string.preferences_attractions));
+        allPreferences.add(getResources().getString(R.string.preferences_community));
+        allPreferences.add(getResources().getString(R.string.preferences_business));
+        allPreferences.add(getResources().getString(R.string.preferences_singles_social));
+        allPreferences.add(getResources().getString(R.string.preferences_schools_alumni));
+        allPreferences.add(getResources().getString(R.string.preferences_outdoors_recreation));
+        allPreferences.add(getResources().getString(R.string.preferences_performing_arts));
+        allPreferences.add(getResources().getString(R.string.preferences_animals));
+        allPreferences.add(getResources().getString(R.string.preferences_politics_activism));
+        allPreferences.add(getResources().getString(R.string.preferences_sales));
+        allPreferences.add(getResources().getString(R.string.preferences_science));
+        allPreferences.add(getResources().getString(R.string.preferences_religion_spiritualism));
+        allPreferences.add(getResources().getString(R.string.preferences_sports));
+        allPreferences.add(getResources().getString(R.string.preferences_technology));
+        allPreferences.add(getResources().getString(R.string.preferences_others));
     }
 
 
@@ -158,7 +156,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
 
                                 if (selectedCities.size() == 0){
                                     Resources resources = getResources();
-                                    text = resources.getString(R.string.pteferences_all_cities);
+                                    text = resources.getString(R.string.preferences_all_cities);
                                 }
                                 else {
                                     for (int i = 0; i < selectedCities.size(); i++) {
@@ -182,6 +180,75 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                             }
                         });
                 android.app.AlertDialog alert = builderDialog.create();
+                alert.show();
+                break;
+            }
+
+            case R.id.selected_preferences: {
+                final CharSequence[] dialogList = allPreferences.toArray(new CharSequence[allPreferences.size()]);
+                final AlertDialog.Builder builderDialog = new AlertDialog.Builder(PreferencesActivity.this);
+                builderDialog.setTitle("Select Item");
+                int count = dialogList.length;
+                boolean[] is_checked = new boolean[count];
+
+                for (int i = 0; i < allPreferences.size(); i++){
+                    if (selectedPreferences.contains(allPreferences.get(i))){
+                        is_checked[i] = true;
+                    }
+                    else {
+                        is_checked[i] = false;
+                    }
+                }
+
+                builderDialog.setMultiChoiceItems(dialogList, is_checked,
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) { }
+                        });
+
+                builderDialog.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                ListView list = ((AlertDialog) dialog).getListView();
+
+                                selectedPreferences = new ArrayList<>();
+
+                                for (int i = 0; i < list.getChildCount(); i++)
+                                {
+                                    CheckedTextView checkedTextView = (CheckedTextView)list.getChildAt(i);
+                                    if (checkedTextView.isChecked()) {
+                                        selectedPreferences.add((String) checkedTextView.getText());
+                                    }
+                                }
+
+                                TextView text_selected_preference = (TextView) findViewById(R.id.selected_preferences);
+                                String text = "";
+
+                                if (selectedPreferences.size() == 0){
+                                    Resources resources = getResources();
+                                    text = resources.getString(R.string.text_all_preferences);
+                                }
+                                else {
+                                    for (int i = 0; i < selectedPreferences.size(); i++) {
+                                        text += selectedPreferences.get(i);
+                                        if (i < selectedPreferences.size() - 1) {
+                                            text += ", ";
+                                        }
+                                    }
+                                }
+                                text_selected_preference.setText(text);
+
+                            }
+                        });
+
+                builderDialog.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                AlertDialog alert = builderDialog.create();
                 alert.show();
                 break;
             }
