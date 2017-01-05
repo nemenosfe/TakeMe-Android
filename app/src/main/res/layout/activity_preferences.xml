@@ -95,55 +95,28 @@
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical" >
+                android:orientation="horizontal" >
 
-                <CheckBox
-                    android:id="@+id/chkFootball"
+                <TextView
+                    android:text="@string/text_your_preferences"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    style="@style/p"/>
+
+
+                <TextView
+                    android:text="@string/text_all_preferences"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pteferences_football" />
-
-                <CheckBox
-                    android:id="@+id/chkBasketball"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pteferences_basketball" />
-
-                <CheckBox
-                    android:id="@+id/chkAllSports"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pteferences_all" />
-
-                <CheckBox
-                    android:id="@+id/chkConcerts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pteferences_concerts" />
-
-                <CheckBox
-                    android:id="@+id/chkPaints"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pteferences_painting" />
-
-                <CheckBox
-                    android:id="@+id/chkTheaters"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pteferences_theater" />
-
-                <CheckBox
-                    android:id="@+id/chkMovies"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pteferences_movies" />
-
-                <CheckBox
-                    android:id="@+id/chkOthers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pteferences_others" />
+                    android:id="@+id/selected_preferences"
+                    android:background="@drawable/button_takeme_grey"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    />
 
             </LinearLayout>
 
@@ -190,7 +163,7 @@
 
 
                 <TextView
-                    android:text="@string/pteferences_all_cities"
+                    android:text="@string/preferences_all_cities"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/text_selected_cities"
@@ -221,7 +194,7 @@
 
         <Button
             android:visibility="gone"
-            android:text="@string/pteferences_skip"
+            android:text="@string/preferences_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_skip"
@@ -235,7 +208,7 @@
             />
 
         <Button
-            android:text="@string/pteferences_save"
+            android:text="@string/preferences_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_save"
