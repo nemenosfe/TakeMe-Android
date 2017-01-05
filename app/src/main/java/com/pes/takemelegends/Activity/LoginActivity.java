@@ -223,7 +223,13 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                    Intent intent;
+                    if (!sharedPreferences.isFirstTime()) {
+                        intent = new Intent(LoginActivity.this, PreferencesActivity.class);
+                        intent.putExtra("skip", true);
+                        sharedPreferences.setFirstTime(true);
+                    }
+                    else intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
