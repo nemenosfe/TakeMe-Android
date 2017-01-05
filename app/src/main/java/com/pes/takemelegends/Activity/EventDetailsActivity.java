@@ -45,6 +45,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private Button asistire;
     private TextView eventName, textEventDate, textEventAddress, textDescription, textTakes;
     private float latitude, longitude;
+    private String address;
     private Context context;
     private ImageView eventImage;
     private String event_id;
@@ -95,6 +96,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         String venue = event.isNull("venue_name") ? "" : event.getString("venue_name");
                         String lat = event.isNull("latitude") ? "" : event.getString("latitude");
                         String lng = event.isNull("longitude") ? "" : event.getString("longitude");
+                        String attendance = event.isNull("wanted_attendance") ? "0" : event.getString("wanted_attendance");
+                        address = event.isNull("address") ? "" : event.getString("address");
                         latitude = Float.valueOf(lat);
                         longitude = Float.valueOf(lng);
                         String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
@@ -104,6 +107,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         textDescription.setText(description);
                         textEventAddress.setText(venue);
                         textTakes.setText(takes + "\ntakes");
+                        if (attendance.equals("1")) {
+                            disableAttendance();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -142,6 +148,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                     Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
                     intent.putExtra("latitude", latitude);
                     intent.putExtra("longitude", longitude);
+                    intent.putExtra("address", address);
                     startActivity(intent);
                     break;
 
@@ -152,6 +159,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
+                        disableAttendance();
                     }
 
                     @Override
@@ -197,5 +205,10 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 return;
             }
         }
+    }
+
+    private void disableAttendance() {
+        asistire.setClickable(false);
+        asistire.setAlpha(0.25f);
     }
 }

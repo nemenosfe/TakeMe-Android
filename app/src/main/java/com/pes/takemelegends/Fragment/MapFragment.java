@@ -3,15 +3,20 @@ package com.pes.takemelegends.Fragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -34,13 +39,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     private View view;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
-    private com.google.android.gms.maps.MapFragment mapFragment;
+    private SupportMapFragment mapFragment;
     // palau sant jordi
-    double lat = 41.36335;
-    double lng = 2.15255;
+    double lat, lng;
+    private String address;
 
-    public MapFragment() {
-        // Required empty public constructor
+    public MapFragment(float latitude, float longitude, String address) {
+        lat = latitude;
+        lng = longitude;
+        this.address = address;
     }
 
     @Override
@@ -59,7 +66,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
             mGoogleApiClient.connect();
         }
 
-        mapFragment = (com.google.android.gms.maps.MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         return view;
@@ -83,7 +90,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
 
         LatLng coords = new LatLng(lat, lng);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(coords, 15);
-        mMap.addMarker(new MarkerOptions().position(coords).title("Palau Sant Jordi"));
+        mMap.addMarker(new MarkerOptions().position(coords).title(address));
         mMap.animateCamera(cameraUpdate);
     }
 

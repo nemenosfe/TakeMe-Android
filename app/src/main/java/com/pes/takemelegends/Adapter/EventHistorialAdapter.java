@@ -69,7 +69,6 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView takes, status, eventName, eventDesc, eventDate, id;
-        CardView container;
         private final Context context;
 
         ViewHolder(View itemLayoutView) {
@@ -82,7 +81,6 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
             eventDesc = (TextView) itemLayoutView.findViewById(R.id.eventDesc);
             eventDate = (TextView) itemLayoutView.findViewById(R.id.eventDate);
             id = (TextView) itemLayoutView.findViewById(R.id.eventId);
-            container = (CardView) itemLayoutView.findViewById(R.id.container);
             itemLayoutView.setOnClickListener(this);
         }
 

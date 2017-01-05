@@ -35,10 +35,7 @@ public class RewardController {
     public void getRewardsByLvl(AsyncHttpResponseHandler responseHandler, Context context){
         SharedPreferencesManager shared = new SharedPreferencesManager(context);
         RequestParams params = new RequestParams();
-        params.add("appKey", URLResources.APP_KEY);
-        params.put("token",shared.getUserToken());
-        params.add("provider",shared.getUserProvider());
-        params.put("uid", shared.getUserId());
+        params.add("appkey", URLResources.APP_KEY);
         params.put("page_size",99);
         client.get(URLResources.REWARDS_URL, params, responseHandler);
     }

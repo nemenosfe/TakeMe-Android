@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.pes.takemelegends.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -81,8 +83,30 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
         @Override
         public void onClick(View view) {
             final Dialog dialog = new Dialog(context);
-            dialog.setContentView(R.layout.reward_dialog);
-            dialog.setTitle("Title...");
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+            View content =  inflater.inflate(R.layout.reward_dialog, null);
+            TextView name = (TextView) content.findViewById(R.id.nameProduct);
+            TextView price = (TextView) content.findViewById(R.id.price);
+            TextView info = (TextView) content.findViewById(R.id.infoProduct);
+            Button btnConfirm = (Button) content.findViewById(R.id.btn_confirm);
+            Button btnCancel = (Button) content.findViewById(R.id.btn_cancel);
+            name.setText(productName.getText());
+            price.setText(productTakes.getText()+" takes");
+            info.setText(productDesc.getText());
+            dialog.setContentView(content);
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            btnConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO call api
+                }
+            });
             dialog.show();
         }
     }
