@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="logros_ganados">Logros ganados</string>
-    <string name="cangeados">Premios cangeados</string>
+    <string name="cangeados">Premios canjeados</string>
 
     <string name="text_welcome_user">¡Bienvenido usuario!</string>
     <string name="text_main_preferences">Gustos principales</string>
@@ -15,17 +15,37 @@
     <string name="text_timetable_monday_to_thursdays">Ver eventos entre semana (Lunes - Jueves)</string>
     <string name="text_timetable_friday_to_sundays">Ver eventos en fin de semana (Viernes - Domingos)</string>
     <string name="text_timetable_prefered">Horario de preferencia</string>
-    <string name="pteferences_football">Futbol</string>
-    <string name="pteferences_basketball">Baloncesto</string>
-    <string name="pteferences_all">Todos los deportes</string>
-    <string name="pteferences_concerts">Conciertos</string>
-    <string name="pteferences_painting">Pintura</string>
-    <string name="pteferences_theater">Teatro</string>
-    <string name="pteferences_movies">Cine y televisión</string>
-    <string name="pteferences_others">Otros</string>
-    <string name="pteferences_skip">Omitir</string>
-    <string name="pteferences_save">Guardar</string>
-    <string name="pteferences_all_cities">Todas las ciudades</string>
+    <string name="preferences_music">Música</string>
+    <string name="preferences_conference">Conferencias</string>
+    <string name="preferences_comedy">Comedia</string>
+    <string name="preferences_learning_education">Educación</string>
+    <string name="preferences_family_fun_kids">Familia</string>
+    <string name="preferences_festivals_parades">Festivales</string>
+    <string name="preferences_movies_film">Cine</string>
+    <string name="preferences_food">Gastronomía</string>
+    <string name="preferences_fundraisers">Recaudación</string>
+    <string name="preferences_art">Arte</string>
+    <string name="preferences_support">Salud</string>
+    <string name="preferences_holiday">Vacaciones</string>
+    <string name="preferences_books">Lectura</string>
+    <string name="preferences_attractions">Museos</string>
+    <string name="preferences_community">Comunidad</string>
+    <string name="preferences_business">Negocio</string>
+    <string name="preferences_singles_social">Nightlife</string>
+    <string name="preferences_schools_alumni">Universidad</string>
+    <string name="preferences_clubs_associations">Clubs</string>
+    <string name="preferences_outdoors_recreation">Aire libre</string>
+    <string name="preferences_animals">Animales</string>
+    <string name="preferences_politics_activism">Política</string>
+    <string name="preferences_sales">Ventas</string>
+    <string name="preferences_science">Ciencia</string>
+    <string name="preferences_religion_spiritualism">Religión</string>
+    <string name="preferences_sports">Deportes</string>
+    <string name="preferences_technology">Tecnología</string>
+    <string name="preferences_others">Otros</string>
+    <string name="preferences_skip">Omitir</string>
+    <string name="preferences_save">Guardar</string>
+    <string name="preferences_all_cities">Todas las ciudades</string>
     <string name="preferences_title">Preferencias</string>
 
     <string name="success_asistire">Disfruta del evento!</string>
