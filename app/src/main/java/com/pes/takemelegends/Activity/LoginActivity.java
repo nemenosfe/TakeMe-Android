@@ -26,6 +26,7 @@ import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
 import com.pes.takemelegends.Utils.SharedPreferencesManager;
+import com.pes.takemelegends.Utils.URLResources;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -161,12 +162,6 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             CreateUser(acct.getId(), "Google", acct.getDisplayName());
-/*=======
-            Intent intent = new Intent(LoginActivity.this, PreferencesActivity.class);
-            intent.putExtra("skip", true);
-            startActivity(intent);
-            finish();
->>>>>>> cd3684981caabb9e169e8a91f6b16fa29dd5ca31*/
         } else {
             // Signed out, show unauthenticated UI.
             Toast.makeText(getApplicationContext(), "error google", Toast.LENGTH_LONG).show();
@@ -218,6 +213,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         JSONObject cli = new JSONObject();
         StringEntity entity;
         try {
+            cli.put("appkey", URLResources.APP_KEY);
             cli.put("uid", uid);
             cli.put("provider", provider);
             cli.put("name", name);

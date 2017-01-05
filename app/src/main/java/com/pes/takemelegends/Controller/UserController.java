@@ -1,5 +1,6 @@
 package com.pes.takemelegends.Controller;
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -82,8 +83,11 @@ public class UserController {
 
     public void postUser(StringEntity body, Context context, JsonHttpResponseHandler responseHandler) {
         String url = URLResources.USERS_URL;
-        client.addHeader("Content-Type","application/x-www-form-urlencoded");
+        //client.addHeader("Content-Type","application/x-www-form-urlencoded");
         client.post(context,url,body,"application/json",responseHandler);
+        int a = 0;
+        a = a + 2;
+        Log.d("a",String.valueOf(a));
     }
 
 }
