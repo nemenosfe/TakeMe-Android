@@ -98,7 +98,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:text="@string/text_your_preferences"
+                    android:text="@string/text_all_preferences"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -107,7 +107,7 @@
 
 
                 <TextView
-                    android:text="@string/text_all_preferences"
+                    android:text="@string/preferences_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/selected_preferences"
@@ -163,7 +163,7 @@
 
 
                 <TextView
-                    android:text="@string/preferences_all_cities"
+                    android:text="@string/preferences_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/text_selected_cities"
