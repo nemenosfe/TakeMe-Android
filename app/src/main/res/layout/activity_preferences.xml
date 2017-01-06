@@ -92,33 +92,62 @@
 
             </RelativeLayout>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="horizontal" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="@string/text_all_preferences"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    style="@style/p"/>
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/all_categories_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:text="@string/text_all_preferences"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        style="@style/p"/>
 
 
-                <TextView
-                    android:text="@string/preferences_select"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/selected_preferences"
-                    android:background="@drawable/button_takeme_grey"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    />
+                    <TextView
+                        android:text="@string/preferences_select"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/selected_preferences"
+                        android:background="@drawable/button_takeme_grey"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        />
 
-            </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_below="@id/all_categories_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/your_preferences_textview"
+                        android:text="@string/text_your_preferences"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        style="@style/p" />
+
+                    <ListView
+                        android:layout_below="@id/your_preferences_textview"
+                        android:id="@+id/preferences_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </ListView>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:orientation="horizontal"

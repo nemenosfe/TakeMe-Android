@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ImageButton;
@@ -28,6 +29,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
     private Button saveButton, skipButton;
     private TextView selectedCitiesTextView, selectedPreferencesTextView;
     private ImageButton backButton;
+    private ListView selectedPreferencesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,9 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         backButton = (ImageButton) findViewById(R.id.preferences_back_button);
         selectedCitiesTextView = (TextView)findViewById(R.id.text_selected_cities);
         selectedPreferencesTextView = (TextView) findViewById(R.id.selected_preferences);
+        selectedPreferencesList = (ListView) findViewById(R.id.preferences_list);
+
+        selectedPreferencesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedPreferences));
 
         saveButton.setOnClickListener(this);
         selectedCitiesTextView.setOnClickListener(this);
@@ -221,24 +226,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                                         selectedPreferences.add((String) checkedTextView.getText());
                                     }
                                 }
-
-                                TextView text_selected_preference = (TextView) findViewById(R.id.selected_preferences);
-                                String text = "";
-
-                                if (selectedPreferences.size() == 0){
-                                    Resources resources = getResources();
-                                    text = resources.getString(R.string.text_all_preferences);
-                                }
-                                else {
-                                    for (int i = 0; i < selectedPreferences.size(); i++) {
-                                        text += selectedPreferences.get(i);
-                                        if (i < selectedPreferences.size() - 1) {
-                                            text += ", ";
-                                        }
-                                    }
-                                }
-                                text_selected_preference.setText(text);
-
+                                selectedPreferencesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedPreferences));
                             }
                         });
 
