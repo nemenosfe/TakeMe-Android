@@ -57,15 +57,17 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:elevation="20dp"
                 android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="175dp"
-                    android:src="@drawable/ph_business"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
+                    android:background="@color/white"
                     android:id="@+id/eventImage" />
+
 
                 <TextView
                     android:layout_marginTop="10dp"

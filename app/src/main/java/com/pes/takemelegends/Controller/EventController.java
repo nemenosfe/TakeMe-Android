@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -82,19 +84,22 @@ public class EventController {
     }
 
     public void doCheckIn(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
-        RequestParams params = new RequestParams();
         sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();
-        params.add("token", token);
-        params.add("appkey", URLResources.APP_KEY);
         JSONObject body = new JSONObject();
         StringEntity entity = null;
+        String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
         try {
             body.put("uid", uid);
             body.put("provider", provider);
             body.put("checkin_done", 1);
+            body.put("appkey",  URLResources.APP_KEY);
+            body.put("token", token);
+            body.put("time_checkin", currentDateandTime);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -103,7 +108,7 @@ public class EventController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.put(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
+        client.put(context, URLResources.EVENTS_URL+'/'+event_id+"/user/", entity, "application/json", responseHandler);
     }
 
     public void deleteAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
