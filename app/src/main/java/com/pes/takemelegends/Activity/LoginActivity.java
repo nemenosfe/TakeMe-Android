@@ -64,9 +64,10 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = new SharedPreferencesManager(this);
-        setContentView(R.layout.activity_login);
         //Facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        setContentView(R.layout.activity_login);
 
         //Twitter
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
@@ -185,11 +186,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         mGoogleApiClient.connect();
-        AppIndex.AppIndexApi.start(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
