@@ -152,7 +152,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
+            String msg = "@" + acct.getDisplayName() + " logged in! (#" + acct.getId() + ")";
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             CreateUser(acct.getId(), "Google", acct.getDisplayName());
         } else {
@@ -213,6 +213,15 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+                    try {
+                        sharedPreferences.setUserId(response.getString("uid"));
+                        sharedPreferences.setUserName(response.getString("name"));
+                        sharedPreferences.setUserProvider(response.getString("provider"));
+                        sharedPreferences.setUserToken(response.getString("token"));
+                        sharedPreferences.setFirstTime(response.getBoolean("has_preferences"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Intent intent;
                     if (!sharedPreferences.isFirstTime()) {
                         intent = new Intent(LoginActivity.this, PreferencesActivity.class);
