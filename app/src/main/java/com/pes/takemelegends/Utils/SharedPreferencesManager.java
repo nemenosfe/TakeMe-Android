@@ -86,7 +86,7 @@ public class SharedPreferencesManager {
     }
 
     public Boolean isFirstTime() { return firstTime; }
-    public void setFirstTime(Boolean firstTime) {
+        public void setFirstTime(Boolean firstTime) {
         this.firstTime = firstTime;
         setValue("firstTime", firstTime);
     }

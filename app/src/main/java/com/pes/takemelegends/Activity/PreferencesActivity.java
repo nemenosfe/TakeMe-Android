@@ -85,14 +85,9 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
             backButton.setVisibility(View.VISIBLE);
             backButton.setOnClickListener(this);
         }
-        
-//        shared = new SharedPreferencesManager(this);
-//        if (shared.getHasPreferences()) {
-//            isFirstTime = false;
-//        }
-//        else {
-//            isFirstTime = true;
-//        }
+
+        shared = new SharedPreferencesManager(this);
+        isFirstTime = shared.isFirstTime();
 
         allCities.add("Barcelona");
         allCities.add("Madrid");
@@ -180,10 +175,12 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
 
                 selectedCitiesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedCities));
                 setListViewHeightBasedOnChildren(selectedCitiesList);
+
+                Toast.makeText(getApplicationContext(), "getPreferences success", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getApplicationContext(), "getPreferences failed: ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "getPreferences failed", Toast.LENGTH_SHORT).show();
             }
         },getApplicationContext());
     }
@@ -399,7 +396,8 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                     userController.postPreferences(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            //shared.setHasPreferences(true);
+                            shared.setFirstTime(false);
+                            Toast.makeText(getApplicationContext(), "putPreferences success", Toast.LENGTH_SHORT).show();
                             goToMainActivity();
                         }
                         @Override
@@ -413,6 +411,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                     userController.putPreferences(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            Toast.makeText(getApplicationContext(), "putPreferences success", Toast.LENGTH_SHORT).show();
                             goToMainActivity();
                         }
                         @Override
