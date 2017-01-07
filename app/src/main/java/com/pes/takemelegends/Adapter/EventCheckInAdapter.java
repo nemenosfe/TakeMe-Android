@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,12 +132,13 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     btnCheckIn.setText("ok");
+                    Log.v("successssssssss", "OK");
                 }
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     btnCheckIn.setText("error");
                 }
-            },context, (String) id.getText());
+            },context, id.getText().toString());
 
             //Toast.makeText(context,'d', Toast.LENGTH_LONG).show();
 
