@@ -23,25 +23,28 @@ public class UserController {
         String uid = sharedPreferences.getUserId(),
                 provider = sharedPreferences.getUserProvider(),
                 token = sharedPreferences.getUserToken(),
-                urlPreferences = URLResources.USERS_URL + uid + "-" + provider + "/preferences";
+                urlPreferences = URLResources.USERS_URL + '/' + uid + "-" + provider + "/preferences";
         params.add("token", token);
         params.add("appkey", URLResources.APP_KEY);
         client.get(context, urlPreferences, params, responseHandler);
     }
 
-    public void postPreferences(AsyncHttpResponseHandler responseHandler, Context context, String preferences) {
+    public void postPreferences(AsyncHttpResponseHandler responseHandler, Context context, String categories, String locations) {
         RequestParams params = new RequestParams();
         sharedPreferences = new SharedPreferencesManager(context);
         String uid = sharedPreferences.getUserId(),
                 provider = sharedPreferences.getUserProvider(),
                 token = sharedPreferences.getUserToken(),
-                urlPreferences = URLResources.USERS_URL + uid + "-" + provider + "/preferences";
+                urlPreferences = URLResources.USERS_URL + '/' + uid + "-" + provider + "/preferences";
         params.add("token", token);
         params.add("appkey", URLResources.APP_KEY);
         JSONObject body = new JSONObject();
         StringEntity entity = null;
         try {
-            body.put("preferences", preferences);
+            body.put("token", token);
+            body.put("appkey", URLResources.APP_KEY);
+            body.put("categories", categories);
+            body.put("locations", locations);
             body.put("uid", uid);
             body.put("provider", provider);
         } catch (JSONException e) {
@@ -55,21 +58,23 @@ public class UserController {
         client.post(context, urlPreferences, entity, "application/json", responseHandler);
     }
 
-    public void putPreferences(AsyncHttpResponseHandler responseHandler, Context context, String preferences) {
+    public void putPreferences(AsyncHttpResponseHandler responseHandler, Context context, String categories, String locations) {
         RequestParams params = new RequestParams();
         sharedPreferences = new SharedPreferencesManager(context);
         String uid = sharedPreferences.getUserId(),
                 provider = sharedPreferences.getUserProvider(),
                 token = sharedPreferences.getUserToken(),
-                urlPreferences = URLResources.USERS_URL + uid + "-" + provider + "/preferences";
-        params.add("token", token);
-        params.add("appkey", URLResources.APP_KEY);
+                urlPreferences = URLResources.USERS_URL + '/' + uid + "-" + provider + "/preferences";
+
         JSONObject body = new JSONObject();
         StringEntity entity = null;
         try {
+            body.put("token", token);
+            body.put("appkey", URLResources.APP_KEY);
             body.put("uid", uid);
             body.put("provider", provider);
-            body.put("checkin_done", 1);
+            body.put("categories", categories);
+            body.put("locations", locations);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -83,11 +88,7 @@ public class UserController {
 
     public void postUser(StringEntity body, Context context, JsonHttpResponseHandler responseHandler) {
         String url = URLResources.USERS_URL;
-        //client.addHeader("Content-Type","application/x-www-form-urlencoded");
         client.post(context,url,body,"application/json",responseHandler);
-        int a = 0;
-        a = a + 2;
-        Log.d("a",String.valueOf(a));
     }
 
 }

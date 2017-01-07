@@ -9,10 +9,12 @@
 
     <string name="text_welcome_user">¡Bienvenido usuario!</string>
     <string name="text_main_preferences">Gustos principales</string>
-    <string name="text_location">Ubicación</string>
+    <string name="text_location">Ciudades de interés</string>
     <string name="text_your_preferences">Tus gustos:</string>
     <string name="text_all_preferences">Todas las categorías:</string>
-    <string name="text_cities_of_interes">Ciudades de interés:</string>
+    <string name="text_your_cities">Tus ciudades:</string>
+    <string name="text_all_cities">Todas las ciudades:</string>
+
     <string name="text_timetable">Horario</string>
     <string name="text_timetable_monday_to_thursdays">Ver eventos entre semana (Lunes - Jueves)</string>
     <string name="text_timetable_friday_to_sundays">Ver eventos en fin de semana (Viernes - Domingos)</string>

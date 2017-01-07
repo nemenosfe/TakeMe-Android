@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
@@ -63,46 +64,18 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = new SharedPreferencesManager(this);
+        //Facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        setContentView(R.layout.activity_login);
+
+        //Twitter
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
-        setContentView(R.layout.activity_login);
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        sharedPreferences = new SharedPreferencesManager(this);
-        //mGoogleApiClient = new GoogleApiClient.Builder(this)
-        //        .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-        //        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-        //        .build();
-        //buttonFacebook = (Button) findViewById(R.id.button_facebook);
-        //buttonFacebook.setOnClickListener(this);
-
-        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setScopes(gso.getScopeArray());
-        // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                //.enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .addApi(AppIndex.API).build();
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-
-            }
-        });
-
-        //buttonGoogle.setOnClickListener(this);
-
-        Button buttonTwitter = (Button) findViewById(R.id.twitter_login_button);
-        //buttonTwitter.setOnClickListener(this);
-
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        loginButton.setText(getString(R.string.login_twitter));
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
@@ -123,15 +96,35 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             }
         });
 
+        //Google
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        SignInButton signInButton = (SignInButton) findViewById(R.id.google_login_button);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        setGooglePlusButtonText(signInButton);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInGoogle();
+
+            }
+        });
+
+        //login sense rrss
+
         Button buttonDirecte = (Button) findViewById(R.id.buttonDirecte);
         buttonDirecte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent;
+                sharedPreferences.setFirstTime(false);
                 if (!sharedPreferences.isFirstTime()) {
                     intent = new Intent(LoginActivity.this, PreferencesActivity.class);
                     intent.putExtra("skip", true);
-                    sharedPreferences.setFirstTime(true);
+                    sharedPreferences.setFirstTime(false);
                 }
                 else intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -140,9 +133,13 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         });
     }
 
+    private void signInGoogle() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 
 
-        @Override
+    @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == RC_SIGN_IN) {
@@ -159,11 +156,12 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
+            String msg = "@" + acct.getDisplayName() + " logged in! (#" + acct.getId() + ")";
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             CreateUser(acct.getId(), "Google", acct.getDisplayName());
         } else {
             // Signed out, show unauthenticated UI.
+
             Toast.makeText(getApplicationContext(), "error google", Toast.LENGTH_LONG).show();
         }
     }
@@ -192,20 +190,13 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         mGoogleApiClient.connect();
-        AppIndex.AppIndexApi.start(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(mGoogleApiClient, getIndexApiAction());
         mGoogleApiClient.disconnect();
     }
 
@@ -223,6 +214,16 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+                    try {
+                        JSONObject user = response.getJSONObject("user");
+                        sharedPreferences.setUserId(user.getString("uid"));
+                        sharedPreferences.setUserName(user.getString("name"));
+                        sharedPreferences.setUserProvider(user.getString("provider"));
+                        sharedPreferences.setUserToken(user.getString("token"));
+                        sharedPreferences.setFirstTime(!user.getBoolean("has_preferences"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Intent intent;
                     if (!sharedPreferences.isFirstTime()) {
                         intent = new Intent(LoginActivity.this, PreferencesActivity.class);
@@ -242,6 +243,19 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void setGooglePlusButtonText(SignInButton signInButton) {
+        // Find the TextView that is inside of the SignInButton and set its text
+        for (int i = 0; i < signInButton.getChildCount(); i++) {
+            View v = signInButton.getChildAt(i);
+
+            if (v instanceof TextView) {
+                TextView tv = (TextView) v;
+                tv.setText(getString(R.string.login_google));
+                return;
+            }
         }
     }
 }

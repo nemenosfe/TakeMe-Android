@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity
         /*
         Hasta que el login no funcione, hardcodeamos el user
          */
-        sharedPreferences.setUserId("2");
+        /*sharedPreferences.setUserId("2");
         sharedPreferences.setUserToken("randomToken");
-        sharedPreferences.setUserProvider("provider");
+        sharedPreferences.setUserProvider("provider");*/
 
 
         //Mostrem el feed al conectar
