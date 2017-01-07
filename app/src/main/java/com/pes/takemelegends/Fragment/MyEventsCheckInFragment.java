@@ -51,6 +51,13 @@ public class MyEventsCheckInFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_my_events_check_in, container, false);
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -59,13 +66,6 @@ public class MyEventsCheckInFragment extends Fragment {
 
             mGoogleApiClient.connect();
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_my_events_check_in, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.checkInRecyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());

@@ -79,7 +79,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         public double lat, lng;
         private View itemLayoutView;
         private GPSTracker gps;
-        private static Context context;
+        private Context context;
 
         ViewHolder(View itemLayoutView, Context context) {
             super(itemLayoutView);
@@ -108,7 +108,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             return d;
         }
 
-        private static Location getLocation() {
+        private Location getLocation() {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return null;
             }
@@ -121,7 +121,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
 
             //double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
 
-            Toast.makeText(context,'d', Toast.LENGTH_LONG).show();
+            //Toast.makeText(context,'d', Toast.LENGTH_LONG).show();
 
             //Toast.makeText(this.context, "g: " + l.getLatitude() + ' ' +  l.getLongitude() + 'd' + String.valueOf(distance), Toast.LENGTH_LONG).show();
         }
