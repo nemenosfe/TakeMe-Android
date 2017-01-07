@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Adapter.EventCheckInAdapter;
 import com.pes.takemelegends.Adapter.EventHistorialAdapter;
@@ -43,11 +45,20 @@ public class MyEventsCheckInFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
+
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addApi(LocationServices.API)
+                    .build();
+
+            mGoogleApiClient.connect();
+        }
     }
 
     @Override
@@ -84,7 +95,9 @@ public class MyEventsCheckInFragment extends Fragment {
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                             String id = event.getString("id");
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                            if (checkin_done.equals("0")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id});
+                            Double lat = event.isNull("latitude") ? 0 : Double.valueOf(event.getDouble("latitude"));
+                            Double lng = event.isNull("longitude") ? 0 : Double.valueOf(event.getDouble("longitude"));
+                            if (checkin_done.equals("0")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id, String.valueOf(lat), String.valueOf(lng)});
                         }
                     }
                 } catch (JSONException e) {
@@ -102,14 +115,16 @@ public class MyEventsCheckInFragment extends Fragment {
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                             String id = event.getString("id");
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                            events.add(new String[]{"Future", title, description, startTime, takes, "Not yet", id});
+                            Double lat = event.isNull("latitude") ? 0 : Double.valueOf(event.getDouble("latitude"));
+                            Double lng = event.isNull("longitude") ? 0 : Double.valueOf(event.getDouble("longitude"));
+                            events.add(new String[]{"Future", title, description, startTime, takes, "Not yet", id, String.valueOf(lat), String.valueOf(lng)});
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity());
+                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient);
                 recyclerView.setAdapter(checkinAdapter);
                 progressDialog.dismiss();
             }
