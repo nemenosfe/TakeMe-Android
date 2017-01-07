@@ -2,6 +2,7 @@ package com.pes.takemelegends.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -50,6 +51,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private Context context;
     private ImageView eventImage;
     private String event_id;
+    private boolean atendance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,16 +161,39 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 }
             }
             case R.id.buttonAsistire:
-                eventController.postAsistire(new JsonHttpResponseHandler() {
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setIndeterminate(true);
+                progressDialog.show();
+                progressDialog.setCancelable(false);
+                progressDialog.setCanceledOnTouchOutside(false);
+                if(atendance) eventController.deleteAsistire(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
-                        disableAttendance();
+                        Toast.makeText(EventDetailsActivity.this, "succes delete", Toast.LENGTH_SHORT).show();
+                        enableAttendance();
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         Toast.makeText(EventDetailsActivity.this, getString(R.string.failure_asistire), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                },this, event_id);
+                else eventController.postAsistire(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
+                        disableAttendance();
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Toast.makeText(EventDetailsActivity.this, getString(R.string.failure_asistire), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 },this, event_id);
                 break;
@@ -211,7 +237,15 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void disableAttendance() {
-        asistire.setClickable(false);
         asistire.setAlpha(0.25f);
+        asistire.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_not, 0, 0, 0);
+        asistire.setText("No asistiré");
+        atendance = true;
+    }
+    private void enableAttendance() {
+        asistire.setAlpha(1.0f);
+        asistire.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_circle, 0, 0, 0);
+        asistire.setText("Asistiré");
+        atendance = false;
     }
 }
