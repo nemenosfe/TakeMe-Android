@@ -30,6 +30,7 @@ public class SharedPreferencesManager {
         firstTime = (Boolean) getObject("firstTime", Boolean.class.getSimpleName());
         currentLevel = (Integer) getObject("currentLevel", Integer.class.getSimpleName());
         totalTakes = (Integer) getObject("totalTakes", Integer.class.getSimpleName());
+
     }
 
     public String getUserToken() {
