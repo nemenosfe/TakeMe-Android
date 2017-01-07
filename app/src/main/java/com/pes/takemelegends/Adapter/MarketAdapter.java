@@ -17,9 +17,11 @@ import com.pes.takemelegends.R;
 public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder>  {
 
     private Integer[] itemsData;
+    private int currentLvl;
 
-    public MarketAdapter(Integer[] itemsData) {
+    public MarketAdapter(Integer[] itemsData, int lvl) {
         this.itemsData = itemsData;
+        this.currentLvl = lvl;
     }
 
 
@@ -36,9 +38,8 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
     @Override
     public void onBindViewHolder(MarketAdapter.ViewHolder viewHolder, int position) {
         // Necessitem el current level del user, fin a linkar amb API estara hardcoded a 3
-        Integer level = 3;
         viewHolder.level.setText("Nivel " + itemsData[position]);
-        if (level < itemsData[position]) viewHolder.lock.setImageResource(R.drawable.ic_lock_close);
+        if (currentLvl < itemsData[position]) viewHolder.lock.setImageResource(R.drawable.ic_lock_close);
         else viewHolder.lock.setImageResource(R.drawable.ic_lock_open);
     }
 
