@@ -121,7 +121,6 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             public void onClick(View view) {
                 Intent intent;
                 sharedPreferences.setFirstTime(false);
-                Toast.makeText(getApplicationContext(), sharedPreferences.isFirstTime().toString(), Toast.LENGTH_SHORT).show();
                 if (!sharedPreferences.isFirstTime()) {
                     intent = new Intent(LoginActivity.this, PreferencesActivity.class);
                     intent.putExtra("skip", true);
