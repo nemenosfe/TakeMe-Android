@@ -2,9 +2,11 @@ package com.pes.takemelegends.Adapter;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,9 +21,11 @@ import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
+import com.pes.takemelegends.Fragment.MyEventsCheckInFragment;
 import com.pes.takemelegends.Fragment.TotsEventsFragment;
 import com.pes.takemelegends.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
@@ -37,18 +41,17 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     private List<String[]> itemsData;
     private static Context context;
     private static GoogleApiClient mGoogleApiClient;
+    private static MyEventsCheckInFragment myEventsCheckInFragment;
 
     static final double _eQuatorialEarthRadius = 6378.1370D;
     static final double _d2r = (Math.PI / 180D);
 
 
-
-
-    public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient) {
-
+    public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient, MyEventsCheckInFragment myEventsCheckInFragment) {
         this.itemsData = itemsData;
         this.context = context;
         this.mGoogleApiClient = mGoogleApiClient;
+        this.myEventsCheckInFragment = myEventsCheckInFragment;
     }
 
     @Override
@@ -80,7 +83,6 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
         TextView takes, hours, eventName, eventDesc, eventDate, id;
         Button btnCheckIn;
         public double lat, lng;
@@ -124,25 +126,52 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         @Override
         public void onClick(View view) {
             Location l = getLocation();
-
             double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
 
-            EventController eventController = ControllerFactory.getInstance().getEventController();
-            eventController.doCheckIn(new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    btnCheckIn.setText("ok");
-                    Log.v("successssssssss", "OK");
-                }
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    btnCheckIn.setText("error");
-                }
-            },context, id.getText().toString());
+            if (distance < 0.5) {
+                EventController eventController = ControllerFactory.getInstance().getEventController();
+                eventController.doCheckIn(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        btnCheckIn.setText("ok");
+                        try {
+                            if (response.getJSONObject("attendance").getJSONObject("achievement") != null) {
+                                String description = response.getJSONObject("attendance").getJSONObject("achievement").getString("description");
+                                String name = response.getJSONObject("attendance").getJSONObject("achievement").getString("name");
 
-            //Toast.makeText(context,'d', Toast.LENGTH_LONG).show();
+                                new AlertDialog.Builder(context).setTitle("¡Enhorabuena! " + description);
+                                new AlertDialog.Builder(context).setMessage("Has desbloqueado el siguiente logro: " + name);
+                                new AlertDialog.Builder(context).setCancelable(false);
+                                new AlertDialog.Builder(context).setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        myEventsCheckInFragment.refreshChackinAndHistorial();
+                                    }
+                                });
+                                new AlertDialog.Builder(context).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        btnCheckIn.setText("error");
+                    }
+                },context, id.getText().toString());
+            }
+            else {
+                new AlertDialog.Builder(context)
+                    .setTitle("Estás demasiado lejos")
+                    .setMessage("Para hacer check-in tienes que estar a menos de 500 metros del evento.")
+                    .setCancelable(false)
+                    .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-            //Toast.makeText(this.context, "g: " + l.getLatitude() + ' ' +  l.getLongitude() + 'd' + String.valueOf(distance), Toast.LENGTH_LONG).show();
+                        }
+                    }).show();
+            }
         }
     }
 }

@@ -17,10 +17,15 @@ import com.pes.takemelegends.Fragment.TotsEventsFragment;
 
 public class MyEventPageAdapter extends FragmentStatePagerAdapter{
     private int numTabs;
+    private MyEventsHistorialFragment tab1;
+    private MyEventsCheckInFragment tab2;
 
     public MyEventPageAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.numTabs = numOfTabs;
+        tab1 = new MyEventsHistorialFragment();
+        tab2 = new MyEventsCheckInFragment();
+        tab2.fragmentHistorial = tab1;
     }
 
     @Override
@@ -32,10 +37,8 @@ public class MyEventPageAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                MyEventsHistorialFragment tab1 = new MyEventsHistorialFragment();
                 return tab1;
             case 1:
-                MyEventsCheckInFragment tab2 = new MyEventsCheckInFragment();
                 return tab2;
             default:
                 return null;

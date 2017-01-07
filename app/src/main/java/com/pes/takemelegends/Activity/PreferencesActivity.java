@@ -158,14 +158,14 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                 for (int i=0; i< categories.size(); i++) {
                     String key = categories.get(i);
                     String value = mapCategories.get(key);
-                    if (value != null) {
+                    if (value != null && value != "null") {
                         selectedPreferences.add(value);
                     }
                 }
 
                 for (int i=0; i< locations.size(); i++) {
                     String value = locations.get(i);
-                    if (value != null) {
+                    if (value != null && value != "null") {
                         selectedCities.add(value);
                     }
                 }

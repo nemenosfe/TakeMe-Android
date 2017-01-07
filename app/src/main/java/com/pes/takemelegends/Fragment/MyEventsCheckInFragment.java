@@ -39,34 +39,26 @@ public class MyEventsCheckInFragment extends Fragment {
 
 
     public MyEventsCheckInFragment() {
-        // Required empty public constructor
+
     }
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
     private GoogleApiClient mGoogleApiClient;
+    private MyEventsCheckInFragment me;
+    private View rootView;
+    public MyEventsHistorialFragment fragmentHistorial;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
+        me = this;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_my_events_check_in, container, false);
 
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                    .addApi(LocationServices.API)
-                    .build();
-
-            mGoogleApiClient.connect();
-        }
-
+    public void refresh() {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.checkInRecyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -124,7 +116,7 @@ public class MyEventsCheckInFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient);
+                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, me);
                 recyclerView.setAdapter(checkinAdapter);
                 progressDialog.dismiss();
             }
@@ -136,15 +128,28 @@ public class MyEventsCheckInFragment extends Fragment {
         }, getActivity(), "50", null);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
 
+    public void refreshChackinAndHistorial() {
+        fragmentHistorial.needsRefresh = true;
+        refresh();
+    }
 
-//        Button buttonDirecte = (Button) rootView.findViewById(R.id.checkIn);
-//        buttonDirecte.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView = inflater.inflate(R.layout.fragment_my_events_check_in, container, false);
+
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addApi(LocationServices.API)
+                    .build();
+
+            mGoogleApiClient.connect();
+        }
+
+        refresh();
 
         return rootView;
     }

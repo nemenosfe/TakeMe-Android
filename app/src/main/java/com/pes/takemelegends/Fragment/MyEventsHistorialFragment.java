@@ -2,9 +2,11 @@ package com.pes.takemelegends.Fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +43,8 @@ public class MyEventsHistorialFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
+    private View rootView;
+    public Boolean needsRefresh = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,12 +52,7 @@ public class MyEventsHistorialFragment extends Fragment {
         eventController = ControllerFactory.getInstance().getEventController();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_my_events_historial, container, false);
-
+    public void refresh() {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.historialRecyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -120,6 +119,26 @@ public class MyEventsHistorialFragment extends Fragment {
         }, getActivity(), "50", null);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && needsRefresh) {
+            needsRefresh = false;
+            refresh();
+        }
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView = inflater.inflate(R.layout.fragment_my_events_historial, container, false);
+
+        refresh();
 
         return rootView;
     }

@@ -27,6 +27,7 @@
                 android:layout_height="70dp"
                 android:textAlignment="center"
                 app:layout_widthPercent="15%"
+                android:layout_centerVertical="true"
                 android:gravity="center_vertical"
                 android:background="@drawable/drawer_grey"
                 android:textColor="@color/white"
@@ -87,12 +88,15 @@
                     style="@style/p"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines = "2"
+                    android:minLines = "1"
                     android:id="@+id/eventName" />
 
                 <TextView
-                    android:maxLines = "2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines = "2"
+                    android:minLines = "1"
                     style="@style/small"
                     android:id="@+id/eventDesc" />
 
