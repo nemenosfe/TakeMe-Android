@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
@@ -79,7 +80,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         //buttonFacebook.setOnClickListener(this);
 
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        //signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
         // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -103,6 +104,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
 
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        loginButton.setText(getString(R.string.login_facebook));
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
@@ -242,6 +244,19 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void setGooglePlusButtonText(SignInButton signInButton, String buttonText) {
+        // Find the TextView that is inside of the SignInButton and set its text
+        for (int i = 0; i < signInButton.getChildCount(); i++) {
+            View v = signInButton.getChildAt(i);
+
+            if (v instanceof TextView) {
+                TextView tv = (TextView) v;
+                tv.setText(getString(R.string.login_google));
+                return;
+            }
         }
     }
 }
