@@ -103,7 +103,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         SignInButton signInButton = (SignInButton) findViewById(R.id.google_login_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
         setGooglePlusButtonText(signInButton);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
