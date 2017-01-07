@@ -42,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            />
+            fb:com_facebook_login_text="@string/login_facebook"
+            fb:com_facebook_logout_text=""/>
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_login_button"

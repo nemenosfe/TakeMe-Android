@@ -155,7 +155,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            String msg = "@" + acct.getEmail() + " logged in! (#" + acct.getId() + ")";
+            String msg = "@" + acct.getDisplayName() + " logged in! (#" + acct.getId() + ")";
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
             CreateUser(acct.getId(), "Google", acct.getDisplayName());
         } else {
@@ -196,9 +196,6 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(mGoogleApiClient, getIndexApiAction());
         mGoogleApiClient.disconnect();
     }
 
