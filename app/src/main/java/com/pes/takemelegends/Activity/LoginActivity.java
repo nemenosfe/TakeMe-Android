@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -35,7 +34,6 @@ import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
-import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import org.json.JSONException;
@@ -45,8 +43,6 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import io.fabric.sdk.android.Fabric;
 
-import static android.R.attr.data;
-import static com.pes.takemelegends.R.id.button;
 import static com.twitter.sdk.android.core.TwitterCore.TAG;
 
 public class LoginActivity extends Activity implements GoogleApiClient.OnConnectionFailedListener {
@@ -66,15 +62,16 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = new SharedPreferencesManager(this);
-        //Facebook
+        //Facebook config
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        //Twitter
+        //Twitter config
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
 
         setContentView(R.layout.activity_login);
 
+        //Twitter button
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setText(getString(R.string.login_twitter));
         loginButton.setCallback(new Callback<TwitterSession>() {
@@ -202,7 +199,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         mGoogleApiClient.disconnect();
     }
 
-    private void CreateUser(String uid, String provider, String name) {
+    private void CreateUser(String uid, String provider, final String name) {
         JSONObject cli = new JSONObject();
         StringEntity entity;
         try {
@@ -217,12 +214,16 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                     super.onSuccess(statusCode, headers, response);
                     Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
                     try {
+
                         JSONObject user = response.getJSONObject("user");
                         sharedPreferences.setUserId(user.getString("uid"));
                         sharedPreferences.setUserName(user.getString("name"));
                         sharedPreferences.setUserProvider(user.getString("provider"));
                         sharedPreferences.setUserToken(user.getString("token"));
                         sharedPreferences.setFirstTime(!user.getBoolean("has_preferences"));
+                        sharedPreferences.setTotalTakes(user.getInt("takes"));
+                        sharedPreferences.setCurrentLevel(user.getInt("level"));
+                        sharedPreferences.setCurrentExperience(user.getInt("experience"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

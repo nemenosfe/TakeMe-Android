@@ -14,7 +14,9 @@ public class SharedPreferencesManager {
     private static String username = "";
     private static Integer currentLevel = 0;
     private static Integer totalTakes = 0;
+    private static int currentExperience = 0;
     SharedPreferences sp;
+
 
     /**
      * creates a shared preferences controller with the actual appication context
@@ -30,6 +32,7 @@ public class SharedPreferencesManager {
         firstTime = (Boolean) getObject("firstTime", Boolean.class.getSimpleName());
         currentLevel = (Integer) getObject("currentLevel", Integer.class.getSimpleName());
         totalTakes = (Integer) getObject("totalTakes", Integer.class.getSimpleName());
+        currentExperience = (Integer) getObject("currentExperience", Integer.class.getSimpleName());
 
     }
 
@@ -75,6 +78,12 @@ public class SharedPreferencesManager {
     public void setUserId(String userId) {
         this.userUid = userId;
         setValue("userUid",userId);
+    }
+    public int getCurrentExperience() {
+        return currentExperience;
+    }
+    public void setCurrentExperience(int currentExperience) {
+        this.currentExperience = currentExperience;
     }
 
     public String getUserProvider() {
@@ -129,11 +138,5 @@ public class SharedPreferencesManager {
                 editor.putString(key, (String) value);
                 break;
         }
-        boolean t = editor.commit();
-
-        int c = 0;
-        int b = 2;
-        int s = c + b;
-
     }
 }
