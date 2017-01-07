@@ -106,10 +106,9 @@ public class RewardsActivity extends AppCompatActivity {
         },getApplicationContext());
 
 
-        //userTV.setText(shared.getUsername());
-        //lvlTV.setText(shared.getCurrentLevel());
-        //takesTV.setText(shared.getTotalTakes());
-        userTV.setText("a la espera de user");
+        userTV.setText(shared.getUsername());
+        lvlTV.setText("Nivel" + shared.getCurrentLevel());
+        takesTV.setText(shared.getTotalTakes() + "takes");
 
     }
 }

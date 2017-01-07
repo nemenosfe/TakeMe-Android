@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 public class ProfileFragment extends Fragment {
 
@@ -21,6 +22,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar expBar;
     private ProfileViewPagerFragment logros;
     private FloatingActionButton mFab;
+    private SharedPreferencesManager shared;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -32,6 +34,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        shared = new SharedPreferencesManager(getActivity().getApplicationContext());
+
         name = (TextView) rootView.findViewById(R.id.nombre);
         currentLvl = (TextView) rootView.findViewById(R.id.currentLvl);
         nextLvl = (TextView) rootView.findViewById(R.id.nextLvl);
@@ -40,12 +44,12 @@ public class ProfileFragment extends Fragment {
         totalTakes = (TextView) rootView.findViewById(R.id.totalTakes);
         expBar = (ProgressBar) rootView.findViewById(R.id.progressLvl);
 
-        name.setText("Óscar Serrano García");
-        currentLvl.setText("lvl3");
-        nextLvl.setText("lvl4");
-        nExp.setText("777/1000 px");
-        totalEvents.setText("33\neventos");
-        totalTakes.setText("777\ntakes");
+        name.setText(shared.getUsername());
+        currentLvl.setText("lvl " + shared.getCurrentLevel());
+        nextLvl.setText("lvl " + (shared.getCurrentLevel()+1));
+        nExp.setText(shared.getCurrentExperience()+"/api px");
+        totalEvents.setText("api\neventos");
+        totalTakes.setText(shared.getTotalTakes()+"\ntakes");
         expBar.setProgress(77);
         expBar.getProgressDrawable().setColorFilter(
                 getResources().getColor(R.color.main_ambar),
