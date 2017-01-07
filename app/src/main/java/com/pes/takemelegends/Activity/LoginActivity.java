@@ -120,10 +120,12 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             @Override
             public void onClick(View view) {
                 Intent intent;
+                sharedPreferences.setFirstTime(false);
+                Toast.makeText(getApplicationContext(), sharedPreferences.isFirstTime().toString(), Toast.LENGTH_SHORT).show();
                 if (!sharedPreferences.isFirstTime()) {
                     intent = new Intent(LoginActivity.this, PreferencesActivity.class);
                     intent.putExtra("skip", true);
-                    sharedPreferences.setFirstTime(true);
+                    sharedPreferences.setFirstTime(false);
                 }
                 else intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -219,7 +221,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                         sharedPreferences.setUserName(user.getString("name"));
                         sharedPreferences.setUserProvider(user.getString("provider"));
                         sharedPreferences.setUserToken(user.getString("token"));
-                        sharedPreferences.setFirstTime(user.getBoolean("has_preferences"));
+                        sharedPreferences.setFirstTime(!user.getBoolean("has_preferences"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

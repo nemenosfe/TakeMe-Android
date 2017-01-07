@@ -89,6 +89,8 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         shared = new SharedPreferencesManager(this);
         isFirstTime = shared.isFirstTime();
 
+        Toast.makeText(getApplicationContext(), isFirstTime.toString(), Toast.LENGTH_SHORT).show();
+
         allCities.add("Barcelona");
         allCities.add("Madrid");
         allCities.add("Valencia");
