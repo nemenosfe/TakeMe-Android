@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -88,12 +90,16 @@ public class EventController {
         String provider = sharedPreferences.getUserProvider();
         JSONObject body = new JSONObject();
         StringEntity entity = null;
+        String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
         try {
             body.put("uid", uid);
             body.put("provider", provider);
             body.put("checkin_done", 1);
             body.put("appkey",  URLResources.APP_KEY);
             body.put("token", token);
+            body.put("time_checkin", currentDateandTime);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
