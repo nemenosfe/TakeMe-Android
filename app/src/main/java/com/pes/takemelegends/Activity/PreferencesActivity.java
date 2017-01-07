@@ -89,8 +89,6 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         shared = new SharedPreferencesManager(this);
         isFirstTime = shared.isFirstTime();
 
-        Toast.makeText(getApplicationContext(), isFirstTime.toString(), Toast.LENGTH_SHORT).show();
-
         allCities.add("Barcelona");
         allCities.add("Madrid");
         allCities.add("Valencia");
@@ -177,12 +175,10 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
 
                 selectedCitiesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedCities));
                 setListViewHeightBasedOnChildren(selectedCitiesList);
-
-                Toast.makeText(getApplicationContext(), "getPreferences success", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getApplicationContext(), "getPreferences failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Error al cargar las preferencias", Toast.LENGTH_SHORT).show();
             }
         },getApplicationContext());
     }
@@ -391,20 +387,17 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                     e.printStackTrace();
                 }
 
-                Toast.makeText(getApplicationContext(), json.toString(), Toast.LENGTH_SHORT).show();
-
                 // POST or PUT
                 if (isFirstTime) {
                     userController.postPreferences(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             shared.setFirstTime(false);
-                            Toast.makeText(getApplicationContext(), "putPreferences success", Toast.LENGTH_SHORT).show();
                             goToMainActivity();
                         }
                         @Override
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            Toast.makeText(getApplicationContext(), "postPreferences failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Error al crear las preferencias", Toast.LENGTH_SHORT).show();
                             goToMainActivity();
                         }
                     },getApplicationContext(), categories, cities);
@@ -413,12 +406,11 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                     userController.putPreferences(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            Toast.makeText(getApplicationContext(), "putPreferences success", Toast.LENGTH_SHORT).show();
                             goToMainActivity();
                         }
                         @Override
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            Toast.makeText(getApplicationContext(), "putPreferences failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Error al guardar las preferencias", Toast.LENGTH_SHORT).show();
                             goToMainActivity();
                         }
                     },getApplicationContext(), categories, cities);
