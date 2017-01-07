@@ -33,6 +33,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -101,6 +102,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         latitude = Float.valueOf(lat);
                         longitude = Float.valueOf(lng);
                         String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
+
+                        description = Jsoup.parse(description).text();
 
                         eventName.setText(title);
                         textEventDate.setText(startTime);
