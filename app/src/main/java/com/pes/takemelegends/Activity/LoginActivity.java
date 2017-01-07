@@ -214,11 +214,12 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                     super.onSuccess(statusCode, headers, response);
                     Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
                     try {
-                        sharedPreferences.setUserId(response.getString("uid"));
-                        sharedPreferences.setUserName(response.getString("name"));
-                        sharedPreferences.setUserProvider(response.getString("provider"));
-                        sharedPreferences.setUserToken(response.getString("token"));
-                        sharedPreferences.setFirstTime(response.getBoolean("has_preferences"));
+                        JSONObject user = response.getJSONObject("user");
+                        sharedPreferences.setUserId(user.getString("uid"));
+                        sharedPreferences.setUserName(user.getString("name"));
+                        sharedPreferences.setUserProvider(user.getString("provider"));
+                        sharedPreferences.setUserToken(user.getString("token"));
+                        sharedPreferences.setFirstTime(user.getBoolean("has_preferences"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
