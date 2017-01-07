@@ -14,7 +14,9 @@ public class SharedPreferencesManager {
     private static String username = "";
     private static Integer currentLevel = 0;
     private static Integer totalTakes = 0;
+    private static Integer currentExperience = 0;
     SharedPreferences sp;
+
 
     /**
      * creates a shared preferences controller with the actual appication context
@@ -30,6 +32,7 @@ public class SharedPreferencesManager {
         firstTime = (Boolean) getObject("firstTime", Boolean.class.getSimpleName());
         currentLevel = (Integer) getObject("currentLevel", Integer.class.getSimpleName());
         totalTakes = (Integer) getObject("totalTakes", Integer.class.getSimpleName());
+        currentExperience = (Integer) getObject("currentExperience", Integer.class.getSimpleName());
 
     }
 
@@ -37,18 +40,18 @@ public class SharedPreferencesManager {
         return userToken;
     }
 
-    public void setUserToken(String userToken) {
-        this.userToken = userToken;
-        setValue("userToken",userToken);
+    public void setUserToken(String uT) {
+        userToken = uT;
+        setValue("userToken",uT);
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUserName(String username) {
-        this.username = username;
-        setValue("username",username);
+    public void setUserName(String uN) {
+        username = uN;
+        setValue("username",uN);
     }
 
     public Integer getCurrentLevel() {
@@ -72,23 +75,30 @@ public class SharedPreferencesManager {
     public String getUserId() {
         return userUid;
     }
-    public void setUserId(String userId) {
-        this.userUid = userId;
-        setValue("userUid",userId);
+    public void setUserId(String uId) {
+        userUid = uId;
+        setValue("userUid",uId);
+    }
+    public int getCurrentExperience() {
+        return currentExperience;
+    }
+    public void setCurrentExperience(int cE) {
+        currentExperience = cE;
+        setValue("currentExperience", cE);
     }
 
     public String getUserProvider() {
         return userProvider;
     }
     public void setUserProvider(String userCompanyId) {
-        this.userProvider = userCompanyId;
+        userProvider = userCompanyId;
         setValue("userProvider",userCompanyId);
     }
 
     public Boolean isFirstTime() { return firstTime; }
-        public void setFirstTime(Boolean firstTime) {
-        this.firstTime = firstTime;
-        setValue("firstTime", firstTime);
+        public void setFirstTime(Boolean fT) {
+        firstTime = fT;
+        setValue("firstTime", fT);
     }
 
     /**
@@ -129,11 +139,7 @@ public class SharedPreferencesManager {
                 editor.putString(key, (String) value);
                 break;
         }
-        boolean t = editor.commit();
-
-        int c = 0;
-        int b = 2;
-        int s = c + b;
-
+        editor.commit();
     }
+
 }

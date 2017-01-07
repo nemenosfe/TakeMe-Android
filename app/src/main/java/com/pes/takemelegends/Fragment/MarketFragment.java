@@ -20,6 +20,7 @@ import com.pes.takemelegends.Assets.DividerItemDecorator;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.RewardController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +36,7 @@ public class MarketFragment extends Fragment {
     private TextView userTV, lvlTV, takesTV;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+    private SharedPreferencesManager shared;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,17 +59,18 @@ public class MarketFragment extends Fragment {
         DividerItemDecorator dividerItemDecoration = new DividerItemDecorator(recyclerView.getContext(),
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
+        shared = new SharedPreferencesManager(getActivity().getApplicationContext());
 
         Integer[] dummy = {1, 2, 3, 4, 5, 6, 7, 8};
-        MarketAdapter marketAdapter = new MarketAdapter(dummy);
+        MarketAdapter marketAdapter = new MarketAdapter(dummy,shared.getCurrentLevel());
 
         recyclerView.setAdapter(marketAdapter);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        userTV.setText("oscarSeGa");
-        lvlTV.setText("Nivel 3");
-        takesTV.setText("777 takes");
+        userTV.setText(shared.getUsername());
+        lvlTV.setText("Nivel "+shared.getCurrentLevel());
+        takesTV.setText(shared.getTotalTakes() + " takes");
 
         return rootview;
     }
