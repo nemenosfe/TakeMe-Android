@@ -69,14 +69,14 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         //Facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        setContentView(R.layout.activity_login);
-
         //Twitter
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
 
+        setContentView(R.layout.activity_login);
+
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
-        //loginButton.setText(getString(R.string.login_twitter));
+        loginButton.setText(getString(R.string.login_twitter));
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
