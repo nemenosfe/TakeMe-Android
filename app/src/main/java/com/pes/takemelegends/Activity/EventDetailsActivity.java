@@ -72,8 +72,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
-        Picasso.with(context).load("http://www.events.cat/wp-content/gallery/2015/exp-events-2015-001.jpg").into(eventImage);
-
         mapBtn.setOnClickListener(this);
         buttonShare.setOnClickListener(this);
         asistire.setOnClickListener(this);
@@ -101,10 +99,28 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         String lat = event.isNull("latitude") ? "" : event.getString("latitude");
                         String lng = event.isNull("longitude") ? "" : event.getString("longitude");
                         String attendance = event.isNull("wanted_attendance") ? "0" : event.getString("wanted_attendance");
+                        JSONObject cat = event.getJSONObject("categories");
+                        String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
                         address = event.isNull("address") ? "" : event.getString("address");
                         latitude = Float.valueOf(lat);
                         longitude = Float.valueOf(lng);
                         String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
+
+                        String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
+                        if (!event.isNull("images")) {
+                            JSONObject imageObject = event.getJSONObject("images").getJSONObject("image");
+                            if (!imageObject.isNull("medium")) image = imageObject.getJSONObject("medium").getString("url");
+                            else if (!imageObject.isNull("thumb")) image = imageObject.getJSONObject("thumb").getString("url");
+                            else if (!imageObject.isNull("small")) image = imageObject.getJSONObject("small").getString("url");
+                        }
+
+                        if(image.equals("http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg")){
+                            String placeholder = "ph_"+ category;
+                            int id = getResources().getIdentifier(placeholder, "drawable", getPackageName());
+                            if (id!=0) eventImage.setImageResource(id);
+                            else Picasso.with(getApplicationContext()).load(image).into(eventImage);
+                        }
+                        else Picasso.with(getApplicationContext()).load(image).into(eventImage);
 
                         description = Jsoup.parse(description).text();
 
