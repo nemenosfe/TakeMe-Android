@@ -19,7 +19,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class EventController {
 
-    private SharedPreferencesManager sharedPreferences;
+    //private SharedPreferencesManager sharedPreferences;
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -48,7 +48,7 @@ public class EventController {
 
     public void getEventsUser(AsyncHttpResponseHandler responseHandler, Context context, String page_size, String page_number) {
         RequestParams params = new RequestParams();
-        sharedPreferences = new SharedPreferencesManager(context);
+        SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();
@@ -61,8 +61,21 @@ public class EventController {
         client.get(context, URLResources.EVENTS_URL+"/user", params, responseHandler);
     }
 
+    public void getRecommendations(AsyncHttpResponseHandler responseHandler, Context context, String page_size, String page_number) {
+        RequestParams params = new RequestParams();
+        SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);
+        String token = sharedPreferences.getUserToken();
+        String provider = sharedPreferences.getUserProvider();
+        String uid = sharedPreferences.getUserId();
+        params.add("appkey", URLResources.APP_KEY);
+        params.add("token", token);
+        if (page_size!=null) params.add("page_size", page_size);
+        if (page_number!=null) params.add("page_number", page_number);
+        client.get(context, URLResources.USERS_RECOMMENDATIONS+'/'+uid+"-"+provider, params, responseHandler);
+    }
+
     public void postAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
-        sharedPreferences = new SharedPreferencesManager(context);
+        SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();
@@ -84,7 +97,7 @@ public class EventController {
     }
 
     public void doCheckIn(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
-        sharedPreferences = new SharedPreferencesManager(context);
+        SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();
@@ -113,7 +126,7 @@ public class EventController {
 
     public void deleteAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
         RequestParams params = new RequestParams();
-        sharedPreferences = new SharedPreferencesManager(context);
+        SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();

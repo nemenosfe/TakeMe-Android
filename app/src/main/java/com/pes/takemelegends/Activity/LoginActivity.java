@@ -224,8 +224,8 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                         sharedPreferences.setTotalTakes(user.getInt("takes"));
                         sharedPreferences.setCurrentLevel(user.getInt("level"));
                         sharedPreferences.setCurrentExperience(user.getInt("experience"));
-                        Log.v("token", user.getString("token"));
-                        
+                        Log.v("token", sharedPreferences.getUserToken());
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
