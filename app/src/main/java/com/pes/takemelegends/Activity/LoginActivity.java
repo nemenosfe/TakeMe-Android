@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,7 +116,8 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
 
         //login sense rrss
 
-        Button buttonDirecte = (Button) findViewById(R.id.buttonDirecte);
+        ImageView buttonDirecte = (ImageView) findViewById(R.id.logo);
+        buttonDirecte.setClickable(true);
         buttonDirecte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
