@@ -10,17 +10,34 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import cz.msebera.android.httpclient.Header;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.pes.takemelegends.Controller.ControllerFactory;
+import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class PreferencesActivity extends Activity implements View.OnClickListener {
 
@@ -29,7 +46,11 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
     private Button saveButton, skipButton;
     private TextView selectedCitiesTextView, selectedPreferencesTextView;
     private ImageButton backButton;
-    private ListView selectedPreferencesList;
+    private ListView selectedPreferencesList, selectedCitiesList;
+    private UserController userController;
+    private Boolean isFirstTime = true;
+    private Map<String,String> mapCategories;
+    private SharedPreferencesManager shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +62,14 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         allCities = new ArrayList<>();
         allPreferences = new ArrayList<>();
 
+
         skipButton = (Button)findViewById(R.id.button_skip);
         saveButton = (Button)findViewById(R.id.button_save);
         backButton = (ImageButton) findViewById(R.id.preferences_back_button);
         selectedCitiesTextView = (TextView)findViewById(R.id.text_selected_cities);
         selectedPreferencesTextView = (TextView) findViewById(R.id.selected_preferences);
         selectedPreferencesList = (ListView) findViewById(R.id.preferences_list);
-
-        selectedPreferencesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedPreferences));
+        selectedCitiesList = (ListView) findViewById(R.id.cities_list);
 
         saveButton.setOnClickListener(this);
         selectedCitiesTextView.setOnClickListener(this);
@@ -64,6 +85,14 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
             backButton.setVisibility(View.VISIBLE);
             backButton.setOnClickListener(this);
         }
+        
+//        shared = new SharedPreferencesManager(this);
+//        if (shared.getHasPreferences()) {
+//            isFirstTime = false;
+//        }
+//        else {
+//            isFirstTime = true;
+//        }
 
         allCities.add("Barcelona");
         allCities.add("Madrid");
@@ -75,34 +104,125 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         allCities.add("Palma de Gran Canaria");
         allCities.add("Bilbao");
 
-        allPreferences.add(getResources().getString(R.string.preferences_music));
-        allPreferences.add(getResources().getString(R.string.preferences_conference));
-        allPreferences.add(getResources().getString(R.string.preferences_comedy));
-        allPreferences.add(getResources().getString(R.string.preferences_learning_education));
-        allPreferences.add(getResources().getString(R.string.preferences_family_fun_kids));
-        allPreferences.add(getResources().getString(R.string.preferences_festivals_parades));
-        allPreferences.add(getResources().getString(R.string.preferences_movies_film));
-        allPreferences.add(getResources().getString(R.string.preferences_food));
-        allPreferences.add(getResources().getString(R.string.preferences_fundraisers));
-        allPreferences.add(getResources().getString(R.string.preferences_art));
-        allPreferences.add(getResources().getString(R.string.preferences_support));
-        allPreferences.add(getResources().getString(R.string.preferences_holiday));
-        allPreferences.add(getResources().getString(R.string.preferences_books));
-        allPreferences.add(getResources().getString(R.string.preferences_attractions));
-        allPreferences.add(getResources().getString(R.string.preferences_community));
-        allPreferences.add(getResources().getString(R.string.preferences_business));
-        allPreferences.add(getResources().getString(R.string.preferences_singles_social));
-        allPreferences.add(getResources().getString(R.string.preferences_schools_alumni));
-        allPreferences.add(getResources().getString(R.string.preferences_outdoors_recreation));
-        allPreferences.add(getResources().getString(R.string.preferences_performing_arts));
-        allPreferences.add(getResources().getString(R.string.preferences_animals));
-        allPreferences.add(getResources().getString(R.string.preferences_politics_activism));
-        allPreferences.add(getResources().getString(R.string.preferences_sales));
-        allPreferences.add(getResources().getString(R.string.preferences_science));
-        allPreferences.add(getResources().getString(R.string.preferences_religion_spiritualism));
-        allPreferences.add(getResources().getString(R.string.preferences_sports));
-        allPreferences.add(getResources().getString(R.string.preferences_technology));
-        allPreferences.add(getResources().getString(R.string.preferences_others));
+        mapCategories = new HashMap<>();
+        mapCategories.put("music", getResources().getString(R.string.preferences_music));
+        mapCategories.put("conference", getResources().getString(R.string.preferences_conference));
+        mapCategories.put("comedy", getResources().getString(R.string.preferences_comedy));
+        mapCategories.put("learning_education", getResources().getString(R.string.preferences_learning_education));
+        mapCategories.put("family_fun_kids", getResources().getString(R.string.preferences_family_fun_kids));
+        mapCategories.put("festivals_parades", getResources().getString(R.string.preferences_festivals_parades));
+        mapCategories.put("movies_film", getResources().getString(R.string.preferences_movies_film));
+        mapCategories.put("food", getResources().getString(R.string.preferences_food));
+        mapCategories.put("fundraisers", getResources().getString(R.string.preferences_fundraisers));
+        mapCategories.put("art", getResources().getString(R.string.preferences_art));
+        mapCategories.put("support", getResources().getString(R.string.preferences_support));
+        mapCategories.put("holiday", getResources().getString(R.string.preferences_holiday));
+        mapCategories.put("books", getResources().getString(R.string.preferences_books));
+        mapCategories.put("attractions", getResources().getString(R.string.preferences_attractions));
+        mapCategories.put("community", getResources().getString(R.string.preferences_community));
+        mapCategories.put("business", getResources().getString(R.string.preferences_business));
+        mapCategories.put("singles_social", getResources().getString(R.string.preferences_singles_social));
+        mapCategories.put("schools_alumni", getResources().getString(R.string.preferences_schools_alumni));
+        mapCategories.put("outdoors_recreation", getResources().getString(R.string.preferences_outdoors_recreation));
+        mapCategories.put("performing_arts", getResources().getString(R.string.preferences_performing_arts));
+        mapCategories.put("animals", getResources().getString(R.string.preferences_animals));
+        mapCategories.put("politics_activism", getResources().getString(R.string.preferences_politics_activism));
+        mapCategories.put("sales", getResources().getString(R.string.preferences_sales));
+        mapCategories.put("science", getResources().getString(R.string.preferences_science));
+        mapCategories.put("religion_spirituality", getResources().getString(R.string.preferences_religion_spiritualism));
+        mapCategories.put("sports", getResources().getString(R.string.preferences_sports));
+        mapCategories.put("technology", getResources().getString(R.string.preferences_technology));
+        mapCategories.put("others", getResources().getString(R.string.preferences_others));
+
+        for ( Map.Entry<String, String> entry : mapCategories.entrySet() ) {
+            String value = entry.getValue();
+            allPreferences.add(value);
+        }
+
+        userController = ControllerFactory.getInstance().getUserController();
+        userController.getPreferences(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                String strCategories = "";
+                String strLocations = "";
+                try {
+                    if (response.getJSONObject("preferences").getString("categories") != null) {
+                        strCategories = response.getJSONObject("preferences").getString("categories");
+                    }
+                    if (response.getJSONObject("preferences").getString("locations") != null) {
+                        strLocations = response.getJSONObject("preferences").getString("locations");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                List<String> categories = Arrays.asList(strCategories.split("\\|\\|"));
+                List<String> locations = Arrays.asList(strLocations.split("\\|\\|"));
+
+                for (int i=0; i< categories.size(); i++) {
+                    String key = categories.get(i);
+                    String value = mapCategories.get(key);
+                    if (value != null) {
+                        selectedPreferences.add(value);
+                    }
+                }
+
+                for (int i=0; i< locations.size(); i++) {
+                    String value = locations.get(i);
+                    if (value != null) {
+                        selectedCities.add(value);
+                    }
+                }
+
+                selectedPreferencesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedPreferences));
+                setListViewHeightBasedOnChildren(selectedPreferencesList);
+
+                selectedCitiesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedCities));
+                setListViewHeightBasedOnChildren(selectedCitiesList);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Toast.makeText(getApplicationContext(), "getPreferences failed: ", Toast.LENGTH_SHORT).show();
+            }
+        },getApplicationContext());
+    }
+
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
+
+
+    private void goToMainActivity() {
+        Intent intent = new Intent(PreferencesActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+    public static Object getKeyFromValue(Map hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
     }
 
 
@@ -155,24 +275,8 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                                     }
                                 }
 
-                                // Display the selected cities or "All Cities" message if none is selected
-                                TextView text_selected_cities = (TextView) findViewById(R.id.text_selected_cities);
-                                String text = "";
-
-                                if (selectedCities.size() == 0){
-                                    Resources resources = getResources();
-                                    text = resources.getString(R.string.preferences_all_cities);
-                                }
-                                else {
-                                    for (int i = 0; i < selectedCities.size(); i++) {
-                                        text += selectedCities.get(i);
-                                        if (i < selectedCities.size() - 1) {
-                                            text += ", ";
-                                        }
-                                    }
-                                }
-
-                                text_selected_cities.setText(text);
+                                selectedCitiesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedCities));
+                                setListViewHeightBasedOnChildren(selectedCitiesList);
 
                             }
                         });
@@ -227,6 +331,8 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                                     }
                                 }
                                 selectedPreferencesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedPreferences));
+                                setListViewHeightBasedOnChildren(selectedPreferencesList);
+
                             }
                         });
 
@@ -249,9 +355,74 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
             }
 
             case R.id.button_save: {
-                Intent intent = new Intent(PreferencesActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
+                // prepare the cities in a string like:   aa||bbbb||asagfdsg
+                String cities = "";
+                for(int i = 0; i < selectedCities.size(); i++) {
+                    if (cities.equals("")) {
+                        cities += selectedCities.get(i);
+                    }
+                    else {
+                        cities += "||";
+                        cities += selectedCities.get(i);
+                    }
+                }
+
+                // prepare the categories in a string like:   aa||bbbb||asagfdsg
+                String categories = "";
+                for(int i = 0; i < selectedPreferences.size(); i++) {
+
+                    String key = (String) getKeyFromValue(mapCategories,selectedPreferences.get(i));
+
+                    if (categories.equals("")) {
+                        categories += key;
+                    }
+                    else {
+                        categories += "||";
+                        categories += key;
+                    }
+                }
+
+                // Create the string preferences to send it to the controller:   "{'loc..':'aa||sad||adf', 'categories':'asd||an||ad'}"
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("categories", categories);
+                    json.put("locations", cities);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Toast.makeText(getApplicationContext(), json.toString(), Toast.LENGTH_SHORT).show();
+
+                // POST or PUT
+                if (isFirstTime) {
+                    userController.postPreferences(new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            //shared.setHasPreferences(true);
+                            goToMainActivity();
+                        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Toast.makeText(getApplicationContext(), "postPreferences failed", Toast.LENGTH_SHORT).show();
+                            goToMainActivity();
+                        }
+                    },getApplicationContext(), categories, cities);
+                }
+                else {
+                    userController.putPreferences(new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            goToMainActivity();
+                        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Toast.makeText(getApplicationContext(), "putPreferences failed", Toast.LENGTH_SHORT).show();
+                            goToMainActivity();
+                        }
+                    },getApplicationContext(), categories, cities);
+                }
+
                 break;
             }
 

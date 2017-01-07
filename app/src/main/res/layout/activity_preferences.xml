@@ -141,6 +141,7 @@
                     <ListView
                         android:layout_below="@id/your_preferences_textview"
                         android:id="@+id/preferences_list"
+                        android:scrollbars="none"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     </ListView>
@@ -182,7 +183,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:text="@string/text_cities_of_interes"
+                    android:text="@string/text_all_cities"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -204,6 +205,29 @@
                     />
 
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_below="@id/all_categories_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/your_cities_textview"
+                    android:text="@string/text_your_cities"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    style="@style/p" />
+
+                <ListView
+                    android:layout_below="@id/your_cities_textview"
+                    android:id="@+id/cities_list"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </ListView>
+
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
