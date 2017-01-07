@@ -15,9 +15,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.pes.takemelegends.Controller.ControllerFactory;
+import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.Fragment.TotsEventsFragment;
 import com.pes.takemelegends.R;
-import com.pes.takemelegends.Utils.GPSTracker;
+
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 import java.util.List;
 
@@ -78,7 +84,6 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         Button btnCheckIn;
         public double lat, lng;
         private View itemLayoutView;
-        private GPSTracker gps;
         private Context context;
 
         ViewHolder(View itemLayoutView, Context context) {
@@ -119,7 +124,19 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         public void onClick(View view) {
             Location l = getLocation();
 
-            //double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
+            double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
+
+            EventController eventController = ControllerFactory.getInstance().getEventController();
+            eventController.doCheckIn(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    btnCheckIn.setText("ok");
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    btnCheckIn.setText("error");
+                }
+            },context, (String) id.getText());
 
             //Toast.makeText(context,'d', Toast.LENGTH_LONG).show();
 
