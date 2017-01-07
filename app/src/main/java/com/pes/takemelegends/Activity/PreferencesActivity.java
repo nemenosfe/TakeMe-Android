@@ -158,7 +158,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
 
                                 if (selectedCities.size() == 0){
                                     Resources resources = getResources();
-                                    text = resources.getString(R.string.pteferences_all_cities);
+                                    text = resources.getString(R.string.preferences_all_cities);
                                 }
                                 else {
                                     for (int i = 0; i < selectedCities.size(); i++) {

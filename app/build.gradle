@@ -11,6 +11,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
 
 
 repositories {
@@ -71,5 +72,3 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile 'com.google.android.gms:play-services-appindexing:9.8.0'
 }
-
-apply plugin: 'com.google.gms.google-services'
