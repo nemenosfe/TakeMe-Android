@@ -34,25 +34,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     static final double _eQuatorialEarthRadius = 6378.1370D;
     static final double _d2r = (Math.PI / 180D);
 
-    public static double HaversineInKM(double lat1, double long1, double lat2, double long2) {
-        double dlong = (long2 - long1) * _d2r;
-        double dlat = (lat2 - lat1) * _d2r;
-        double a = Math.pow(Math.sin(dlat / 2D), 2D) + Math.cos(lat1 * _d2r) * Math.cos(lat2 * _d2r)
-                * Math.pow(Math.sin(dlong / 2D), 2D);
-        double c = 2D * Math.atan2(Math.sqrt(a), Math.sqrt(1D - a));
-        double d = _eQuatorialEarthRadius * c;
 
-        return d;
-    }
-
-
-
-    private static Location getLocation() {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return null;
-        }
-        return LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-    }
 
 
     public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient) {
@@ -65,7 +47,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     @Override
     public EventCheckInAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_check_in_row, parent, false);
-        return new ViewHolder(itemLayoutView);
+        return new ViewHolder(itemLayoutView, context);
     }
 
     @Override
@@ -81,8 +63,8 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         viewHolder.takes.setText(data[4]+"\ntakes");
         viewHolder.hours.setText(data[5]);
         viewHolder.id.setText(data[6]);
-        viewHolder.lat = data[7];
-        viewHolder.lng = data[8];
+        viewHolder.lat = Double.parseDouble(data[7]);
+        viewHolder.lng = Double.parseDouble(data[8]);
     }
 
     @Override
@@ -94,14 +76,15 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
 
         TextView takes, hours, eventName, eventDesc, eventDate, id;
         Button btnCheckIn;
-        public String lat, lng;
-        private Context context;
+        public double lat, lng;
         private View itemLayoutView;
         private GPSTracker gps;
+        private static Context context;
 
-        ViewHolder(View itemLayoutView) {
+        ViewHolder(View itemLayoutView, Context context) {
             super(itemLayoutView);
             this.itemLayoutView = itemLayoutView;
+            this.context = context;
 
             context = itemLayoutView.getContext();
             btnCheckIn = (Button) this.itemLayoutView.findViewById(R.id.btnCheckIn);
@@ -114,36 +97,33 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             btnCheckIn.setOnClickListener(this);
         }
 
+        public static double HaversineInKM(double lat1, double long1, double lat2, double long2) {
+            double dlong = (long2 - long1) * _d2r;
+            double dlat = (lat2 - lat1) * _d2r;
+            double a = Math.pow(Math.sin(dlat / 2D), 2D) + Math.cos(lat1 * _d2r) * Math.cos(lat2 * _d2r)
+                    * Math.pow(Math.sin(dlong / 2D), 2D);
+            double c = 2D * Math.atan2(Math.sqrt(a), Math.sqrt(1D - a));
+            double d = _eQuatorialEarthRadius * c;
+
+            return d;
+        }
+
+        private static Location getLocation() {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return null;
+            }
+            return LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        }
+
         @Override
         public void onClick(View view) {
-            //http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
-            //Toast.makeText(this.context, "asdf", Toast.LENGTH_SHORT).show();
-
-//            gps = new GPSTracker(this.context);
-//
-//            // check if GPS enabled
-//            if(gps.canGetLocation()){
-//
-//                double latitude = gps.getLatitude();
-//                double longitude = gps.getLongitude();
-//
-//                // \n is for new line
-//                Toast.makeText(this.context, "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-//            }else{
-//                // can't get location
-//                // GPS or Network is not enabled
-//                // Ask user to enable GPS/network in settings
-//                gps.showSettingsAlert();
-//            }
-
-
-
-            //HaversineInKM();
-
             Location l = getLocation();
 
-            Toast.makeText(this.context, "Check in" + lat + lng + "   g: " + l.getLatitude() + ' ' +  l.getLongitude(), Toast.LENGTH_LONG).show();
+            //double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
 
+            Toast.makeText(context,'d', Toast.LENGTH_LONG).show();
+
+            //Toast.makeText(this.context, "g: " + l.getLatitude() + ' ' +  l.getLongitude() + 'd' + String.valueOf(distance), Toast.LENGTH_LONG).show();
         }
     }
 }
