@@ -22,7 +22,7 @@
         <ImageView
             app:layout_widthPercent="75%"
             app:layout_heightPercent="30%"
-            android:id="@+id/imageView2"
+            android:id="@+id/logo"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
             android:background="@drawable/logov1color"
@@ -36,94 +36,60 @@
             android:id="@+id/buttonDirecte"
             android:visibility="gone"/>
 
-        <com.facebook.login.widget.LoginButton
-            xmlns:fb="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/button_facebook"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            fb:com_facebook_login_text="@string/login_facebook"
-            fb:com_facebook_logout_text=""
-            android:gravity="right"/>
+        <RelativeLayout
+            app:layout_widthPercent="80%"
+            app:layout_heightPercent="50%"
+            android:id="@+id/menu"
+            android:layout_below="@+id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp">
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_login_button"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="right"
-            android:padding="0dp"
-            android:layout_margin="0dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:background="#666666"
+                android:id="@+id/bar1"/>
 
-        <com.twitter.sdk.android.core.identity.TwitterLoginButton
-            android:id="@+id/twitter_login_button"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="right|center_vertical"/>
-<!--
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_google"
-            android:text="@string/login_google"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:background="@drawable/button_google"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:drawableLeft="@drawable/ic_google"
-            android:drawablePadding="20dp"
-            android:textColor="@android:color/background_light"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:layout_gravity="center_horizontal"
-            android:drawableTint="#fff"
-            android:gravity="center_vertical" />
--->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:background="#666666"
+                android:id="@+id/bar2"
+                android:layout_alignParentBottom="true"/>
 
-        <!--
-                <Button
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttons"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true">
+
+                <com.facebook.login.widget.LoginButton
+                    xmlns:fb="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/button_facebook"
-                    android:text="@string/login_facebook"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:textColorLink="?attr/colorPrimary"
-                    android:background="@drawable/button_facebook"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:drawableLeft="@drawable/ic_facebook"
-                    android:drawablePadding="20dp"
-                    android:textColor="@android:color/background_light"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_gravity="center_horizontal"
-                    android:drawableTint="#fff"
-                    android:gravity="center_vertical" />
-                -->
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    fb:com_facebook_login_text="@string/login_facebook"
+                    fb:com_facebook_logout_text=""/>
 
-        <!--<Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_twitter"
-            android:text="@string/login_twitter"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:background="@drawable/button_twitter"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:drawableLeft="@drawable/ic_twitter"
-            android:drawableTint="#fff"
-            android:drawablePadding="20dp"
-            android:textColor="@android:color/background_light"
-            android:paddingLeft="20dp"
-            android:radius="150dp"
-            android:paddingRight="20dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical" />
-            -->
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/google_login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/button_facebook"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                    android:id="@+id/twitter_login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/google_login_button" />
+            </RelativeLayout>
+        </RelativeLayout>
+
 
     </android.support.percent.PercentRelativeLayout>
 
