@@ -15,7 +15,10 @@ public class SharedPreferencesManager {
     private static Integer currentLevel = 0;
     private static Integer totalTakes = 0;
     private static Integer currentExperience = 0;
+    private static Integer numberOfCheckins = 0;
+    private static Double experienceOfTheNextLevel = 0.0;
     SharedPreferences sp;
+
 
 
     /**
@@ -95,6 +98,15 @@ public class SharedPreferencesManager {
         setValue("userProvider",userCompanyId);
     }
 
+    public int getNumberOfChekins(){return numberOfCheckins;}
+    public void setNumberOfCheckins(int numberOfCheckins) {
+        this.numberOfCheckins = numberOfCheckins;
+    }
+    public Double getExperienceOfTheNextLevel(){return experienceOfTheNextLevel;}
+    public void setExperienceOfTheNextLevel(double experienceOfTheNextLevel) {
+        this.experienceOfTheNextLevel = experienceOfTheNextLevel;
+    }
+
     public Boolean isFirstTime() { return firstTime; }
         public void setFirstTime(Boolean fT) {
         firstTime = fT;
@@ -141,5 +153,4 @@ public class SharedPreferencesManager {
         }
         editor.commit();
     }
-
 }
