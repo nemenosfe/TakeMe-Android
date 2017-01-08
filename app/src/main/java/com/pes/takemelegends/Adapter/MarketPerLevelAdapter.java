@@ -119,6 +119,12 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
                     rewardController.postUserReward(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                String takes = response.getJSONObject("purchase").getString("takes_left");
+                                productTakes.setText(takes+" takes");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             dialog.dismiss();
                         }
 
