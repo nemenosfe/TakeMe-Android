@@ -119,12 +119,12 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
                     rewardController.postUserReward(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            Log.v("EXITO", "NIGGA");
+                            dialog.dismiss();
                         }
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-
+                            dialog.dismiss();
                         }
                     }, context, productName.getText().toString());
                 }
