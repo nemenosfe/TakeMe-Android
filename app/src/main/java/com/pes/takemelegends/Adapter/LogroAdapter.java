@@ -1,5 +1,6 @@
 package com.pes.takemelegends.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -12,15 +13,19 @@ import android.widget.TextView;
 
 import com.pes.takemelegends.R;
 
+import java.util.List;
+
 /**
  * Created by Oscar on 24/10/2016.
  */
 
 public class LogroAdapter extends RecyclerView.Adapter<LogroAdapter.ViewHolder> {
 
-    private String[] itemsData;
+    private List<String[]> itemsData;
+    private Context context;
 
-    public LogroAdapter(String[] itemsData) {
+    public LogroAdapter(Context context, List<String[]> itemsData) {
+        this.context = context;
         this.itemsData = itemsData;
     }
 
@@ -33,14 +38,15 @@ public class LogroAdapter extends RecyclerView.Adapter<LogroAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(LogroAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.numOfTakes.setText("200 takes");
-        viewHolder.titleLogro.setText("Awesome logro man!");
-        viewHolder.descriptionLogro.setText("Has ganado el logro que tu quieras.");
+        String[] data = itemsData.get(position);
+        viewHolder.titleLogro.setText(data[0]);
+        viewHolder.descriptionLogro.setText(data[1]);
+        viewHolder.numOfTakes.setText(data[2]+" takes");
     }
 
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        return itemsData.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

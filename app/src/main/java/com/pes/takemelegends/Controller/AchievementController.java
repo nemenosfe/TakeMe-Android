@@ -19,9 +19,10 @@ public class AchievementController {
 
     public void getUserAchievements(AsyncHttpResponseHandler responseHandler, Context context) {
         SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);
-        RequestParams params = new RequestParams("appkey", URLResources.APP_KEY);
+        RequestParams params = new RequestParams();
+        params.add("appkey", URLResources.APP_KEY);
         params.add("uid", sharedPreferences.getUserId());
         params.add("provider", sharedPreferences.getUserProvider());
-        client.get(URLResources.USER_ACHIEVEMENTS_URL, responseHandler);
+        client.get(URLResources.USER_ACHIEVEMENTS_URL, params, responseHandler);
     }
 }
