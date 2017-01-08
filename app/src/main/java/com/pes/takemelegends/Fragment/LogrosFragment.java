@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Fragment;
 
 
+import android.app.ProgressDialog;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,9 +20,15 @@ import com.pes.takemelegends.Adapter.EventAdapter;
 import com.pes.takemelegends.Adapter.LogroAdapter;
 import com.pes.takemelegends.Controller.AchievementController;
 import com.pes.takemelegends.Controller.ControllerFactory;
+import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -34,6 +41,7 @@ public class LogrosFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private FloatingActionButton mFab;
     private AchievementController achievementController;
+    private EventController eventController;
 
     public LogrosFragment() {
         // Required empty public constructor
@@ -46,6 +54,7 @@ public class LogrosFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_logros, container, false);
 
         achievementController = ControllerFactory.getInstance().getAchievementController();
+        eventController = ControllerFactory.getInstance().getEventController();
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.logrosRecyclerView);
         mFab = (FloatingActionButton) rootView.findViewById(R.id.fabBtn);
@@ -61,22 +70,40 @@ public class LogrosFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        String[] dummy = {"Festival", "BOOM Festival 2016","Portugal", "16/10/2016 - 20:45h"};
-        LogroAdapter logrosAdapter = new LogroAdapter(dummy);
-
-        /*achievementController.getAllAchievements(new JsonHttpResponseHandler() {
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Obteniendo eventos");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        achievementController.getUserAchievements(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Toast.makeText(getActivity(), "GG WP IT WORKS DUDE!", Toast.LENGTH_SHORT).show();
+                List<String[]> logros = new ArrayList<>();
+                JSONArray eventArray = response.optJSONArray("achievements");
+                for (int i = 0; i < eventArray.length(); i++) {
+                    try {
+                        JSONObject achievement = eventArray.getJSONObject(i).getJSONObject("achievement");
+                        String name = achievement.getString("name");
+                        String description = achievement.getString("description");
+                        String takes = achievement.getString("takes");
+                        logros.add(new String[]{name, description, takes});
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                LogroAdapter logrosAdapter = new LogroAdapter(getActivity(), logros);
+
+                recyclerView.setAdapter(logrosAdapter);
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getActivity(), "IT CRASHES DUDE!", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
-        });*/
-
-        recyclerView.setAdapter(logrosAdapter);
+        }, getActivity());
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 

@@ -51,7 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/infoUser"
         android:gravity="center"
-        android:id="@+id/expLayout">
+        android:id="@+id/expLayout"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
