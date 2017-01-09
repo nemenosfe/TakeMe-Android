@@ -195,6 +195,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 else eventController.postAsistire(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
                         Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
                         disableAttendance();
                         progressDialog.dismiss();
