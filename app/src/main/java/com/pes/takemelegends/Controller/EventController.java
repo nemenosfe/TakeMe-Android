@@ -125,18 +125,17 @@ public class EventController {
     }
 
     public void deleteAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
-        RequestParams params = new RequestParams();
         SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();
-        params.add("token", token);
-        params.add("appkey", URLResources.APP_KEY);
         JSONObject body = new JSONObject();
         StringEntity entity = null;
         try {
             body.put("uid", uid);
             body.put("provider", provider);
+            body.put("token", token);
+            body.put("appkey", URLResources.APP_KEY);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -145,7 +144,7 @@ public class EventController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.delete(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
+        client.delete(context, URLResources.EVENTS_URL+'/'+event_id+"/user", entity, "application/json", responseHandler);
     }
 
 }
