@@ -1,11 +1,14 @@
 package com.pes.takemelegends.Activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,9 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.pes.takemelegends.Fragment.EventsViewPagerFragment;
 import com.pes.takemelegends.Fragment.MarketFragment;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment feed, profile, market, myEvents;
     private SharedPreferencesManager sharedPreferences;
+    private static final int RECORD_REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,19 +54,27 @@ public class MainActivity extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         header.setBackgroundColor(getResources().getColor(R.color.white));
 
-        /*
-        Hasta que el login no funcione, hardcodeamos el user
-         */
-        /*sharedPreferences.setUserId("2");
-        sharedPreferences.setUserToken("randomToken");
-        sharedPreferences.setUserProvider("provider");*/
-
+        checkPermissions();
 
         //Mostrem el feed al conectar
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (feed == null) feed = new EventsViewPagerFragment();
         transaction.replace(R.id.fragment_container,feed);
         transaction.commit();
+    }
+
+    public void checkPermissions() {
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        RECORD_REQUEST_CODE);
+            }
+        }
     }
 
     @Override
