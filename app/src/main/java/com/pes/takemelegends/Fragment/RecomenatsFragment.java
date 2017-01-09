@@ -5,12 +5,14 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Adapter.EventAdapter;
@@ -38,6 +40,7 @@ public class RecomenatsFragment extends Fragment {
     private EventController eventController;
     private SharedPreferencesManager sharedPreferences;
     private List<String[]> events;
+    private SwipeRefreshLayout swipeContainer;
 
     public RecomenatsFragment() {
         // Required empty public constructor
@@ -54,6 +57,33 @@ public class RecomenatsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (sharedPreferences.getRecomendadosUpdate())updateRecyclerView();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_recomenats, container, false);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.totsRecyclerView);
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateRecyclerView();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(R.color.main_ambar);
+
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        updateRecyclerView();
+
+        return rootView;
     }
 
     private void updateRecyclerView() {
@@ -106,20 +136,4 @@ public class RecomenatsFragment extends Fragment {
         }, getActivity().getApplicationContext(), null, null);
         //'category','keywords','date','location','within','page_size','page_number'
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_recomenats, container, false);
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.totsRecyclerView);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        updateRecyclerView();
-
-        return rootView;
-    }
-
 }
