@@ -199,6 +199,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         sharedPreferences.setAttendanceUpdate(true);
+                        sharedPreferences.setTodosUpdate(true);
+                        sharedPreferences.setRecomendadosUpdate(true);
                         Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
                         disableAttendance();
                         progressDialog.dismiss();
@@ -211,42 +213,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                     }
                 },this, event_id);
                 break;
-        }
-    }
-
-    private void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(EventDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(EventDetailsActivity.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-            } else {
-                ActivityCompat.requestPermissions(EventDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        RECORD_REQUEST_CODE);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case RECORD_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
-                    startActivity(intent);
-                    break;
-
-                } else {
-
-                    Toast toast = Toast.makeText(EventDetailsActivity.this, "DENIED", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                return;
-            }
         }
     }
 
