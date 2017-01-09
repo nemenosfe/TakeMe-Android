@@ -27,6 +27,7 @@ import com.pes.takemelegends.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -68,7 +69,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         }
         else viewHolder.btnCheckIn.setClickable(false);
         viewHolder.eventName.setText(data[1]);
-        viewHolder.eventDesc.setText(data[2]);
+        viewHolder.eventDesc.setText(Jsoup.parse(data[2]).text());
         viewHolder.eventDate.setText(data[3]);
         viewHolder.takes.setText(data[4]+"\ntakes");
         viewHolder.hours.setText(data[5]);
@@ -127,6 +128,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             Location l = getLocation();
             double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
 
+            //TODO: Fix distance god mode
             if (distance < 10000000) {
                 EventController eventController = ControllerFactory.getInstance().getEventController();
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
