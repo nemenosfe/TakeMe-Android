@@ -22,6 +22,7 @@ import com.pes.takemelegends.Adapter.EventHistorialAdapter;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,29 +33,26 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MyEventsCheckInFragment extends Fragment {
 
 
     public MyEventsCheckInFragment() {
-
     }
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
     private GoogleApiClient mGoogleApiClient;
-    private MyEventsCheckInFragment me;
     private View rootView;
+    private SharedPreferencesManager sharedPreferencesManager;
     public MyEventsHistorialFragment fragmentHistorial;
+    private List<String[]> events;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
-        me = this;
+        sharedPreferencesManager = new SharedPreferencesManager(getContext());
     }
 
 
@@ -73,7 +71,7 @@ public class MyEventsCheckInFragment extends Fragment {
         eventController.getEventsUser(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                List<String[]> events = new ArrayList<>();
+                events = new ArrayList<>();
                 //Present
                 try {
                     JSONObject present = response.getJSONObject("present");
@@ -81,7 +79,7 @@ public class MyEventsCheckInFragment extends Fragment {
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
-                            String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            int checkin_done = event.isNull("checkin_done") ? 0 : event.getInt("checkin_done");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
@@ -89,7 +87,7 @@ public class MyEventsCheckInFragment extends Fragment {
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
                             Double lat = event.isNull("latitude") ? 0 : Double.valueOf(event.getDouble("latitude"));
                             Double lng = event.isNull("longitude") ? 0 : Double.valueOf(event.getDouble("longitude"));
-                            if (checkin_done.equals("0")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id, String.valueOf(lat), String.valueOf(lng)});
+                            if (checkin_done == 0) events.add(new String[]{"Present", String.valueOf(checkin_done), title, description, startTime, takes, id, String.valueOf(lat), String.valueOf(lng)});
                         }
                     }
                 } catch (JSONException e) {
@@ -116,7 +114,7 @@ public class MyEventsCheckInFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, me);
+                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient);
                 recyclerView.setAdapter(checkinAdapter);
                 progressDialog.dismiss();
             }
@@ -128,11 +126,6 @@ public class MyEventsCheckInFragment extends Fragment {
         }, getActivity(), "50", null);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-    }
-
-    public void refreshChackinAndHistorial() {
-        fragmentHistorial.needsRefresh = true;
-        refresh();
     }
 
     @Override
@@ -154,4 +147,13 @@ public class MyEventsCheckInFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sharedPreferencesManager.needToRefreshView()) {
+            EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient);
+            checkinAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(checkinAdapter);
+        }
+    }
 }

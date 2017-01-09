@@ -9,14 +9,12 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -24,9 +22,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Activity.EventDetailsActivity;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
-import com.pes.takemelegends.Fragment.MyEventsCheckInFragment;
-import com.pes.takemelegends.Fragment.TotsEventsFragment;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,19 +40,17 @@ import java.util.List;
 public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapter.ViewHolder> {
 
     private List<String[]> itemsData;
-    private Context outerContext;
+    private Context context;
     private static GoogleApiClient mGoogleApiClient;
-    private MyEventsCheckInFragment myEventsCheckInFragment;
 
     static final double _eQuatorialEarthRadius = 6378.1370D;
     static final double _d2r = (Math.PI / 180D);
 
 
-    public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient, MyEventsCheckInFragment myEventsCheckInFragment) {
+    public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient) {
         this.itemsData = itemsData;
-        this.outerContext = context;
-        this.mGoogleApiClient = mGoogleApiClient;
-        this.myEventsCheckInFragment = myEventsCheckInFragment;
+        this.context = context;
+        EventCheckInAdapter.mGoogleApiClient = mGoogleApiClient;
     }
 
     @Override
@@ -68,7 +63,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
         if (!data[0].equals("Present")) {
-            viewHolder.btnCheckIn.setBackgroundColor(outerContext.getResources().getColor(R.color.green));
+            viewHolder.btnCheckIn.setBackgroundColor(context.getResources().getColor(R.color.green));
         }
         else viewHolder.btnCheckIn.setClickable(false);
         viewHolder.eventName.setText(data[1]);
@@ -148,7 +143,8 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        btnCheckIn.setText("ok");
+                        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
+                        sharedPreferencesManager.setRefreshView(true);
                         try {
                             if (response.getJSONObject("attendance").getJSONObject("achievement") != null) {
                                 String description = response.getJSONObject("attendance").getJSONObject("achievement").getString("description");
@@ -169,7 +165,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                     }
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        btnCheckIn.setText("error");
+                        btnCheckIn.setText(context.getString(R.string.error));
                     }
                 },context, id.getText().toString());
             }

@@ -21,6 +21,7 @@ public class SharedPreferencesManager {
     private static Boolean hasPreferences = false;
     private static Boolean todosUpdate = false;
     private static Boolean recomendadosUpdate = false;
+    private static Boolean refreshView = false;
     SharedPreferences sp;
 
 
@@ -44,6 +45,13 @@ public class SharedPreferencesManager {
         hasPreferences = (Boolean) getObject("hasPreferences", Boolean.class.getSimpleName());
         todosUpdate = (Boolean) getObject("todosUpdate", Boolean.class.getSimpleName());
         recomendadosUpdate = (Boolean) getObject("recomendadosUpdate", Boolean.class.getSimpleName());
+        refreshView = (Boolean) getObject("refreshView", Boolean.class.getSimpleName());
+    }
+
+    public Boolean needToRefreshView() { return refreshView; }
+    public void setRefreshView(Boolean b) {
+        this.refreshView = b;
+        setValue("refreshView", b);
     }
 
     public Boolean getTodosUpdate() {return todosUpdate;}
