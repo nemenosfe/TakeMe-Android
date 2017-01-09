@@ -89,6 +89,13 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         Bundle extra = getIntent().getExtras();
         if (extra!=null) {
             event_id = extra.getString("id");
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Obteniendo eventos");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
             eventController.getEventInfo(new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -135,13 +142,16 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         if (attendance == 1) {
                             disableAttendance();
                         }
+                        progressDialog.dismiss();
                     } catch (JSONException e) {
+                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    progressDialog.dismiss();
                     Log.v("reponse","fail");
                 }
             }, event_id, getApplicationContext());
