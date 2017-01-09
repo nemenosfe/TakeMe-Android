@@ -18,6 +18,7 @@ public class SharedPreferencesManager {
     private static Integer numberOfCheckins = 0;
     private static Double experienceOfTheNextLevel = 0.0;
     private static Boolean needAttendanceUpdate = false;
+    private static Boolean hasPreferences = false;
     SharedPreferences sp;
 
 
@@ -38,11 +39,20 @@ public class SharedPreferencesManager {
         totalTakes = (Integer) getObject("totalTakes", Integer.class.getSimpleName());
         currentExperience = (Integer) getObject("currentExperience", Integer.class.getSimpleName());
         needAttendanceUpdate = (Boolean) getObject("needAttendanceUpdate", Boolean.class.getSimpleName());
+        hasPreferences = (Boolean) getObject("hasPreferences", Boolean.class.getSimpleName());
     }
 
     public Boolean getNeedAttendanceUpdate() {return needAttendanceUpdate;}
     public void setAttendanceUpdate(Boolean need) {
         needAttendanceUpdate = need;
+    }
+
+    public Boolean hasPreferences() {
+        return hasPreferences;
+    }
+    public void setHasPreferences(Boolean hasPreferences) {
+        this.hasPreferences = hasPreferences;
+        setValue("hasPreferences", hasPreferences);
     }
 
     public String getUserToken() {
