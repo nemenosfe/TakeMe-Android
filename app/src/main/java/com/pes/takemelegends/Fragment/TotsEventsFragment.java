@@ -19,6 +19,7 @@ import com.pes.takemelegends.Adapter.EventAdapter;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,11 +37,20 @@ public class TotsEventsFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
+    private SharedPreferencesManager sharedPreferences;
+    private List<String[]> events;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
+        sharedPreferences = new SharedPreferencesManager(getActivity());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sharedPreferences.getTodosUpdate())updateRecyclerView();
     }
 
     @Override
@@ -53,6 +63,15 @@ public class TotsEventsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        if (sharedPreferences.getTodosUpdate()) {
+            updateRecyclerView();
+        }
+
+        return rootView;
+    }
+
+    private void updateRecyclerView() {
+        sharedPreferences.setTodosUpdate(false);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Obteniendo eventos");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -63,7 +82,7 @@ public class TotsEventsFragment extends Fragment {
         eventController.getAllEvents(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                List<String[]> events = new ArrayList<>();
+                events = new ArrayList<>();
                 JSONArray eventArray = response.optJSONArray("events");
                 for (int i = 0; i < eventArray.length(); i++) {
                     try {
@@ -88,6 +107,7 @@ public class TotsEventsFragment extends Fragment {
                     }
                 }
                 EventAdapter totsAdapter = new EventAdapter(events, getActivity());
+                totsAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(totsAdapter);
                 progressDialog.dismiss();
             }
@@ -98,8 +118,6 @@ public class TotsEventsFragment extends Fragment {
             }
         }, null, null, "Future", "Barcelona", null, null, null);
         //'category','keywords','date','location','within','page_size','page_number'
-
-        return rootView;
     }
 
     private String capitalize(final String line) {

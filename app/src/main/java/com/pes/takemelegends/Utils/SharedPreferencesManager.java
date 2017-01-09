@@ -19,6 +19,8 @@ public class SharedPreferencesManager {
     private static Double experienceOfTheNextLevel = 0.0;
     private static Boolean needAttendanceUpdate = false;
     private static Boolean hasPreferences = false;
+    private static Boolean todosUpdate = false;
+    private static Boolean recomendadosUpdate = false;
     SharedPreferences sp;
 
 
@@ -40,11 +42,26 @@ public class SharedPreferencesManager {
         currentExperience = (Integer) getObject("currentExperience", Integer.class.getSimpleName());
         needAttendanceUpdate = (Boolean) getObject("needAttendanceUpdate", Boolean.class.getSimpleName());
         hasPreferences = (Boolean) getObject("hasPreferences", Boolean.class.getSimpleName());
+        todosUpdate = (Boolean) getObject("todosUpdate", Boolean.class.getSimpleName());
+        recomendadosUpdate = (Boolean) getObject("recomendadosUpdate", Boolean.class.getSimpleName());
+    }
+
+    public Boolean getTodosUpdate() {return todosUpdate;}
+    public void setTodosUpdate(Boolean need) {
+        todosUpdate = need;
+        setValue("todosUpdate", need);
+    }
+
+    public Boolean getRecomendadosUpdate() {return recomendadosUpdate;}
+    public void setRecomendadosUpdate(Boolean need) {
+        recomendadosUpdate = need;
+        setValue("recomendadosUpdate", need);
     }
 
     public Boolean getNeedAttendanceUpdate() {return needAttendanceUpdate;}
     public void setAttendanceUpdate(Boolean need) {
         needAttendanceUpdate = need;
+        setValue("needAttendanceUpdate", need);
     }
 
     public Boolean hasPreferences() {

@@ -17,6 +17,7 @@ import com.pes.takemelegends.Adapter.EventAdapter;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +36,8 @@ public class RecomenatsFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
+    private SharedPreferencesManager sharedPreferences;
+    private List<String[]> events;
 
     public RecomenatsFragment() {
         // Required empty public constructor
@@ -44,18 +47,17 @@ public class RecomenatsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
+        sharedPreferences = new SharedPreferencesManager(getActivity());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_recomenats, container, false);
+    public void onResume() {
+        super.onResume();
+        if (sharedPreferences.getRecomendadosUpdate())updateRecyclerView();
+    }
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.totsRecyclerView);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
+    private void updateRecyclerView() {
+        sharedPreferences.setRecomendadosUpdate(false);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Obteniendo eventos");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -66,7 +68,7 @@ public class RecomenatsFragment extends Fragment {
         eventController.getRecommendations(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                List<String[]> events = new ArrayList<>();
+                events = new ArrayList<>();
                 JSONArray eventArray = response.optJSONArray("events");
                 for (int i = 0; i < eventArray.length(); i++) {
                     try {
@@ -91,7 +93,9 @@ public class RecomenatsFragment extends Fragment {
                     }
                 }
                 EventAdapter totsAdapter = new EventAdapter(events, getActivity());
+                totsAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(totsAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
                 progressDialog.dismiss();
             }
 
@@ -101,8 +105,21 @@ public class RecomenatsFragment extends Fragment {
             }
         }, getActivity().getApplicationContext(), null, null);
         //'category','keywords','date','location','within','page_size','page_number'
+    }
 
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_recomenats, container, false);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.totsRecyclerView);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        if (sharedPreferences.getRecomendadosUpdate()) {
+            updateRecyclerView();
+        }
 
         return rootView;
     }

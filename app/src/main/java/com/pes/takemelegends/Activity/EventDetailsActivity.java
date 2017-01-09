@@ -29,6 +29,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -52,6 +53,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private ImageView eventImage;
     private String event_id;
     private boolean atendance;
+    private SharedPreferencesManager sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         textTakes = (TextView) findViewById(R.id.textTakes);
 
         eventController = ControllerFactory.getInstance().getEventController();
+        sharedPreferences = new SharedPreferencesManager(this);
         Bundle extra = getIntent().getExtras();
         if (extra!=null) {
             event_id = extra.getString("id");
@@ -195,7 +198,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 else eventController.postAsistire(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
+                        sharedPreferences.setAttendanceUpdate(true);
                         Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
                         disableAttendance();
                         progressDialog.dismiss();

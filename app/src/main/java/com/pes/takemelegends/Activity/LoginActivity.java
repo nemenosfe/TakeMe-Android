@@ -212,7 +212,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
-                    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
                     try {
 
                         JSONObject user = response.getJSONObject("user");
@@ -226,6 +226,9 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                         sharedPreferences.setCurrentExperience(user.getInt("experience"));
                         sharedPreferences.setNumberOfCheckins(user.getInt("number_checkins"));
                         sharedPreferences.setExperienceOfTheNextLevel(user.getDouble("experience_of_next_level"));
+                        sharedPreferences.setAttendanceUpdate(true);
+                        sharedPreferences.setTodosUpdate(true);
+                        sharedPreferences.setRecomendadosUpdate(true);
                         Log.v("token", sharedPreferences.getUserToken());
 
                     } catch (JSONException e) {
