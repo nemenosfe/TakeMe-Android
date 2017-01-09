@@ -132,6 +132,8 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             Location l = getLocation();
             double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
             final SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
+            Double minDistance = sharedPreferencesManager.getDistance();
+            if (minDistance == null) sharedPreferencesManager.setDistance(0.5);
             if (distance < sharedPreferencesManager.getDistance()) {
                 EventController eventController = ControllerFactory.getInstance().getEventController();
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
