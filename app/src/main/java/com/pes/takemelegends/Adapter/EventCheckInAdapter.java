@@ -39,9 +39,9 @@ import java.util.List;
 public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapter.ViewHolder> {
 
     private List<String[]> itemsData;
-    private static Context context;
+    private Context outerContext;
     private static GoogleApiClient mGoogleApiClient;
-    private static MyEventsCheckInFragment myEventsCheckInFragment;
+    private MyEventsCheckInFragment myEventsCheckInFragment;
 
     static final double _eQuatorialEarthRadius = 6378.1370D;
     static final double _d2r = (Math.PI / 180D);
@@ -49,7 +49,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
 
     public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient, MyEventsCheckInFragment myEventsCheckInFragment) {
         this.itemsData = itemsData;
-        this.context = context;
+        this.outerContext = context;
         this.mGoogleApiClient = mGoogleApiClient;
         this.myEventsCheckInFragment = myEventsCheckInFragment;
     }
@@ -57,14 +57,14 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     @Override
     public EventCheckInAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_check_in_row, parent, false);
-        return new ViewHolder(itemLayoutView, context);
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
         if (!data[0].equals("Present")) {
-            viewHolder.btnCheckIn.setBackgroundColor(context.getResources().getColor(R.color.green));
+            viewHolder.btnCheckIn.setBackgroundColor(outerContext.getResources().getColor(R.color.green));
         }
         else viewHolder.btnCheckIn.setClickable(false);
         viewHolder.eventName.setText(data[1]);
@@ -87,14 +87,13 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         Button btnCheckIn;
         public double lat, lng;
         private View itemLayoutView;
-        private Context context;
+        private final Context context;
 
-        ViewHolder(View itemLayoutView, Context context) {
+        ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             this.itemLayoutView = itemLayoutView;
-            this.context = context;
 
-            context = itemLayoutView.getContext();
+            this.context = itemLayoutView.getContext();
             btnCheckIn = (Button) this.itemLayoutView.findViewById(R.id.btnCheckIn);
             takes = (TextView) itemLayoutView.findViewById(R.id.takes);
             hours = (TextView) itemLayoutView.findViewById(R.id.hours);
@@ -128,7 +127,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             Location l = getLocation();
             double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
 
-            if (distance < 0.5) {
+            if (distance < 10000000) {
                 EventController eventController = ControllerFactory.getInstance().getEventController();
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
                     @Override
@@ -139,16 +138,14 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                                 String description = response.getJSONObject("attendance").getJSONObject("achievement").getString("description");
                                 String name = response.getJSONObject("attendance").getJSONObject("achievement").getString("name");
 
-                                new AlertDialog.Builder(context).setTitle("¡Enhorabuena! " + description);
-                                new AlertDialog.Builder(context).setMessage("Has desbloqueado el siguiente logro: " + name);
-                                new AlertDialog.Builder(context).setCancelable(false);
-                                new AlertDialog.Builder(context).setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        myEventsCheckInFragment.refreshChackinAndHistorial();
-                                    }
-                                });
-                                new AlertDialog.Builder(context).show();
+                                new AlertDialog.Builder(context).setTitle("¡Enhorabuena! " + description)
+                                        .setMessage("Has desbloqueado el siguiente logro: " + name)
+                                        .setCancelable(false)
+                                        .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                }).create().show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
