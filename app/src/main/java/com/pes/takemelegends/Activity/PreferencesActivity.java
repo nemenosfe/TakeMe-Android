@@ -48,7 +48,6 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
     private ImageButton backButton;
     private ListView selectedPreferencesList, selectedCitiesList;
     private UserController userController;
-    private Boolean isFirstTime = true;
     private Map<String,String> mapCategories;
     private SharedPreferencesManager shared;
 
@@ -87,7 +86,6 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         }
 
         shared = new SharedPreferencesManager(this);
-        isFirstTime = shared.isFirstTime();
 
         allCities.add("Barcelona");
         allCities.add("Madrid");
@@ -138,19 +136,24 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         userController.getPreferences(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
                 String strCategories = "";
                 String strLocations = "";
+                Boolean hasCategories = false, hasLocation = false;
                 try {
-                    if (response.getJSONObject("preferences").getString("categories") != null) {
+                    if (!response.getJSONObject("preferences").getString("categories").equals("null")) {
+                        hasCategories = true;
                         strCategories = response.getJSONObject("preferences").getString("categories");
                     }
-                    if (response.getJSONObject("preferences").getString("locations") != null) {
+                    else hasCategories = false;
+                    if (!response.getJSONObject("preferences").getString("locations").equals("null")) {
+                        hasLocation = true;
                         strLocations = response.getJSONObject("preferences").getString("locations");
                     }
+                    else hasLocation = false;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                shared.setHasPreferences(hasCategories || hasLocation);
 
                 List<String> categories = Arrays.asList(strCategories.split("\\|\\|"));
                 List<String> locations = Arrays.asList(strLocations.split("\\|\\|"));
@@ -178,6 +181,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                shared.setHasPreferences(false);
                 Toast.makeText(getApplicationContext(), "Error al cargar las preferencias", Toast.LENGTH_SHORT).show();
             }
         },getApplicationContext());
@@ -388,7 +392,8 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                 }
 
                 // POST or PUT
-                if (isFirstTime) {
+                Boolean hasPreferences = shared.hasPreferences();
+                if (!hasPreferences) {
                     userController.postPreferences(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
