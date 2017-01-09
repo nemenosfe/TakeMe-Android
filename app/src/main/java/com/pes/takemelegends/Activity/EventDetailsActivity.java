@@ -163,18 +163,12 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
             }
             case R.id.mapBtn:
             {
-                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP){
-                    checkPermissions();
-                } else{
-                    Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
-                    intent.putExtra("latitude", latitude);
-                    intent.putExtra("longitude", longitude);
-                    intent.putExtra("address", address);
-                    startActivity(intent);
-                    break;
-
-                }
+                Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+                intent.putExtra("address", address);
+                startActivity(intent);
+                break;
             }
             case R.id.buttonAsistire:
                 final ProgressDialog progressDialog = new ProgressDialog(this);
