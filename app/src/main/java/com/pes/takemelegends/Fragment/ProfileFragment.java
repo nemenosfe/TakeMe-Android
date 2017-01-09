@@ -1,8 +1,5 @@
 package com.pes.takemelegends.Fragment;
 
-
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -21,11 +18,11 @@ public class ProfileFragment extends Fragment {
     private TextView name, currentLvl, nextLvl, nExp, totalTakes, totalEvents;
     private ProgressBar expBar;
     private ProfileViewPagerFragment logros;
-    private FloatingActionButton mFab;
     private SharedPreferencesManager shared;
+    private Boolean godMode;
 
     public ProfileFragment() {
-        // Required empty public constructor
+        godMode = false;
     }
 
     @Override
@@ -44,9 +41,25 @@ public class ProfileFragment extends Fragment {
         totalTakes = (TextView) rootView.findViewById(R.id.totalTakes);
         expBar = (ProgressBar) rootView.findViewById(R.id.progressLvl);
 
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!godMode) {
+                    shared.setDistance(100.0);
+                    name.setText(name.getText() + " *");
+                    godMode = true;
+                }
+                else {
+                    shared.setDistance(0.5);
+                    name.setText(shared.getUsername());
+                    godMode = false;
+                }
+            }
+        });
+
         name.setText(shared.getUsername());
-        currentLvl.setText("lvl " + shared.getCurrentLevel());
-        nextLvl.setText("lvl " + (shared.getCurrentLevel()+1));
+        currentLvl.setText("Nivel " + shared.getCurrentLevel());
+        nextLvl.setText("Nivel " + (shared.getCurrentLevel()+1));
         nExp.setText(shared.getCurrentExperience()+"/api px");
         totalEvents.setText("api\neventos");
         totalTakes.setText(shared.getTotalTakes()+"\ntakes");
