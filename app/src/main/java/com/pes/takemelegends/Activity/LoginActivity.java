@@ -217,7 +217,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
 
                         JSONObject user = response.getJSONObject("user");
                         sharedPreferences.setUserId(user.getString("uid"));
-                        sharedPreferences.setUserName(user.getString("name"));
+                        sharedPreferences.setUserName(name);
                         sharedPreferences.setUserProvider(user.getString("provider"));
                         sharedPreferences.setUserToken(user.getString("token"));
                         sharedPreferences.setFirstTime(!user.getBoolean("has_preferences"));

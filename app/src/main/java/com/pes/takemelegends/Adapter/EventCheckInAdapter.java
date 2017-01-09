@@ -33,10 +33,6 @@ import cz.msebera.android.httpclient.Header;
 
 import java.util.List;
 
-/**
- * Created by victorgallegobetorz on 18/11/16.
- */
-
 public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapter.ViewHolder> {
 
     private List<String[]> itemsData;
@@ -135,15 +131,12 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         public void onClick(View view) {
             Location l = getLocation();
             double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
-
-            //TODO: Fix distance god mode
-            //if (distance < 0.5) {
-            if (distance < 10000000) {
+            final SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
+            if (distance < sharedPreferencesManager.getDistance()) {
                 EventController eventController = ControllerFactory.getInstance().getEventController();
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
                         sharedPreferencesManager.setRefreshView(true);
                         try {
                             if (response.getJSONObject("attendance").getJSONObject("achievement") != null) {
