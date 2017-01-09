@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
@@ -49,6 +50,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
         viewHolder.typeTV.setText(capitalize(data[0]));
+        viewHolder.titleTV.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.titleTV.setText(data[1]);
         viewHolder.location.setText(data[2]);
         viewHolder.date.setText(data[3]);
