@@ -101,7 +101,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         String venue = event.isNull("venue_name") ? "" : event.getString("venue_name");
                         String lat = event.isNull("latitude") ? "" : event.getString("latitude");
                         String lng = event.isNull("longitude") ? "" : event.getString("longitude");
-                        String attendance = event.isNull("wanted_attendance") ? "0" : event.getString("wanted_attendance");
+                        int attendance = event.isNull("wanted_attendance") ? 0 : event.getInt("wanted_attendance");
                         JSONObject cat = event.getJSONObject("categories");
                         String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
                         address = event.isNull("address") ? "" : event.getString("address");
@@ -132,7 +132,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         textDescription.setText(description);
                         textEventAddress.setText(venue);
                         textTakes.setText(takes + "\ntakes");
-                        if (attendance.equals("1")) {
+                        if (attendance == 1) {
                             disableAttendance();
                         }
                     } catch (JSONException e) {
@@ -144,7 +144,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     Log.v("reponse","fail");
                 }
-            }, event_id);
+            }, event_id, getApplicationContext());
         }
 
     }

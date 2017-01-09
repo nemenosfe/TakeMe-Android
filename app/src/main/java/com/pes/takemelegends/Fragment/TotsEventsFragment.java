@@ -63,9 +63,7 @@ public class TotsEventsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        if (sharedPreferences.getTodosUpdate()) {
-            updateRecyclerView();
-        }
+        updateRecyclerView();
 
         return rootView;
     }

@@ -117,9 +117,7 @@ public class RecomenatsFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        if (sharedPreferences.getRecomendadosUpdate()) {
-            updateRecyclerView();
-        }
+        updateRecyclerView();
 
         return rootView;
     }

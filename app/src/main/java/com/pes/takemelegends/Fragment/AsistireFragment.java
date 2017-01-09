@@ -67,9 +67,7 @@ public class AsistireFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        if (sharedPreferences.getNeedAttendanceUpdate()) {
-            updateRecyclerView();
-        }
+        updateRecyclerView();
         return rootView;
     }
 

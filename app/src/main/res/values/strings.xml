@@ -56,6 +56,7 @@
 
     <string name="success_asistire">Disfruta del evento!</string>
     <string name="failure_asistire">Upps, algo ha ido mal! Vuelve a intentarlo más tarde.</string>
+    <string name="assistance_error">No puedes no asistir a un evento al cual ya has asistido.</string>
 
     <string name="settings">Preferencias</string>
     <string name="mi_perfil">Mi perfil</string>

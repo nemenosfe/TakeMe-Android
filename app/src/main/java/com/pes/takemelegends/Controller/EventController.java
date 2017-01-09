@@ -19,8 +19,6 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class EventController {
 
-    //private SharedPreferencesManager sharedPreferences;
-
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public void getAllEvents(AsyncHttpResponseHandler responseHandler, String category, String keywords, String date, String location,
@@ -38,10 +36,13 @@ public class EventController {
         client.get(URLResources.EVENTS_URL, params, responseHandler);
     }
 
-    public void getEventInfo(AsyncHttpResponseHandler responseHandler, String id) {
+    public void getEventInfo(AsyncHttpResponseHandler responseHandler, String id, Context context) {
+        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
         RequestParams params = new RequestParams();
-        //params.add("id", id);
         params.add("appkey", URLResources.APP_KEY);
+        params.add("uid", sharedPreferencesManager.getUserId());
+        params.add("provider", sharedPreferencesManager.getUserProvider());
+        params.add("token", sharedPreferencesManager.getUserToken());
         //String url = "http://10.4.41.167:8888/events/"+id+"?appkey=7384d85615237469c2f6022a154b7e2c";
         client.get(URLResources.EVENTS_URL+"/"+id, params, responseHandler);
     }
