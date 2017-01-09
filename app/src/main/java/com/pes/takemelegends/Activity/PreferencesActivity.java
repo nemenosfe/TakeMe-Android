@@ -398,6 +398,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             shared.setFirstTime(false);
+                            shared.setRecomendadosUpdate(true);
                             goToMainActivity();
                         }
                         @Override
@@ -411,6 +412,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                     userController.putPreferences(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            shared.setRecomendadosUpdate(true);
                             goToMainActivity();
                         }
                         @Override
