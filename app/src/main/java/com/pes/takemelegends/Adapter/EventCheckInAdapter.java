@@ -3,6 +3,7 @@ package com.pes.takemelegends.Adapter;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
@@ -13,12 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.pes.takemelegends.Activity.EventDetailsActivity;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.Fragment.MyEventsCheckInFragment;
@@ -86,6 +89,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView takes, hours, eventName, eventDesc, eventDate, id;
         Button btnCheckIn;
+        LinearLayout details;
         public double lat, lng;
         private View itemLayoutView;
         private final Context context;
@@ -102,7 +106,17 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             eventDesc = (TextView) itemLayoutView.findViewById(R.id.eventDesc);
             eventDate = (TextView) itemLayoutView.findViewById(R.id.eventDate);
             id = (TextView) itemLayoutView.findViewById(R.id.eventId);
+            details = (LinearLayout) itemLayoutView.findViewById(R.id.event_details_layout);
             btnCheckIn.setOnClickListener(this);
+            details.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, EventDetailsActivity.class);
+                    intent.putExtra("id", id.getText().toString());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         public static double HaversineInKM(double lat1, double long1, double lat2, double long2) {
@@ -112,7 +126,6 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                     * Math.pow(Math.sin(dlong / 2D), 2D);
             double c = 2D * Math.atan2(Math.sqrt(a), Math.sqrt(1D - a));
             double d = _eQuatorialEarthRadius * c;
-
             return d;
         }
 
@@ -129,6 +142,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
 
             //TODO: Fix distance god mode
+            //if (distance < 0.5) {
             if (distance < 10000000) {
                 EventController eventController = ControllerFactory.getInstance().getEventController();
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
