@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -40,7 +41,7 @@ public class TotsEventsFragment extends Fragment {
     private SharedPreferencesManager sharedPreferences;
     private List<String[]> events;
     private SwipeRefreshLayout swipeContainer;
-
+    private TextView noResults;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +64,8 @@ public class TotsEventsFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.totsRecyclerView);
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        noResults = (TextView) rootView.findViewById(R.id.no_results);
+
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -122,9 +125,15 @@ public class TotsEventsFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-                EventAdapter totsAdapter = new EventAdapter(events, getActivity());
-                totsAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(totsAdapter);
+                if (events.size() > 0) {
+                    EventAdapter totsAdapter = new EventAdapter(events, getActivity());
+                    totsAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(totsAdapter);
+                    noResults.setVisibility(TextView.GONE);
+                }
+                else {
+                    noResults.setVisibility(TextView.VISIBLE);
+                }
                 progressDialog.dismiss();
             }
 

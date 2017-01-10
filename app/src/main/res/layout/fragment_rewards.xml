@@ -5,20 +5,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.pes.takemelegends.Fragment.RewardsFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/logrosRecyclerView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"/>
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fabBtn"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/ic_market_white"
-        app:backgroundTint="@color/main_ambar"
-        android:background="@color/main_ambar"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:text="@string/no_rewards"
+            android:visibility="gone"
+            android:id="@+id/no_results"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/logrosRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fabBtn"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_market_white"
+            app:backgroundTint="@color/main_ambar"
+            android:background="@color/main_ambar"/>
+
+    </RelativeLayout>
+
 </FrameLayout>

@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -46,6 +47,7 @@ public class AsistireFragment extends Fragment {
     private SharedPreferencesManager sharedPreferences;
     private List<String[]> events;
     private SwipeRefreshLayout swipeContainer;
+    private TextView noResults;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class AsistireFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.totsRecyclerView);
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        noResults = (TextView) rootView.findViewById(R.id.no_results);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -157,9 +160,14 @@ public class AsistireFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                EventAdapter totsAdapter = new EventAdapter(events, getActivity());
-                totsAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(totsAdapter);
+                if (events.size()>0) {
+                    EventAdapter totsAdapter = new EventAdapter(events, getActivity());
+                    totsAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(totsAdapter);
+                }
+                else {
+                    noResults.setVisibility(TextView.VISIBLE);
+                }
                 progressDialog.dismiss();
             }
 
