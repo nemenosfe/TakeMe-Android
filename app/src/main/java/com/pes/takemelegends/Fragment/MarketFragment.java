@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Fragment;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,30 +14,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Adapter.MarketAdapter;
 import com.pes.takemelegends.Adapter.LogroAdapter;
 import com.pes.takemelegends.Assets.DividerItemDecorator;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.RewardController;
+import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
 import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class MarketFragment extends Fragment {
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    //http://stackoverflow.com/questions/24471109/recyclerview-onclick
-    public MarketFragment() {
-        // Required empty public constructor
-    }
+import cz.msebera.android.httpclient.Header;
+
+public class MarketFragment extends Fragment {
 
     private View rootview;
     private TextView userTV, lvlTV, takesTV;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SharedPreferencesManager shared;
+    private UserController userController;
+
+    public MarketFragment() {
+        userController = ControllerFactory.getInstance().getUserController();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,9 +74,37 @@ public class MarketFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        userTV.setText(shared.getUsername());
-        lvlTV.setText("Nivel "+shared.getCurrentLevel());
-        takesTV.setText(shared.getTotalTakes() + " takes");
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Obteniendo datos");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        userController.getUserData(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONObject user = response.getJSONObject("user");
+                    Integer level = user.getInt("level");
+                    userTV.setText(shared.getUsername());
+                    lvlTV.setText("Nivel "+level);
+                    takesTV.setText(user.getInt("takes") + " takes");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), getString(R.string.profile_error), Toast.LENGTH_SHORT).show();
+            }
+        }, getContext(), shared.getUserId(), shared.getUserProvider());
 
         return rootview;
     }

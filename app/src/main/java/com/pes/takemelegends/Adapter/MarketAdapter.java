@@ -39,7 +39,10 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
     public void onBindViewHolder(MarketAdapter.ViewHolder viewHolder, int position) {
         // Necessitem el current level del user, fin a linkar amb API estara hardcoded a 3
         viewHolder.level.setText("Nivel " + itemsData[position]);
-        if (currentLvl < itemsData[position]) viewHolder.lock.setImageResource(R.drawable.ic_lock_close);
+        viewHolder.currentLevel = currentLvl;
+        if (currentLvl < itemsData[position]) {
+            viewHolder.lock.setImageResource(R.drawable.ic_lock_close);
+        }
         else viewHolder.lock.setImageResource(R.drawable.ic_lock_open);
     }
 
@@ -53,6 +56,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
 
         public TextView level;
         public ImageView lock;
+        public Integer currentLevel;
         private final Context context;
 
         public ViewHolder(View itemLayoutView) {
@@ -66,10 +70,11 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(context, RewardsActivity.class);
-            intent.putExtra("id", getLayoutPosition());
-            intent.putExtra("level", getLayoutPosition()+1);
-            context.startActivity(intent);
+            if (currentLevel - 1 >= this.getLayoutPosition()) {
+                Intent intent = new Intent(context, RewardsActivity.class);
+                intent.putExtra("level", getLayoutPosition() + 1);
+                context.startActivity(intent);
+            }
         }
 
 

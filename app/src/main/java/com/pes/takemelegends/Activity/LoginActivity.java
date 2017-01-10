@@ -181,6 +181,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         }
         else {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Log.v("token", sharedPreferences.getUserToken());
             startActivity(intent);
             finish();
         }

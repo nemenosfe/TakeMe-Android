@@ -166,8 +166,8 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
             {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Mira este evento que he encontrado en Take Me Legends! www.takeme-legends.com";
-                String shareSub = "Take Me Legends!";
+                String shareBody = "Mira el evento que he encontrado en TakeMe Legends: " + eventName.getText();
+                String shareSub = "Evento de TakeMe Legends: " + eventName.getText();
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share using"));
@@ -194,7 +194,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 if(atendance) eventController.deleteAsistire(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        Toast.makeText(EventDetailsActivity.this, "succes delete", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EventDetailsActivity.this, "Que lástima no puedas venir.", Toast.LENGTH_SHORT).show();
                         enableAttendance();
                         progressDialog.dismiss();
                     }
