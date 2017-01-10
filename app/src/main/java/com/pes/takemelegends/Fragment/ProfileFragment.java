@@ -2,12 +2,14 @@ package com.pes.takemelegends.Fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pes.takemelegends.R;
@@ -16,6 +18,8 @@ import com.pes.takemelegends.Utils.SharedPreferencesManager;
 public class ProfileFragment extends Fragment {
 
     private TextView name, currentLvl, nextLvl, nExp, totalTakes, totalEvents;
+    private RelativeLayout infoUser;
+    private PercentRelativeLayout infoExp;
     private ProgressBar expBar;
     private ProfileViewPagerFragment logros;
     private SharedPreferencesManager shared;
@@ -38,6 +42,8 @@ public class ProfileFragment extends Fragment {
         totalEvents = (TextView) rootView.findViewById(R.id.totalEvents);
         totalTakes = (TextView) rootView.findViewById(R.id.totalTakes);
         expBar = (ProgressBar) rootView.findViewById(R.id.progressLvl);
+        infoUser = (RelativeLayout) rootView.findViewById(R.id.infoUser);
+        infoExp = (PercentRelativeLayout) rootView.findViewById(R.id.expLayout);
 
         name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,4 +78,10 @@ public class ProfileFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        infoExp.invalidate();
+        infoUser.invalidate();
+    }
 }

@@ -142,6 +142,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         sharedPreferencesManager.setRefreshView(true);
+                        sharedPreferencesManager.increaseCheckInEvents();
                         try {
                             if (response.getJSONObject("attendance").getJSONObject("achievement") != null) {
                                 String description = response.getJSONObject("attendance").getJSONObject("achievement").getString("description");

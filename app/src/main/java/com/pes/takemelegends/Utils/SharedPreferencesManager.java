@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 public class SharedPreferencesManager {
@@ -16,7 +17,7 @@ public class SharedPreferencesManager {
     private static Integer totalTakes = 0;
     private static Integer currentExperience = 0;
     private static Integer numberOfCheckins = 0;
-    private static Double experienceToNextLevel = 0.0;
+    private static Float experienceToNextLevel = 0.0f;
     private static Boolean needAttendanceUpdate = false;
     private static Boolean hasPreferences = false;
     private static Boolean todosUpdate = false;
@@ -42,6 +43,8 @@ public class SharedPreferencesManager {
         currentLevel = (Integer) getObject("currentLevel", Integer.class.getSimpleName());
         totalTakes = (Integer) getObject("totalTakes", Integer.class.getSimpleName());
         currentExperience = (Integer) getObject("currentExperience", Integer.class.getSimpleName());
+        experienceToNextLevel = (Float) getObject("experienceToNextLevel", Float.class.getSimpleName());
+        numberOfCheckins = (Integer) getObject("numberOfChekins", Integer.class.getSimpleName());
         needAttendanceUpdate = (Boolean) getObject("needAttendanceUpdate", Boolean.class.getSimpleName());
         hasPreferences = (Boolean) getObject("hasPreferences", Boolean.class.getSimpleName());
         todosUpdate = (Boolean) getObject("todosUpdate", Boolean.class.getSimpleName());
@@ -150,10 +153,17 @@ public class SharedPreferencesManager {
     public int getNumberOfChekins(){return numberOfCheckins;}
     public void setNumberOfCheckins(int numberOfCheckins) {
         this.numberOfCheckins = numberOfCheckins;
+        setValue("numberOfCheckins", numberOfCheckins);
     }
-    public Double getExperienceToNextLevel(){return experienceToNextLevel;}
-    public void setExperienceToNextLevel(double experienceOfTheNextLevel) {
+
+    public void increaseCheckInEvents() {
+        setValue("numberOfChekins", numberOfCheckins++);
+    }
+
+    public Float getExperienceToNextLevel(){return experienceToNextLevel;}
+    public void setExperienceToNextLevel(float experienceOfTheNextLevel) {
         this.experienceToNextLevel = experienceOfTheNextLevel;
+        setValue("experienceToNextLevel", experienceOfTheNextLevel);
     }
 
     public Boolean isFirstTime() { return firstTime; }
@@ -176,6 +186,8 @@ public class SharedPreferencesManager {
                 return sp.getInt(key, 0);
             case "String":
                 return sp.getString(key, "");
+            case "Float":
+                return sp.getFloat(key, 0.0f);
             default:
                 return null;
         }
@@ -198,6 +210,9 @@ public class SharedPreferencesManager {
                 break;
             case "String":
                 editor.putString(key, (String) value);
+                break;
+            case "Float":
+                editor.putFloat(key, (Float) value);
                 break;
         }
         editor.commit();
