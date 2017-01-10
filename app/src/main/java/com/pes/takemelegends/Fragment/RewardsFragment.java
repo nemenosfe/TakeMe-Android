@@ -81,7 +81,7 @@ public class RewardsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Obteniendo listado de recomensas");
+        progressDialog.setMessage("Obteniendo listado de recompensas");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.show();
