@@ -56,8 +56,8 @@ public class ProfileFragment extends Fragment {
         name.setText(shared.getUsername());
         currentLvl.setText("Nivel " + shared.getCurrentLevel());
         nextLvl.setText("Nivel " + (shared.getCurrentLevel()+1));
-        nExp.setText(shared.getCurrentExperience() + "/api xp");
-        totalEvents.setText(shared.getNumberOfChekins() + "\neventos");
+        nExp.setText(shared.getCurrentExperience() + "/" + "api" + " xp");
+        totalEvents.setText(shared.getNumberOfChekins() + "\nevento(s)");
         totalTakes.setText(shared.getTotalTakes()+"\ntakes");
         expBar.setProgress(77);
         expBar.getProgressDrawable().setColorFilter(

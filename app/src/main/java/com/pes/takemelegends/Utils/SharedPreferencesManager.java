@@ -16,7 +16,7 @@ public class SharedPreferencesManager {
     private static Integer totalTakes = 0;
     private static Integer currentExperience = 0;
     private static Integer numberOfCheckins = 0;
-    private static Double experienceOfTheNextLevel = 0.0;
+    private static Double experienceToNextLevel = 0.0;
     private static Boolean needAttendanceUpdate = false;
     private static Boolean hasPreferences = false;
     private static Boolean todosUpdate = false;
@@ -151,9 +151,9 @@ public class SharedPreferencesManager {
     public void setNumberOfCheckins(int numberOfCheckins) {
         this.numberOfCheckins = numberOfCheckins;
     }
-    public Double getExperienceOfTheNextLevel(){return experienceOfTheNextLevel;}
-    public void setExperienceOfTheNextLevel(double experienceOfTheNextLevel) {
-        this.experienceOfTheNextLevel = experienceOfTheNextLevel;
+    public Double getExperienceToNextLevel(){return experienceToNextLevel;}
+    public void setExperienceToNextLevel(double experienceOfTheNextLevel) {
+        this.experienceToNextLevel = experienceOfTheNextLevel;
     }
 
     public Boolean isFirstTime() { return firstTime; }
