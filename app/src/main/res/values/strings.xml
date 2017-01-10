@@ -3,6 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_logout">Desconectar</string>
 
     <string name="logros_ganados">Logros ganados</string>
     <string name="cangeados">Premios canjeados</string>

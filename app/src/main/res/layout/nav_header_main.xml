@@ -21,4 +21,12 @@
         android:layout_gravity="center"
         android:src="@drawable/logo_contorno" />
 
+    <TextView
+        android:id="@+id/disconect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:text="@string/navigation_drawer_logout"
+        />
+
 </LinearLayout>
