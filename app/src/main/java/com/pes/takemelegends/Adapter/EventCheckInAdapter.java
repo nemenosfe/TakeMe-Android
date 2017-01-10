@@ -120,7 +120,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                     * Math.pow(Math.sin(dlong / 2D), 2D);
             double c = 2D * Math.atan2(Math.sqrt(a), Math.sqrt(1D - a));
             double d = _eQuatorialEarthRadius * c;
-            return d;
+            return d * 1000;
         }
 
         private Location getLocation() {
@@ -135,9 +135,8 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             Location l = getLocation();
             double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
             final SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-            Double minDistance = sharedPreferencesManager.getDistance();
-            if (minDistance == null) sharedPreferencesManager.setDistance(0.5);
-            if (distance < sharedPreferencesManager.getDistance()) {
+            Integer minDistance = sharedPreferencesManager.getDistance();
+            if (distance < minDistance) {
                 EventController eventController = ControllerFactory.getInstance().getEventController();
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
                     @Override

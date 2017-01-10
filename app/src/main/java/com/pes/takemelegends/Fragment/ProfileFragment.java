@@ -19,10 +19,8 @@ public class ProfileFragment extends Fragment {
     private ProgressBar expBar;
     private ProfileViewPagerFragment logros;
     private SharedPreferencesManager shared;
-    private Boolean godMode;
 
     public ProfileFragment() {
-        godMode = false;
     }
 
     @Override
@@ -31,7 +29,7 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        shared = new SharedPreferencesManager(getActivity().getApplicationContext());
+        shared = new SharedPreferencesManager(getContext());
 
         name = (TextView) rootView.findViewById(R.id.nombre);
         currentLvl = (TextView) rootView.findViewById(R.id.currentLvl);
@@ -44,15 +42,13 @@ public class ProfileFragment extends Fragment {
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!godMode) {
-                    shared.setDistance(100.0);
+                if (shared.getDistance() == 500) {
+                    shared.setDistance(1000000);
                     name.setText(name.getText() + " *");
-                    godMode = true;
                 }
                 else {
-                    shared.setDistance(0.5);
+                    shared.setDistance(500);
                     name.setText(shared.getUsername());
-                    godMode = false;
                 }
             }
         });
@@ -60,8 +56,8 @@ public class ProfileFragment extends Fragment {
         name.setText(shared.getUsername());
         currentLvl.setText("Nivel " + shared.getCurrentLevel());
         nextLvl.setText("Nivel " + (shared.getCurrentLevel()+1));
-        nExp.setText(shared.getCurrentExperience()+"/api px");
-        totalEvents.setText("api\neventos");
+        nExp.setText(shared.getCurrentExperience() + "/api xp");
+        totalEvents.setText(shared.getNumberOfChekins() + "\neventos");
         totalTakes.setText(shared.getTotalTakes()+"\ntakes");
         expBar.setProgress(77);
         expBar.getProgressDrawable().setColorFilter(

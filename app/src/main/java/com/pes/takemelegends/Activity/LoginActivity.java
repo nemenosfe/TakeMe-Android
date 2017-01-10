@@ -229,6 +229,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                         sharedPreferences.setAttendanceUpdate(true);
                         sharedPreferences.setTodosUpdate(true);
                         sharedPreferences.setRecomendadosUpdate(true);
+                        sharedPreferences.setDistance(500);
                         Log.v("token", sharedPreferences.getUserToken());
 
                     } catch (JSONException e) {

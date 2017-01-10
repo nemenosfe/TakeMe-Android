@@ -22,7 +22,7 @@ public class SharedPreferencesManager {
     private static Boolean todosUpdate = false;
     private static Boolean recomendadosUpdate = false;
     private static Boolean refreshView = false;
-    private static Double distance = 0.5;
+    private static Integer distance = 500;
     SharedPreferences sp;
 
 
@@ -47,11 +47,11 @@ public class SharedPreferencesManager {
         todosUpdate = (Boolean) getObject("todosUpdate", Boolean.class.getSimpleName());
         recomendadosUpdate = (Boolean) getObject("recomendadosUpdate", Boolean.class.getSimpleName());
         refreshView = (Boolean) getObject("refreshView", Boolean.class.getSimpleName());
-        distance = (Double) getObject("distance", Double.class.getSimpleName());
+        distance = (Integer) getObject("distance", Integer.class.getSimpleName());
     }
 
-    public Double getDistance() { return distance; }
-    public void setDistance(Double distance) {
+    public Integer getDistance() { return distance; }
+    public void setDistance(Integer distance) {
         this.distance = distance;
         setValue("distance", distance);
     }
