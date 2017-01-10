@@ -74,6 +74,18 @@ public class MarketFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        refresh();
+
+        return rootview;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    private void refresh() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Obteniendo datos");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -105,8 +117,5 @@ public class MarketFragment extends Fragment {
                 Toast.makeText(getContext(), getString(R.string.profile_error), Toast.LENGTH_SHORT).show();
             }
         }, getContext(), shared.getUserId(), shared.getUserProvider());
-
-        return rootview;
     }
-
 }
