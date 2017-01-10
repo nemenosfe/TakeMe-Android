@@ -9,6 +9,7 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,9 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         }
         else viewHolder.btnCheckIn.setClickable(false);
         viewHolder.eventName.setText(data[1]);
+        viewHolder.eventName.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDesc.setText(Jsoup.parse(data[2]).text());
+        viewHolder.eventDesc.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDate.setText(data[3]);
         viewHolder.takes.setText(data[4]+"\ntakes");
         viewHolder.hours.setText(data[5]);

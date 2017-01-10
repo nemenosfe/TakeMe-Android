@@ -100,6 +100,7 @@ public class MyEventsCheckInFragment extends Fragment {
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
+                            int checkin_done = event.isNull("checkin_done") ? 0 : event.getInt("checkin_done");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "No description" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
@@ -107,7 +108,7 @@ public class MyEventsCheckInFragment extends Fragment {
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
                             Double lat = event.isNull("latitude") ? 0 : Double.valueOf(event.getDouble("latitude"));
                             Double lng = event.isNull("longitude") ? 0 : Double.valueOf(event.getDouble("longitude"));
-                            events.add(new String[]{"Future", title, description, startTime, takes, "Not yet", id, String.valueOf(lat), String.valueOf(lng)});
+                            if (checkin_done == 0) events.add(new String[]{"Future", title, description, startTime, takes, "Not yet", id, String.valueOf(lat), String.valueOf(lng)});
                         }
                     }
                 } catch (JSONException e) {

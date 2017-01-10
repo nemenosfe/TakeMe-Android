@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,7 +57,9 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
             viewHolder.takes.setBackgroundColor(context.getResources().getColor(R.color.red));
         }
         viewHolder.eventName.setText(data[1]);
+        viewHolder.eventName.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDesc.setText(data[2]);
+        viewHolder.eventDesc.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDate.setText(data[3]);
         viewHolder.takes.setText(data[4]+"\ntakes");
         viewHolder.id.setText(data[5]);
