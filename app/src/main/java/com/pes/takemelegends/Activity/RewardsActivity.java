@@ -1,5 +1,7 @@
 package com.pes.takemelegends.Activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import com.pes.takemelegends.Controller.RewardController;
 import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
 import com.pes.takemelegends.Utils.SharedPreferencesManager;
+import com.twitter.sdk.android.core.models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,8 +42,9 @@ public class RewardsActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private ImageButton backBtn;
     private RewardController rewardController;
+    private UserController userController;
     private HashMap<Integer,ArrayList<JSONObject>> rewardsbyLVL;
-
+    private SharedPreferencesManager shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,8 @@ public class RewardsActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rewardsRecyclerView);
         backBtn= (ImageButton) findViewById(R.id.backBtn);
         rewardController = ControllerFactory.getInstance().getRewardController();
-        SharedPreferencesManager shared = new SharedPreferencesManager(this);
+        userController = ControllerFactory.getInstance().getUserController();
+        shared = new SharedPreferencesManager(this);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,52 +68,79 @@ public class RewardsActivity extends AppCompatActivity {
                 finish();
             }
         });
-        final Intent i = getIntent();
-        rewardsbyLVL = new HashMap<Integer,ArrayList<JSONObject>>();
+        rewardsbyLVL = new HashMap<>();
         for (int j = 1; j<=10; ++j){
             rewardsbyLVL.put(j,new ArrayList<JSONObject>());
         }
-        rewardController.getRewardsByLvl(new JsonHttpResponseHandler() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Obteniendo datos");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        userController.getUserData(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONArray rewardsArray = response.optJSONArray("rewards");
-                for (int i = 0; i < rewardsArray.length(); i++) {
-                    try {
-                        JSONObject reward = rewardsArray.getJSONObject(i);
-                        rewardsbyLVL.get(reward.getInt("level")).add(reward);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONObject user = response.getJSONObject("user");
+                    Integer level = user.getInt("level");
+                    userTV.setText(shared.getUsername());
+                    lvlTV.setText("Nivel "+level);
+                    takesTV.setText(user.getInt("takes") + " takes");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                int lvl = i.getIntExtra("level",0);
-                ArrayList<JSONObject> rewards = new ArrayList<>();
-                if( lvl == 0) Toast.makeText(getApplicationContext(),"Fallo de api, level = 0.",Toast.LENGTH_LONG);
-                else rewards = rewardsbyLVL.get(i.getIntExtra("level",0));
+                progressDialog.dismiss();
 
-                linearLayoutManager = new LinearLayoutManager(getApplication());
-                recyclerView.setLayoutManager(linearLayoutManager);
+                rewardController.getRewardsByLvl(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        JSONArray rewardsArray = response.optJSONArray("rewards");
+                        for (int i = 0; i < rewardsArray.length(); i++) {
+                            try {
+                                JSONObject reward = rewardsArray.getJSONObject(i);
+                                rewardsbyLVL.get(reward.getInt("level")).add(reward);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        int lvl = getIntent().getIntExtra("level",0);
+                        ArrayList<JSONObject> rewards = new ArrayList<>();
+                        if( lvl == 0) Toast.makeText(getApplicationContext(),"Fallo de api, level = 0.",Toast.LENGTH_LONG);
+                        else rewards = rewardsbyLVL.get(getIntent().getIntExtra("level",0));
 
-                DividerItemDecorator dividerItemDecoration = new DividerItemDecorator(recyclerView.getContext(),
-                        linearLayoutManager.getOrientation());
-                recyclerView.addItemDecoration(dividerItemDecoration);
+                        linearLayoutManager = new LinearLayoutManager(getApplication());
+                        recyclerView.setLayoutManager(linearLayoutManager);
 
-                MarketPerLevelAdapter perLvlAdapter = new MarketPerLevelAdapter(rewards);
+                        DividerItemDecorator dividerItemDecoration = new DividerItemDecorator(recyclerView.getContext(),
+                                linearLayoutManager.getOrientation());
+                        recyclerView.addItemDecoration(dividerItemDecoration);
 
-                recyclerView.setAdapter(perLvlAdapter);
+                        MarketPerLevelAdapter perLvlAdapter = new MarketPerLevelAdapter(rewards);
 
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(perLvlAdapter);
 
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Toast.makeText(getApplicationContext(), "faiiiiiiiiiiil", Toast.LENGTH_SHORT).show();
+                    }
+                },getApplicationContext());
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getApplicationContext(), "faiiiiiiiiiiil", Toast.LENGTH_SHORT).show();
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), getString(R.string.profile_error), Toast.LENGTH_SHORT).show();
             }
-        },getApplicationContext());
-
-
-        userTV.setText(shared.getUsername());
-        lvlTV.setText("Nivel" + shared.getCurrentLevel());
-        takesTV.setText(shared.getTotalTakes() + "takes");
+        }, getApplicationContext(), shared.getUserId(), shared.getUserProvider());
 
     }
 }
