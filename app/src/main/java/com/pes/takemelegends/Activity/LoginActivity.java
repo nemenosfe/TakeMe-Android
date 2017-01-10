@@ -85,15 +85,13 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
 
                 private void TwitterSucces(Result<TwitterSession> result) {
                     final TwitterSession session = result.data;
-                    String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.login_success), Toast.LENGTH_LONG).show();
                     CreateUser(String.valueOf(session.getId()),"Twitter",session.getUserName());
                 }
 
                 @Override
                 public void failure(TwitterException exception) {
-                    Log.d("TwitterKit", "Login with Twitter failure", exception);
-                    Toast.makeText(getApplicationContext(), "error twitter", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -144,13 +142,12 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            String msg = "@" + acct.getDisplayName() + " logged in! (#" + acct.getId() + ")";
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.login_success), Toast.LENGTH_LONG).show();
             CreateUser(acct.getId(), "Google", acct.getDisplayName());
         } else {
             // Signed out, show unauthenticated UI.
 
-            Toast.makeText(getApplicationContext(), "error google", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_LONG).show();
         }
     }
 
