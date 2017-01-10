@@ -12,7 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookButtonBase;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.auth.api.Auth;
@@ -35,6 +44,7 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,10 +62,11 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     private static final String TWITTER_SECRET = "gCwOn4hM5xiC07KJXpONWZUw0moyz5OhP92GYFZRxveCImCtBK";
     private static final int RC_SIGN_IN = 1;
     private TwitterLoginButton loginButton;
-    private Button buttonFacebook;
+    private LoginButton buttonFacebook;
     private GoogleApiClient mGoogleApiClient;
     private UserController uc = ControllerFactory.getInstance().getUserController();
     private SharedPreferencesManager sharedPreferences;
+    private CallbackManager callbackManager;
 
 
     @Override
@@ -64,6 +75,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         sharedPreferences = new SharedPreferencesManager(this);
         //Facebook config
         FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
 
         //Twitter config
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
@@ -111,7 +123,57 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             }
         });
 
-        //login sense rrss
+
+        //facebook button
+        buttonFacebook = (LoginButton) findViewById(R.id.button_facebook);
+        buttonFacebook.setReadPermissions("public_profile");
+
+        // Callback registration
+        buttonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(final LoginResult loginResult) {
+
+
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.v("LoginActivity", response.toString());
+
+                                // Application code
+                                String name = "";
+                                try {
+                                    name = object.getString("name");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                String msg = "@" + name + " logged in! (#" + loginResult.getAccessToken().getUserId() + ")";
+                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                CreateUser(loginResult.getAccessToken().getUserId(), "Facebook", name);
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "name");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), "facebook cancel", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Toast.makeText(getApplicationContext(), "facebook error", Toast.LENGTH_LONG).show();
+                Log.e("error de facebook", exception.toString());
+            }
+        });
+
+        //rrss
 
         ImageView buttonDirecte = (ImageView) findViewById(R.id.logo);
         buttonDirecte.setClickable(true);
@@ -147,8 +209,16 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             }
             // Make sure that the loginButton hears the result from any
             // Activity that it triggered.
+            callbackManager.onActivityResult(requestCode, resultCode, data);
             loginButton.onActivityResult(requestCode, resultCode, data);
         }
+
+    /*
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+    * */
 
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
@@ -168,22 +238,6 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Login Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
     }
 
     @Override
