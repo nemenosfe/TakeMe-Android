@@ -6,20 +6,27 @@
     tools:context="com.pes.takemelegends.Fragment.MyEventsCheckInFragment"
     android:id="@+id/swipeContainer">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="22sp"
-        android:text="@string/no_assitire_events"
-        android:visibility="gone"
-        android:id="@+id/no_results"/>
+        android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/checkInRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:text="@string/no_assitire_events"
+            android:visibility="gone"
+            android:id="@+id/no_results"/>
+
+        <!-- TODO: Update blank fragment layout -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/checkInRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"/>
+
+    </RelativeLayout>
+
 
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -129,6 +129,7 @@ public class TotsEventsFragment extends Fragment {
                     EventAdapter totsAdapter = new EventAdapter(events, getActivity());
                     totsAdapter.notifyDataSetChanged();
                     recyclerView.setAdapter(totsAdapter);
+                    noResults.setVisibility(TextView.GONE);
                 }
                 else {
                     noResults.setVisibility(TextView.VISIBLE);
