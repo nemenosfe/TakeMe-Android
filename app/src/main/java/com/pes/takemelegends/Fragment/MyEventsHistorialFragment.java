@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,6 +46,7 @@ public class MyEventsHistorialFragment extends Fragment {
     private EventController eventController;
     private View rootView;
     public Boolean needsRefresh = false;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,12 +78,13 @@ public class MyEventsHistorialFragment extends Fragment {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
                             String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            String time_checkin = event.isNull("time_checkin") ? "--:--" : event.getString("time_checkin");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "No description" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                             String id = event.getString("id");
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                            if (checkin_done.equals("1")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id});
+                            if (checkin_done.equals("1")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id, time_checkin});
                         }
                     }
                 } catch (JSONException e) {
@@ -95,12 +98,33 @@ public class MyEventsHistorialFragment extends Fragment {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
                             String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            String time_checkin = event.isNull("time_checkin") ? "--:--" : event.getString("time_checkin");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                             String id = event.getString("id");
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
                             events.add(new String[]{checkin_done, title, description, startTime, takes, id});
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //Past
+                try {
+                    JSONObject present = response.getJSONObject("future");
+                    JSONArray eventArray = present.optJSONArray("events");
+                    for (int i = 0; i < eventArray.length(); i++) {
+                        JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
+                        if (event != null) {
+                            String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            String time_checkin = event.isNull("time_checkin") ? "--:--" : event.getString("time_checkin");
+                            String title = event.isNull("title") ? "" : event.getString("title");
+                            String description = event.isNull("description") ? "" : event.getString("description");
+                            String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
+                            String id = event.getString("id");
+                            String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
+                            if (checkin_done.equals("1")) events.add(new String[]{checkin_done, title, description, startTime, takes, id, time_checkin});
                         }
                     }
                 } catch (JSONException e) {
@@ -137,6 +161,18 @@ public class MyEventsHistorialFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_my_events_historial, container, false);
+
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(R.color.main_ambar);
 
         refresh();
 

@@ -29,6 +29,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -52,6 +53,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     private ImageView eventImage;
     private String event_id;
     private boolean atendance;
+    private SharedPreferencesManager sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +85,17 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
         textTakes = (TextView) findViewById(R.id.textTakes);
 
         eventController = ControllerFactory.getInstance().getEventController();
+        sharedPreferences = new SharedPreferencesManager(this);
         Bundle extra = getIntent().getExtras();
         if (extra!=null) {
             event_id = extra.getString("id");
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Obteniendo eventos");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
             eventController.getEventInfo(new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -98,7 +108,7 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         String venue = event.isNull("venue_name") ? "" : event.getString("venue_name");
                         String lat = event.isNull("latitude") ? "" : event.getString("latitude");
                         String lng = event.isNull("longitude") ? "" : event.getString("longitude");
-                        String attendance = event.isNull("wanted_attendance") ? "0" : event.getString("wanted_attendance");
+                        int attendance = event.isNull("wanted_attendance") ? 0 : event.getInt("wanted_attendance");
                         JSONObject cat = event.getJSONObject("categories");
                         String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
                         address = event.isNull("address") ? "" : event.getString("address");
@@ -129,19 +139,22 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         textDescription.setText(description);
                         textEventAddress.setText(venue);
                         textTakes.setText(takes + "\ntakes");
-                        if (attendance.equals("1")) {
+                        if (attendance == 1) {
                             disableAttendance();
                         }
+                        progressDialog.dismiss();
                     } catch (JSONException e) {
+                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    progressDialog.dismiss();
                     Log.v("reponse","fail");
                 }
-            }, event_id);
+            }, event_id, getApplicationContext());
         }
 
     }
@@ -163,18 +176,12 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
             }
             case R.id.mapBtn:
             {
-                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP){
-                    checkPermissions();
-                } else{
-                    Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
-                    intent.putExtra("latitude", latitude);
-                    intent.putExtra("longitude", longitude);
-                    intent.putExtra("address", address);
-                    startActivity(intent);
-                    break;
-
-                }
+                Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+                intent.putExtra("address", address);
+                startActivity(intent);
+                break;
             }
             case R.id.buttonAsistire:
                 final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -201,6 +208,9 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 else eventController.postAsistire(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        sharedPreferences.setAttendanceUpdate(true);
+                        sharedPreferences.setTodosUpdate(true);
+                        sharedPreferences.setRecomendadosUpdate(true);
                         Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
                         disableAttendance();
                         progressDialog.dismiss();
@@ -213,42 +223,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                     }
                 },this, event_id);
                 break;
-        }
-    }
-
-    private void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(EventDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(EventDetailsActivity.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-            } else {
-                ActivityCompat.requestPermissions(EventDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        RECORD_REQUEST_CODE);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case RECORD_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
-                    startActivity(intent);
-                    break;
-
-                } else {
-
-                    Toast toast = Toast.makeText(EventDetailsActivity.this, "DENIED", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                return;
-            }
         }
     }
 

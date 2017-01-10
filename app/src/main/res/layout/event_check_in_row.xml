@@ -17,14 +17,14 @@
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:layout_toRightOf="@+id/imageEvent">
 
 
             <TextView
-                android:layout_height="70dp"
+                android:layout_height="match_parent"
                 android:textAlignment="center"
                 app:layout_widthPercent="15%"
                 android:layout_centerVertical="true"
@@ -71,6 +71,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/event_details_layout"
                 android:orientation="vertical"
                 app:layout_widthPercent="55%"
                 android:layout_height="wrap_content"
@@ -89,7 +90,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines = "2"
-                    android:minLines = "1"
                     android:id="@+id/eventName" />
 
                 <TextView

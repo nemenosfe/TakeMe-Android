@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.pes.takemelegends.Adapter.EventHistorialAdapter;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,31 +34,28 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MyEventsCheckInFragment extends Fragment {
 
 
     public MyEventsCheckInFragment() {
-
     }
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
     private GoogleApiClient mGoogleApiClient;
-    private MyEventsCheckInFragment me;
     private View rootView;
+    private SharedPreferencesManager sharedPreferencesManager;
     public MyEventsHistorialFragment fragmentHistorial;
+    private List<String[]> events;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
-        me = this;
+        sharedPreferencesManager = new SharedPreferencesManager(getContext());
     }
-
 
     public void refresh() {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.checkInRecyclerView);
@@ -73,7 +72,7 @@ public class MyEventsCheckInFragment extends Fragment {
         eventController.getEventsUser(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                List<String[]> events = new ArrayList<>();
+                events = new ArrayList<>();
                 //Present
                 try {
                     JSONObject present = response.getJSONObject("present");
@@ -81,7 +80,7 @@ public class MyEventsCheckInFragment extends Fragment {
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
-                            String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            int checkin_done = event.isNull("checkin_done") ? 0 : event.getInt("checkin_done");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
@@ -89,7 +88,7 @@ public class MyEventsCheckInFragment extends Fragment {
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
                             Double lat = event.isNull("latitude") ? 0 : Double.valueOf(event.getDouble("latitude"));
                             Double lng = event.isNull("longitude") ? 0 : Double.valueOf(event.getDouble("longitude"));
-                            if (checkin_done.equals("0")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id, String.valueOf(lat), String.valueOf(lng)});
+                            if (checkin_done == 0) events.add(new String[]{"Present", String.valueOf(checkin_done), title, description, startTime, takes, id, String.valueOf(lat), String.valueOf(lng)});
                         }
                     }
                 } catch (JSONException e) {
@@ -102,6 +101,7 @@ public class MyEventsCheckInFragment extends Fragment {
                     for (int i = 0; i < eventArray.length(); i++) {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
+                            int checkin_done = event.isNull("checkin_done") ? 0 : event.getInt("checkin_done");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "No description" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
@@ -109,14 +109,14 @@ public class MyEventsCheckInFragment extends Fragment {
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
                             Double lat = event.isNull("latitude") ? 0 : Double.valueOf(event.getDouble("latitude"));
                             Double lng = event.isNull("longitude") ? 0 : Double.valueOf(event.getDouble("longitude"));
-                            events.add(new String[]{"Future", title, description, startTime, takes, "Not yet", id, String.valueOf(lat), String.valueOf(lng)});
+                            if (checkin_done == 0) events.add(new String[]{"Future", title, description, startTime, takes, "Not yet", id, String.valueOf(lat), String.valueOf(lng)});
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, me);
+                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient);
                 recyclerView.setAdapter(checkinAdapter);
                 progressDialog.dismiss();
             }
@@ -130,16 +130,23 @@ public class MyEventsCheckInFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void refreshChackinAndHistorial() {
-        fragmentHistorial.needsRefresh = true;
-        refresh();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_my_events_check_in, container, false);
+
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(R.color.main_ambar);
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -154,4 +161,13 @@ public class MyEventsCheckInFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sharedPreferencesManager.needToRefreshView()) {
+            EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient);
+            checkinAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(checkinAdapter);
+        }
+    }
 }

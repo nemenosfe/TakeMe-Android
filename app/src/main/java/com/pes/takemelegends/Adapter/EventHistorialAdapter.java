@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,7 +49,7 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
         if (data[0].equals("1")) {
-            viewHolder.status.setText(context.getString(R.string.text_was_at_time)+"\nFalta hora en API!");
+            viewHolder.status.setText(context.getString(R.string.text_was_at_time));
             viewHolder.takes.setBackgroundColor(context.getResources().getColor(R.color.green));
         }
         else {
@@ -56,8 +57,11 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
             viewHolder.takes.setBackgroundColor(context.getResources().getColor(R.color.red));
         }
         viewHolder.eventName.setText(data[1]);
+        viewHolder.eventName.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDesc.setText(data[2]);
+        viewHolder.eventDesc.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDate.setText(data[3]);
+        viewHolder.status_hour.setText(data[6]);
         viewHolder.takes.setText(data[4]+"\ntakes");
         viewHolder.id.setText(data[5]);
     }
@@ -68,7 +72,7 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView takes, status, eventName, eventDesc, eventDate, id;
+        TextView takes, status, status_hour, eventName, eventDesc, eventDate, id;
         private final Context context;
 
         ViewHolder(View itemLayoutView) {
@@ -77,6 +81,7 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
             context = itemLayoutView.getContext();
             takes = (TextView) itemLayoutView.findViewById(R.id.takes);
             status = (TextView) itemLayoutView.findViewById(R.id.status);
+            status_hour = (TextView) itemLayoutView.findViewById(R.id.status_hour);
             eventName = (TextView) itemLayoutView.findViewById(R.id.eventName);
             eventDesc = (TextView) itemLayoutView.findViewById(R.id.eventDesc);
             eventDate = (TextView) itemLayoutView.findViewById(R.id.eventDate);

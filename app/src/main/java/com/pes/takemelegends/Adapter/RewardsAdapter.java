@@ -1,5 +1,6 @@
 package com.pes.takemelegends.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +9,19 @@ import android.widget.TextView;
 
 import com.pes.takemelegends.R;
 
+import java.util.List;
+
 /**
  * Created by Oscar on 15/11/2016.
  */
 
 public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHolder> {
 
-    private String[] itemsData;
+    private List<String[]> itemsData;
+    private Context context;
 
-    public RewardsAdapter(String[] itemsData) {
+    public RewardsAdapter(Context context, List<String[]> itemsData) {
+        this.context = context;
         this.itemsData = itemsData;
     }
 
@@ -29,14 +34,15 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(RewardsAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.rewardName.setText("Nom del producte");
-        viewHolder.rewardDesc.setText("Descripció del producte que pot arribar a ser dos linies.");
-        viewHolder.rewardTakes.setText("300 takes");
+        String[] data = itemsData.get(position);
+        viewHolder.rewardName.setText(data[0]);
+        viewHolder.rewardDesc.setText(data[1]);
+        viewHolder.rewardTakes.setText(data[2] + "takes");
     }
 
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        return itemsData.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Adapter;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -13,17 +14,26 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Activity.LoginActivity;
 import com.pes.takemelegends.Activity.PreferencesActivity;
 import com.pes.takemelegends.Activity.RewardsActivity;
+import com.pes.takemelegends.Controller.ControllerFactory;
+import com.pes.takemelegends.Controller.RewardController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Oscar on 08/11/2016.
@@ -68,10 +78,14 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
         public ImageView productImage;
         public ImageButton productBtn;
         private final Context context;
+        private RewardController rewardController;
+        private SharedPreferencesManager shared;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             context = itemLayoutView.getContext();
+            shared = new SharedPreferencesManager(context);
+            rewardController = ControllerFactory.getInstance().getRewardController();
             productName = (TextView) itemLayoutView.findViewById(R.id.productName);
             productDesc = (TextView) itemLayoutView.findViewById(R.id.productDescription);
             productTakes = (TextView) itemLayoutView.findViewById(R.id.productTakes);
@@ -84,7 +98,7 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
         public void onClick(View view) {
             final Dialog dialog = new Dialog(context);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-            View content =  inflater.inflate(R.layout.reward_dialog, null);
+            final View content =  inflater.inflate(R.layout.reward_dialog, null);
             TextView name = (TextView) content.findViewById(R.id.nameProduct);
             TextView price = (TextView) content.findViewById(R.id.price);
             TextView info = (TextView) content.findViewById(R.id.infoProduct);
@@ -104,7 +118,24 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
             btnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO call api
+
+                    rewardController.postUserReward(new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                String takes = response.getJSONObject("purchase").getString("takes_left");
+                                shared.setTotalTakes(Integer.valueOf(takes));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            dialog.dismiss();
+                        }
+                    }, context, productName.getText().toString());
                 }
             });
             dialog.show();

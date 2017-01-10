@@ -1,6 +1,7 @@
 package com.pes.takemelegends.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 public class SharedPreferencesManager {
@@ -16,7 +17,13 @@ public class SharedPreferencesManager {
     private static Integer totalTakes = 0;
     private static Integer currentExperience = 0;
     private static Integer numberOfCheckins = 0;
-    private static Double experienceOfTheNextLevel = 0.0;
+    private static Float experienceToNextLevel = 0.0f;
+    private static Boolean needAttendanceUpdate = false;
+    private static Boolean hasPreferences = false;
+    private static Boolean todosUpdate = false;
+    private static Boolean recomendadosUpdate = false;
+    private static Boolean refreshView = false;
+    private static Integer distance = 500;
     SharedPreferences sp;
 
 
@@ -36,7 +43,52 @@ public class SharedPreferencesManager {
         currentLevel = (Integer) getObject("currentLevel", Integer.class.getSimpleName());
         totalTakes = (Integer) getObject("totalTakes", Integer.class.getSimpleName());
         currentExperience = (Integer) getObject("currentExperience", Integer.class.getSimpleName());
+        experienceToNextLevel = (Float) getObject("experienceToNextLevel", Float.class.getSimpleName());
+        numberOfCheckins = (Integer) getObject("numberOfChekins", Integer.class.getSimpleName());
+        needAttendanceUpdate = (Boolean) getObject("needAttendanceUpdate", Boolean.class.getSimpleName());
+        hasPreferences = (Boolean) getObject("hasPreferences", Boolean.class.getSimpleName());
+        todosUpdate = (Boolean) getObject("todosUpdate", Boolean.class.getSimpleName());
+        recomendadosUpdate = (Boolean) getObject("recomendadosUpdate", Boolean.class.getSimpleName());
+        refreshView = (Boolean) getObject("refreshView", Boolean.class.getSimpleName());
+        distance = (Integer) getObject("distance", Integer.class.getSimpleName());
+    }
 
+    public Integer getDistance() { return distance; }
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+        setValue("distance", distance);
+    }
+
+    public Boolean needToRefreshView() { return refreshView; }
+    public void setRefreshView(Boolean b) {
+        this.refreshView = b;
+        setValue("refreshView", b);
+    }
+
+    public Boolean getTodosUpdate() {return todosUpdate;}
+    public void setTodosUpdate(Boolean need) {
+        todosUpdate = need;
+        setValue("todosUpdate", need);
+    }
+
+    public Boolean getRecomendadosUpdate() {return recomendadosUpdate;}
+    public void setRecomendadosUpdate(Boolean need) {
+        recomendadosUpdate = need;
+        setValue("recomendadosUpdate", need);
+    }
+
+    public Boolean getNeedAttendanceUpdate() {return needAttendanceUpdate;}
+    public void setAttendanceUpdate(Boolean need) {
+        needAttendanceUpdate = need;
+        setValue("needAttendanceUpdate", need);
+    }
+
+    public Boolean hasPreferences() {
+        return hasPreferences;
+    }
+    public void setHasPreferences(Boolean hasPreferences) {
+        this.hasPreferences = hasPreferences;
+        setValue("hasPreferences", hasPreferences);
     }
 
     public String getUserToken() {
@@ -101,10 +153,17 @@ public class SharedPreferencesManager {
     public int getNumberOfChekins(){return numberOfCheckins;}
     public void setNumberOfCheckins(int numberOfCheckins) {
         this.numberOfCheckins = numberOfCheckins;
+        setValue("numberOfCheckins", numberOfCheckins);
     }
-    public Double getExperienceOfTheNextLevel(){return experienceOfTheNextLevel;}
-    public void setExperienceOfTheNextLevel(double experienceOfTheNextLevel) {
-        this.experienceOfTheNextLevel = experienceOfTheNextLevel;
+
+    public void increaseCheckInEvents() {
+        setValue("numberOfChekins", numberOfCheckins++);
+    }
+
+    public Float getExperienceToNextLevel(){return experienceToNextLevel;}
+    public void setExperienceToNextLevel(float experienceOfTheNextLevel) {
+        this.experienceToNextLevel = experienceOfTheNextLevel;
+        setValue("experienceToNextLevel", experienceOfTheNextLevel);
     }
 
     public Boolean isFirstTime() { return firstTime; }
@@ -127,6 +186,8 @@ public class SharedPreferencesManager {
                 return sp.getInt(key, 0);
             case "String":
                 return sp.getString(key, "");
+            case "Float":
+                return sp.getFloat(key, 0.0f);
             default:
                 return null;
         }
@@ -149,6 +210,9 @@ public class SharedPreferencesManager {
                 break;
             case "String":
                 editor.putString(key, (String) value);
+                break;
+            case "Float":
+                editor.putFloat(key, (Float) value);
                 break;
         }
         editor.commit();

@@ -3,61 +3,57 @@ package com.pes.takemelegends.Adapter;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.pes.takemelegends.Activity.EventDetailsActivity;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
-import com.pes.takemelegends.Fragment.MyEventsCheckInFragment;
-import com.pes.takemelegends.Fragment.TotsEventsFragment;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import cz.msebera.android.httpclient.Header;
 
 import java.util.List;
 
-/**
- * Created by victorgallegobetorz on 18/11/16.
- */
-
 public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapter.ViewHolder> {
 
     private List<String[]> itemsData;
-    private static Context context;
+    private Context context;
     private static GoogleApiClient mGoogleApiClient;
-    private static MyEventsCheckInFragment myEventsCheckInFragment;
 
     static final double _eQuatorialEarthRadius = 6378.1370D;
     static final double _d2r = (Math.PI / 180D);
 
 
-    public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient, MyEventsCheckInFragment myEventsCheckInFragment) {
+    public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient) {
         this.itemsData = itemsData;
         this.context = context;
-        this.mGoogleApiClient = mGoogleApiClient;
-        this.myEventsCheckInFragment = myEventsCheckInFragment;
+        EventCheckInAdapter.mGoogleApiClient = mGoogleApiClient;
     }
 
     @Override
     public EventCheckInAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_check_in_row, parent, false);
-        return new ViewHolder(itemLayoutView, context);
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
@@ -68,7 +64,9 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         }
         else viewHolder.btnCheckIn.setClickable(false);
         viewHolder.eventName.setText(data[1]);
-        viewHolder.eventDesc.setText(data[2]);
+        viewHolder.eventName.setEllipsize(TextUtils.TruncateAt.END);
+        viewHolder.eventDesc.setText(Jsoup.parse(data[2]).text());
+        viewHolder.eventDesc.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDate.setText(data[3]);
         viewHolder.takes.setText(data[4]+"\ntakes");
         viewHolder.hours.setText(data[5]);
@@ -85,16 +83,16 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView takes, hours, eventName, eventDesc, eventDate, id;
         Button btnCheckIn;
+        LinearLayout details;
         public double lat, lng;
         private View itemLayoutView;
-        private Context context;
+        private final Context context;
 
-        ViewHolder(View itemLayoutView, Context context) {
+        ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             this.itemLayoutView = itemLayoutView;
-            this.context = context;
 
-            context = itemLayoutView.getContext();
+            this.context = itemLayoutView.getContext();
             btnCheckIn = (Button) this.itemLayoutView.findViewById(R.id.btnCheckIn);
             takes = (TextView) itemLayoutView.findViewById(R.id.takes);
             hours = (TextView) itemLayoutView.findViewById(R.id.hours);
@@ -102,7 +100,17 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             eventDesc = (TextView) itemLayoutView.findViewById(R.id.eventDesc);
             eventDate = (TextView) itemLayoutView.findViewById(R.id.eventDate);
             id = (TextView) itemLayoutView.findViewById(R.id.eventId);
+            details = (LinearLayout) itemLayoutView.findViewById(R.id.event_details_layout);
             btnCheckIn.setOnClickListener(this);
+            details.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, EventDetailsActivity.class);
+                    intent.putExtra("id", id.getText().toString());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         public static double HaversineInKM(double lat1, double long1, double lat2, double long2) {
@@ -112,8 +120,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                     * Math.pow(Math.sin(dlong / 2D), 2D);
             double c = 2D * Math.atan2(Math.sqrt(a), Math.sqrt(1D - a));
             double d = _eQuatorialEarthRadius * c;
-
-            return d;
+            return d * 1000;
         }
 
         private Location getLocation() {
@@ -127,28 +134,28 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         public void onClick(View view) {
             Location l = getLocation();
             double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
-
-            if (distance < 0.5) {
+            final SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
+            Integer minDistance = sharedPreferencesManager.getDistance();
+            if (distance < minDistance) {
                 EventController eventController = ControllerFactory.getInstance().getEventController();
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        btnCheckIn.setText("ok");
+                        sharedPreferencesManager.setRefreshView(true);
+                        sharedPreferencesManager.increaseCheckInEvents();
                         try {
                             if (response.getJSONObject("attendance").getJSONObject("achievement") != null) {
                                 String description = response.getJSONObject("attendance").getJSONObject("achievement").getString("description");
                                 String name = response.getJSONObject("attendance").getJSONObject("achievement").getString("name");
 
-                                new AlertDialog.Builder(context).setTitle("¡Enhorabuena! " + description);
-                                new AlertDialog.Builder(context).setMessage("Has desbloqueado el siguiente logro: " + name);
-                                new AlertDialog.Builder(context).setCancelable(false);
-                                new AlertDialog.Builder(context).setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        myEventsCheckInFragment.refreshChackinAndHistorial();
-                                    }
-                                });
-                                new AlertDialog.Builder(context).show();
+                                new AlertDialog.Builder(context).setTitle("¡Enhorabuena! " + description)
+                                        .setMessage("Has desbloqueado el siguiente logro: " + name)
+                                        .setCancelable(false)
+                                        .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                }).create().show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -156,7 +163,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                     }
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        btnCheckIn.setText("error");
+                        btnCheckIn.setText(context.getString(R.string.error));
                     }
                 },context, id.getText().toString());
             }

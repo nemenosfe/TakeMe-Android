@@ -5,18 +5,21 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Adapter.EventAdapter;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,11 +43,21 @@ public class AsistireFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
+    private SharedPreferencesManager sharedPreferences;
+    private List<String[]> events;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
+        sharedPreferences = new SharedPreferencesManager(getActivity());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sharedPreferences.getNeedAttendanceUpdate())updateRecyclerView();
     }
 
     @Override
@@ -54,9 +67,27 @@ public class AsistireFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_asistire, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.totsRecyclerView);
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateRecyclerView();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(R.color.main_ambar);
+
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        updateRecyclerView();
+        return rootView;
+    }
+
+    private void updateRecyclerView() {
+        sharedPreferences.setAttendanceUpdate(false);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Obteniendo eventos");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -67,7 +98,7 @@ public class AsistireFragment extends Fragment {
         eventController.getEventsUser(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                List<String[]> events = new ArrayList<>();
+                events = new ArrayList<>();
                 //Present
                 try {
                     JSONObject present = response.getJSONObject("present");
@@ -122,6 +153,7 @@ public class AsistireFragment extends Fragment {
                 }
 
                 EventAdapter totsAdapter = new EventAdapter(events, getActivity());
+                totsAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(totsAdapter);
                 progressDialog.dismiss();
             }
@@ -134,8 +166,6 @@ public class AsistireFragment extends Fragment {
         //context, page_size, page_number
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        return rootView;
     }
 
 }

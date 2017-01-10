@@ -19,8 +19,6 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class EventController {
 
-    //private SharedPreferencesManager sharedPreferences;
-
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public void getAllEvents(AsyncHttpResponseHandler responseHandler, String category, String keywords, String date, String location,
@@ -38,10 +36,13 @@ public class EventController {
         client.get(URLResources.EVENTS_URL, params, responseHandler);
     }
 
-    public void getEventInfo(AsyncHttpResponseHandler responseHandler, String id) {
+    public void getEventInfo(AsyncHttpResponseHandler responseHandler, String id, Context context) {
+        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
         RequestParams params = new RequestParams();
-        //params.add("id", id);
         params.add("appkey", URLResources.APP_KEY);
+        params.add("uid", sharedPreferencesManager.getUserId());
+        params.add("provider", sharedPreferencesManager.getUserProvider());
+        params.add("token", sharedPreferencesManager.getUserToken());
         //String url = "http://10.4.41.167:8888/events/"+id+"?appkey=7384d85615237469c2f6022a154b7e2c";
         client.get(URLResources.EVENTS_URL+"/"+id, params, responseHandler);
     }
@@ -89,9 +90,7 @@ public class EventController {
             body.put("provider", provider);
             StringEntity entity = new StringEntity(body.toString());
             client.post(context, URLResources.EVENTS_URL+"/user", entity, "application/json", responseHandler);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (JSONException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -103,7 +102,7 @@ public class EventController {
         String provider = sharedPreferences.getUserProvider();
         JSONObject body = new JSONObject();
         StringEntity entity = null;
-        String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String currentDateandTime = new SimpleDateFormat("HH:mm").format(new Date());
 
         try {
             body.put("uid", uid);
@@ -125,18 +124,17 @@ public class EventController {
     }
 
     public void deleteAsistire(AsyncHttpResponseHandler responseHandler, Context context, String event_id) {
-        RequestParams params = new RequestParams();
         SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);
         String token = sharedPreferences.getUserToken();
         String uid = sharedPreferences.getUserId();
         String provider = sharedPreferences.getUserProvider();
-        params.add("token", token);
-        params.add("appkey", URLResources.APP_KEY);
         JSONObject body = new JSONObject();
         StringEntity entity = null;
         try {
             body.put("uid", uid);
             body.put("provider", provider);
+            body.put("token", token);
+            body.put("appkey", URLResources.APP_KEY);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -145,7 +143,7 @@ public class EventController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.delete(context, URLResources.EVENTS_URL+event_id+URLResources.USERS_URL, entity, "application/json", responseHandler);
+        client.delete(context, URLResources.EVENTS_URL+'/'+event_id+"/user", entity, "application/json", responseHandler);
     }
 
 }

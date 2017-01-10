@@ -56,6 +56,7 @@
 
     <string name="success_asistire">Disfruta del evento!</string>
     <string name="failure_asistire">Upps, algo ha ido mal! Vuelve a intentarlo más tarde.</string>
+    <string name="assistance_error">No puedes no asistir a un evento al cual ya has asistido.</string>
 
     <string name="settings">Preferencias</string>
     <string name="mi_perfil">Mi perfil</string>
@@ -71,6 +72,8 @@
     <string name="login_facebook">Facebook</string>
     <string name="login_google">Google</string>
     <string name="login_twitter">Twitter</string>
+    <string name="login_success">Sesión iniciada correctamente!</string>
+    <string name="login_fail">No se ha podido iniciar sesión.</string>
 
     <string name="button_asistire">Asistiré</string>
     <string name="text_date">Fecha</string>
@@ -80,11 +83,15 @@
     <string name="text_historial">Historial</string>
     <string name="text_check_in">Check-in</string>
     <string name="btn_text_check_in">Check in</string>
-    <string name="text_was_at_time">Realizado a las:</string>
+    <string name="text_was_at_time">Realizado el:</string>
     <string name="text_historic">Historial</string>
     <string name="text_no_reward_obtained">Recompensa no adquirida</string>
     <string name="text_from">De</string>
     <string name="text_to">a</string>
+
+    <string name="profile_error">Error obteniendo datos.</string>
+    <string name="profile_god_mode_on">God Mode ON</string>
+    <string name="profile_god_mode_off">God Mode OFF</string>
 
     <string name="login">Log In</string>
     <string name="event_details">Detalles del evento</string>
@@ -92,6 +99,8 @@
     <string name="facebook_app_id">306462863070758</string>
 
     <string name="fb_login_protocol_scheme">fb306462863070758</string>
+
+    <string name="error">Error</string>
 
 
     <string name="text_lorem">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</string>

@@ -61,6 +61,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     private static final String TWITTER_KEY = "3BHl3HDnSPuOEz4h8udLjZ1an";
     private static final String TWITTER_SECRET = "gCwOn4hM5xiC07KJXpONWZUw0moyz5OhP92GYFZRxveCImCtBK";
     private static final int RC_SIGN_IN = 1;
+    private Boolean isNewUser;
     private TwitterLoginButton loginButton;
     private LoginButton buttonFacebook;
     private GoogleApiClient mGoogleApiClient;
@@ -73,171 +74,93 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = new SharedPreferencesManager(this);
-        //Facebook config
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
 
-        //Twitter config
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new Twitter(authConfig));
+        if (sharedPreferences.getUserId().equals("")) {
 
-        setContentView(R.layout.activity_login);
+            //Facebook config
+            FacebookSdk.sdkInitialize(getApplicationContext());
+            callbackManager = CallbackManager.Factory.create();
 
-        //Twitter button
-        loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
-        loginButton.setText(getString(R.string.login_twitter));
-        loginButton.setCallback(new Callback<TwitterSession>() {
-            @Override
-            public void success(Result<TwitterSession> result) {
-                TwitterSucces(result);
-            }
+            //Twitter config
+            TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+            Fabric.with(this, new Twitter(authConfig));
 
-            private void TwitterSucces(Result<TwitterSession> result) {
-                final TwitterSession session = result.data;
-                String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                CreateUser(String.valueOf(session.getId()),"Twitter",session.getUserName());
-            }
+            setContentView(R.layout.activity_login);
 
-            @Override
-            public void failure(TwitterException exception) {
-                Log.d("TwitterKit", "Login with Twitter failure", exception);
-                Toast.makeText(getApplicationContext(), "error twitter", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        //Google
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        SignInButton signInButton = (SignInButton) findViewById(R.id.google_login_button);
-        signInButton.setSize(SignInButton.SIZE_WIDE);
-        setGooglePlusButtonText(signInButton);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInGoogle();
-
-            }
-        });
-
-
-        //facebook button
-        buttonFacebook = (LoginButton) findViewById(R.id.button_facebook);
-        buttonFacebook.setReadPermissions("public_profile");
-
-        // Callback registration
-        buttonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(final LoginResult loginResult) {
-
-
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                Log.v("LoginActivity", response.toString());
-
-                                // Application code
-                                String name = "";
-                                try {
-                                    name = object.getString("name");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                String msg = "@" + name + " logged in! (#" + loginResult.getAccessToken().getUserId() + ")";
-                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                                CreateUser(loginResult.getAccessToken().getUserId(), "Facebook", name);
-                            }
-                        });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "name");
-                request.setParameters(parameters);
-                request.executeAsync();
-
-
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getApplicationContext(), "facebook cancel", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                Toast.makeText(getApplicationContext(), "facebook error", Toast.LENGTH_LONG).show();
-                Log.e("error de facebook", exception.toString());
-            }
-        });
-
-        //rrss
-
-        ImageView buttonDirecte = (ImageView) findViewById(R.id.logo);
-        buttonDirecte.setClickable(true);
-        buttonDirecte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent;
-                sharedPreferences.setFirstTime(false);
-                if (!sharedPreferences.isFirstTime()) {
-                    intent = new Intent(LoginActivity.this, PreferencesActivity.class);
-                    intent.putExtra("skip", true);
-                    sharedPreferences.setFirstTime(false);
+            //Twitter button
+            loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+            loginButton.setText(getString(R.string.login_twitter));
+            loginButton.setCallback(new Callback<TwitterSession>() {
+                @Override
+                public void success(Result<TwitterSession> result) {
+                    TwitterSucces(result);
                 }
-                else intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-    }
 
+                private void TwitterSucces(Result<TwitterSession> result) {
+                    final TwitterSession session = result.data;
+                    Toast.makeText(getApplicationContext(), getString(R.string.login_success), Toast.LENGTH_LONG).show();
+                    CreateUser(String.valueOf(session.getId()),"Twitter",session.getUserName());
+                }
+
+                @Override
+                public void failure(TwitterException exception) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_LONG).show();
+                }
+            });
+
+            //Google
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .build();
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
+            SignInButton signInButton = (SignInButton) findViewById(R.id.google_login_button);
+            signInButton.setSize(SignInButton.SIZE_WIDE);
+            setGooglePlusButtonText(signInButton);
+            signInButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signInGoogle();
+
+                }
+            });
+        }
+        else {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
     private void signInGoogle() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-
     @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == RC_SIGN_IN) {
-                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-                handleSignInResult(result);
-            }
-            // Make sure that the loginButton hears the result from any
-            // Activity that it triggered.
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-            loginButton.onActivityResult(requestCode, resultCode, data);
-        }
-
-    /*
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+        // Make sure that the loginButton hears the result from any
+        // Activity that it triggered.
+        loginButton.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-    * */
 
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            String msg = "@" + acct.getDisplayName() + " logged in! (#" + acct.getId() + ")";
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.login_success), Toast.LENGTH_LONG).show();
             CreateUser(acct.getId(), "Google", acct.getDisplayName());
         } else {
             // Signed out, show unauthenticated UI.
 
-            Toast.makeText(getApplicationContext(), "error google", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_LONG).show();
         }
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 
     @Override
@@ -253,6 +176,11 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         mGoogleApiClient.disconnect();
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
     private void CreateUser(String uid, String provider, final String name) {
         JSONObject cli = new JSONObject();
         StringEntity entity;
@@ -266,12 +194,12 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
-                    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
                     try {
 
                         JSONObject user = response.getJSONObject("user");
                         sharedPreferences.setUserId(user.getString("uid"));
-                        sharedPreferences.setUserName(user.getString("name"));
+                        sharedPreferences.setUserName(name);
                         sharedPreferences.setUserProvider(user.getString("provider"));
                         sharedPreferences.setUserToken(user.getString("token"));
                         sharedPreferences.setFirstTime(!user.getBoolean("has_preferences"));
@@ -279,14 +207,19 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
                         sharedPreferences.setCurrentLevel(user.getInt("level"));
                         sharedPreferences.setCurrentExperience(user.getInt("experience"));
                         sharedPreferences.setNumberOfCheckins(user.getInt("number_checkins"));
-                        sharedPreferences.setExperienceOfTheNextLevel(user.getDouble("experience_of_next_level"));
+                        sharedPreferences.setExperienceToNextLevel((float)user.getDouble("experience_of_next_level"));
+                        sharedPreferences.setAttendanceUpdate(true);
+                        sharedPreferences.setTodosUpdate(true);
+                        sharedPreferences.setRecomendadosUpdate(true);
+                        sharedPreferences.setDistance(500);
+                        isNewUser = user.getBoolean("new_user");
                         Log.v("token", sharedPreferences.getUserToken());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     Intent intent;
-                    if (!sharedPreferences.isFirstTime()) {
+                    if (isNewUser) {
                         intent = new Intent(LoginActivity.this, PreferencesActivity.class);
                         intent.putExtra("skip", true);
                         sharedPreferences.setFirstTime(true);
