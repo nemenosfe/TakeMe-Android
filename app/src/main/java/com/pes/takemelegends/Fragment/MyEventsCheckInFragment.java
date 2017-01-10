@@ -45,16 +45,17 @@ public class MyEventsCheckInFragment extends Fragment {
     private EventController eventController;
     private GoogleApiClient mGoogleApiClient;
     private View rootView;
-    private SharedPreferencesManager sharedPreferencesManager;
     public MyEventsHistorialFragment fragmentHistorial;
     private List<String[]> events;
     private SwipeRefreshLayout swipeContainer;
+    public EventCheckInAdapter eventCheckInAdapter;
+    private MyEventsCheckInFragment instance;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventController = ControllerFactory.getInstance().getEventController();
-        sharedPreferencesManager = new SharedPreferencesManager(getContext());
+        instance = this;
     }
 
     public void refresh() {
@@ -116,8 +117,8 @@ public class MyEventsCheckInFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient);
-                recyclerView.setAdapter(checkinAdapter);
+                eventCheckInAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, instance);
+                recyclerView.setAdapter(eventCheckInAdapter);
                 progressDialog.dismiss();
             }
 
@@ -159,15 +160,5 @@ public class MyEventsCheckInFragment extends Fragment {
         refresh();
 
         return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (sharedPreferencesManager.needToRefreshView()) {
-            EventCheckInAdapter checkinAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient);
-            checkinAdapter.notifyDataSetChanged();
-            recyclerView.setAdapter(checkinAdapter);
-        }
     }
 }

@@ -47,6 +47,7 @@ public class MyEventsHistorialFragment extends Fragment {
     private View rootView;
     public Boolean needsRefresh = false;
     private SwipeRefreshLayout swipeContainer;
+    private EventHistorialAdapter historialAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,7 +132,7 @@ public class MyEventsHistorialFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                EventHistorialAdapter historialAdapter = new EventHistorialAdapter(events, getActivity());
+                historialAdapter = new EventHistorialAdapter(events, getActivity());
                 recyclerView.setAdapter(historialAdapter);
                 progressDialog.dismiss();
             }
@@ -178,5 +179,4 @@ public class MyEventsHistorialFragment extends Fragment {
 
         return rootView;
     }
-
 }

@@ -1,7 +1,6 @@
 package com.pes.takemelegends.Utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
 public class SharedPreferencesManager {
@@ -22,7 +21,8 @@ public class SharedPreferencesManager {
     private static Boolean hasPreferences = false;
     private static Boolean todosUpdate = false;
     private static Boolean recomendadosUpdate = false;
-    private static Boolean refreshView = false;
+    private static Boolean refreshCheckin = false;
+    private static Boolean refreshHistorial = false;
     private static Integer distance = 500;
     SharedPreferences sp;
 
@@ -49,7 +49,8 @@ public class SharedPreferencesManager {
         hasPreferences = (Boolean) getObject("hasPreferences", Boolean.class.getSimpleName());
         todosUpdate = (Boolean) getObject("todosUpdate", Boolean.class.getSimpleName());
         recomendadosUpdate = (Boolean) getObject("recomendadosUpdate", Boolean.class.getSimpleName());
-        refreshView = (Boolean) getObject("refreshView", Boolean.class.getSimpleName());
+        refreshCheckin = (Boolean) getObject("refreshCheckin", Boolean.class.getSimpleName());
+        refreshHistorial = (Boolean) getObject("refreshHistorial", Boolean.class.getSimpleName());
         distance = (Integer) getObject("distance", Integer.class.getSimpleName());
     }
 
@@ -59,10 +60,16 @@ public class SharedPreferencesManager {
         setValue("distance", distance);
     }
 
-    public Boolean needToRefreshView() { return refreshView; }
-    public void setRefreshView(Boolean b) {
-        this.refreshView = b;
-        setValue("refreshView", b);
+    public Boolean getRefreshCheckin() { return refreshCheckin; }
+    public void setRefreshCheckin(Boolean b) {
+        this.refreshCheckin = b;
+        setValue("refreshCheckin", b);
+    }
+
+    public Boolean getRefreshHistorial() { return refreshHistorial; }
+    public void setRefreshHistorial(Boolean b) {
+        this.refreshHistorial = b;
+        setValue("refreshHistorial", b);
     }
 
     public Boolean getTodosUpdate() {return todosUpdate;}
