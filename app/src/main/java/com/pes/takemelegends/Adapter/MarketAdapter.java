@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.pes.takemelegends.Activity.RewardsActivity;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder>  {
 
@@ -24,8 +25,6 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
         this.currentLvl = lvl;
     }
 
-
-
     @Override
     public MarketAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.level_row, parent, false);
@@ -33,17 +32,16 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
         return viewHolder;
     }
 
-
-
     @Override
     public void onBindViewHolder(MarketAdapter.ViewHolder viewHolder, int position) {
         // Necessitem el current level del user, fin a linkar amb API estara hardcoded a 3
         viewHolder.level.setText("Nivel " + itemsData[position]);
-        viewHolder.currentLevel = currentLvl;
         if (currentLvl < itemsData[position]) {
             viewHolder.lock.setImageResource(R.drawable.ic_lock_close);
         }
-        else viewHolder.lock.setImageResource(R.drawable.ic_lock_open);
+        else {
+            viewHolder.lock.setImageResource(R.drawable.ic_lock_open);
+        }
     }
 
     @Override
@@ -56,8 +54,8 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
 
         public TextView level;
         public ImageView lock;
-        public Integer currentLevel;
         private final Context context;
+        private SharedPreferencesManager sharedPreferences;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
@@ -70,7 +68,8 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            if (currentLevel - 1 >= this.getLayoutPosition()) {
+            sharedPreferences = new SharedPreferencesManager(context);
+            if (sharedPreferences.getCurrentLevel()>=this.getLayoutPosition()) {
                 Intent intent = new Intent(context, RewardsActivity.class);
                 intent.putExtra("level", getLayoutPosition() + 1);
                 context.startActivity(intent);

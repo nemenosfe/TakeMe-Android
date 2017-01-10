@@ -94,6 +94,7 @@ public class ProfileFragment extends Fragment {
                     }
                     else name.setText(shared.getUsername() + " *");
                     Integer level = user.getInt("level");
+                    shared.setCurrentLevel(level);
                     currentLvl.setText("Nivel " + level);
                     nextLvl.setText("Nivel " + (level+1));
                     Integer currentExp = user.getInt("experience");

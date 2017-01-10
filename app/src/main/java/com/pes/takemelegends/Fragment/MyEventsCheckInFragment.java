@@ -122,6 +122,7 @@ public class MyEventsCheckInFragment extends Fragment {
 
                 if (events.size()>0) {
                     eventCheckInAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, instance);
+                    eventCheckInAdapter.notifyDataSetChanged();
                     recyclerView.setAdapter(eventCheckInAdapter);
                 }
                 else noResults.setVisibility(TextView.VISIBLE);
