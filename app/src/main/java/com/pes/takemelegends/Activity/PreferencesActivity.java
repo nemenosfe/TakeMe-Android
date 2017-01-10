@@ -261,7 +261,6 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                                 // select the view containing all the cities
                                 ListView list = ((android.app.AlertDialog) dialog).getListView();
 
-                                // Empty the selected cities
                                 selectedCities = new ArrayList<String>();
 
                                 // iterate throught the cities
@@ -320,7 +319,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
 
                                 ListView list = ((AlertDialog) dialog).getListView();
 
-                                selectedPreferences = new ArrayList<>();
+                                selectedPreferences = new ArrayList<String>();
 
                                 for (int i = 0; i < list.getChildCount(); i++)
                                 {
@@ -383,13 +382,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                 }
 
                 // Create the string preferences to send it to the controller:   "{'loc..':'aa||sad||adf', 'categories':'asd||an||ad'}"
-                JSONObject json = new JSONObject();
-                try {
-                    json.put("categories", categories);
-                    json.put("locations", cities);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
 
                 // POST or PUT
                 Boolean hasPreferences = shared.hasPreferences();

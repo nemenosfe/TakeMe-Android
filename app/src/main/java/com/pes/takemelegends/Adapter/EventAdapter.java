@@ -49,6 +49,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
+        viewHolder.typeTV.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.typeTV.setText(capitalize(data[0]));
         viewHolder.titleTV.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.titleTV.setText(data[1]);

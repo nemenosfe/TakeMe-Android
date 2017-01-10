@@ -101,8 +101,12 @@ public class TotsEventsFragment extends Fragment {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         //TODO: Obtenir categoria de la API
                         JSONObject cat = event.getJSONObject("categories");
-                        String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
-                        String title = event.isNull("title") ? "" : event.getString("title");
+                        String category = "";
+                        JSONArray categories = cat.isNull("category") ? null : cat.getJSONArray("category");
+                        if (categories.length()>0) category = categories.getJSONObject(0).getString("id");
+                        for (int j = 1; j < categories.length(); ++j) {
+                            category += ", "+categories.getJSONObject(j).getString("id");
+                        }                        String title = event.isNull("title") ? "" : event.getString("title");
                         String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                         String id = event.getString("id");
                         String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
