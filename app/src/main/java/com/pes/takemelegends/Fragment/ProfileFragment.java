@@ -23,6 +23,8 @@ import com.pes.takemelegends.Utils.SharedPreferencesManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+
 import cz.msebera.android.httpclient.Header;
 
 public class ProfileFragment extends Fragment {
@@ -94,10 +96,12 @@ public class ProfileFragment extends Fragment {
                     Integer level = user.getInt("level");
                     currentLvl.setText("Nivel " + level);
                     nextLvl.setText("Nivel " + (level+1));
-                    nExp.setText(user.getInt("experience") + "/" + user.getInt("experience_of_next_level") + " xp");
+                    Integer currentExp = user.getInt("experience");
+                    Integer nextLevelExp = user.getInt("experience_of_next_level");
+                    nExp.setText(currentExp + "/" + nextLevelExp + " xp");
                     totalEvents.setText(user.getInt("number_checkins") + "\nevento(s)");
                     totalTakes.setText(user.getInt("takes") + "\ntakes");
-                    expBar.setProgress(77);
+                    expBar.setProgress(getLevelProgress(currentExp, nextLevelExp));
                     expBar.getProgressDrawable().setColorFilter(
                             getResources().getColor(R.color.main_ambar),
                             android.graphics.PorterDuff.Mode.SRC_IN);
@@ -121,5 +125,11 @@ public class ProfileFragment extends Fragment {
         transaction.addToBackStack("logros");
         transaction.commit();
         return rootView;
+    }
+
+    private Integer getLevelProgress(Integer current, Integer next) {
+        BigDecimal c = new BigDecimal(current);
+        BigDecimal n = new BigDecimal(next);
+        return c.divide(n, BigDecimal.ROUND_DOWN).intValue();
     }
 }
