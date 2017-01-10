@@ -133,7 +133,7 @@ public class RewardsActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        Toast.makeText(getApplicationContext(), "faiiiiiiiiiiil", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Error al descargar las recompensas.", Toast.LENGTH_SHORT).show();
                     }
                 },getApplicationContext());
             }

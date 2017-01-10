@@ -7,10 +7,10 @@
     <string name="logros_ganados">Logros ganados</string>
     <string name="cangeados">Premios canjeados</string>
 
-    <string name="text_welcome_user">¡Bienvenido usuario!</string>
-    <string name="text_main_preferences">Gustos principales</string>
+    <string name="text_welcome_user">¡Bienvenido! Selecciona tus preferencias</string>
+    <string name="text_main_preferences">Categorías de eventos</string>
     <string name="text_location">Ciudades de interés</string>
-    <string name="text_your_preferences">Tus gustos:</string>
+    <string name="text_your_preferences">Tus categorías:</string>
     <string name="text_all_preferences">Todas las categorías:</string>
     <string name="text_your_cities">Tus ciudades:</string>
     <string name="text_all_cities">Todas las ciudades:</string>
@@ -53,6 +53,8 @@
     <string name="preferences_all_cities">Todas las ciudades</string>
     <string name="preferences_title">Preferencias</string>
     <string name="preferences_select">Seleccionar</string>
+    <string name="preferences_select_categories">Seleccionar categorías</string>
+    <string name="preferences_select_cities">Seleccionar ciudades</string>
 
     <string name="success_asistire">Disfruta del evento!</string>
     <string name="failure_asistire">Upps, algo ha ido mal! Vuelve a intentarlo más tarde.</string>

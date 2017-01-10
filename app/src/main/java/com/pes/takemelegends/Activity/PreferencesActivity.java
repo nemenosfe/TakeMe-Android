@@ -132,6 +132,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
             allPreferences.add(value);
         }
 
+        // download the preferences
         userController = ControllerFactory.getInstance().getUserController();
         userController.getPreferences(new JsonHttpResponseHandler() {
             @Override
@@ -297,7 +298,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
             case R.id.selected_preferences: {
                 final CharSequence[] dialogList = allPreferences.toArray(new CharSequence[allPreferences.size()]);
                 final AlertDialog.Builder builderDialog = new AlertDialog.Builder(PreferencesActivity.this);
-                builderDialog.setTitle("Select Item");
+                builderDialog.setTitle("Selecciona las categorias de tu interés");
                 int count = dialogList.length;
                 final boolean[] is_checked = new boolean[count];
 
@@ -393,8 +394,6 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                     }
                 }
                 if (categories == "") categories = "Null";
-
-                // Create the string preferences to send it to the controller:   "{'loc..':'aa||sad||adf', 'categories':'asd||an||ad'}"
 
 
                 // POST or PUT
