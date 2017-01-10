@@ -45,6 +45,7 @@ public class RewardsActivity extends AppCompatActivity {
     private UserController userController;
     private HashMap<Integer,ArrayList<JSONObject>> rewardsbyLVL;
     private SharedPreferencesManager shared;
+    private RewardsActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class RewardsActivity extends AppCompatActivity {
         rewardController = ControllerFactory.getInstance().getRewardController();
         userController = ControllerFactory.getInstance().getUserController();
         shared = new SharedPreferencesManager(this);
-
+        instance = this;
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +74,10 @@ public class RewardsActivity extends AppCompatActivity {
             rewardsbyLVL.put(j,new ArrayList<JSONObject>());
         }
 
+        refresh();
+    }
+
+    public void refresh() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Obteniendo datos");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -80,7 +85,6 @@ public class RewardsActivity extends AppCompatActivity {
         progressDialog.show();
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
-
         userController.getUserData(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -120,7 +124,7 @@ public class RewardsActivity extends AppCompatActivity {
                                 linearLayoutManager.getOrientation());
                         recyclerView.addItemDecoration(dividerItemDecoration);
 
-                        MarketPerLevelAdapter perLvlAdapter = new MarketPerLevelAdapter(rewards);
+                        MarketPerLevelAdapter perLvlAdapter = new MarketPerLevelAdapter(rewards, instance);
 
                         recyclerView.setAdapter(perLvlAdapter);
 
@@ -141,6 +145,5 @@ public class RewardsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getString(R.string.profile_error), Toast.LENGTH_SHORT).show();
             }
         }, getApplicationContext(), shared.getUserId(), shared.getUserProvider());
-
     }
 }
