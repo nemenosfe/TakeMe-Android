@@ -90,6 +90,8 @@
     <string name="text_to">a</string>
 
     <string name="profile_error">Error obteniendo datos.</string>
+    <string name="profile_god_mode_on">God Mode ON</string>
+    <string name="profile_god_mode_off">God Mode OFF</string>
 
     <string name="login">Log In</string>
     <string name="event_details">Detalles del evento</string>

@@ -61,12 +61,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (shared.getDistance() == 500) {
-                    shared.setDistance(1000000);
-                    name.setText(name.getText() + " *");
+                    shared.setDistance(10000000);
+                    name.setText(shared.getUsername() + " *");
+                    Toast.makeText(getContext(), getString(R.string.profile_god_mode_on), Toast.LENGTH_SHORT).show();
                 }
                 else {
                     shared.setDistance(500);
                     name.setText(shared.getUsername());
+                    Toast.makeText(getContext(), getString(R.string.profile_god_mode_off), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -85,7 +87,10 @@ public class ProfileFragment extends Fragment {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     JSONObject user = response.getJSONObject("user");
-                    name.setText(shared.getUsername());
+                    if (shared.getDistance() == 500) {
+                        name.setText(shared.getUsername());
+                    }
+                    else name.setText(shared.getUsername() + " *");
                     Integer level = user.getInt("level");
                     currentLvl.setText("Nivel " + level);
                     nextLvl.setText("Nivel " + (level+1));
@@ -116,12 +121,5 @@ public class ProfileFragment extends Fragment {
         transaction.addToBackStack("logros");
         transaction.commit();
         return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        infoExp.invalidate();
-        infoUser.invalidate();
     }
 }
