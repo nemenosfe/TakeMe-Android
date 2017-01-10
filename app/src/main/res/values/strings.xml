@@ -89,6 +89,8 @@
     <string name="text_from">De</string>
     <string name="text_to">a</string>
 
+    <string name="profile_error">Error obteniendo datos.</string>
+
     <string name="login">Log In</string>
     <string name="event_details">Detalles del evento</string>
 

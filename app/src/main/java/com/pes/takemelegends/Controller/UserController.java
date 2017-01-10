@@ -58,7 +58,6 @@ public class UserController {
     }
 
     public void putPreferences(AsyncHttpResponseHandler responseHandler, Context context, String categories, String locations) {
-        RequestParams params = new RequestParams();
         sharedPreferences = new SharedPreferencesManager(context);
         String uid = sharedPreferences.getUserId(),
                 provider = sharedPreferences.getUserProvider(),
@@ -88,6 +87,12 @@ public class UserController {
     public void postUser(StringEntity body, Context context, JsonHttpResponseHandler responseHandler) {
         String url = URLResources.USERS_URL;
         client.post(context,url,body,"application/json",responseHandler);
+    }
+
+    public void getUserData(JsonHttpResponseHandler responseHandler, Context context, String uid, String provider) {
+        RequestParams params = new RequestParams("appkey", URLResources.APP_KEY);
+        String url = URLResources.USERS_URL + "/" + uid + "-" + provider;
+        client.get(context, url, params, responseHandler);
     }
 
 }
