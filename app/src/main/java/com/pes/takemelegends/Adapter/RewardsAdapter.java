@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.pes.takemelegends.R;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -38,6 +40,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHold
         viewHolder.rewardName.setText(data[0]);
         viewHolder.rewardDesc.setText(data[1]);
         viewHolder.rewardTakes.setText(data[2] + "takes");
+        viewHolder.amount.setText("x"+data[3]);
     }
 
     @Override
@@ -47,14 +50,14 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView rewardName, rewardDesc, rewardTakes;
+        private TextView rewardName, rewardDesc, rewardTakes, amount;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             rewardName = (TextView) itemLayoutView.findViewById(R.id.rewardName);
             rewardDesc = (TextView) itemLayoutView.findViewById(R.id.rewardDescription);
             rewardTakes = (TextView) itemLayoutView.findViewById(R.id.rewardTakes);
-
+            amount = (TextView) itemLayoutView.findViewById(R.id.amount);
         }
     }
 }
