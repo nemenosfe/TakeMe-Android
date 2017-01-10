@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="22sp"
+            android:layout_marginTop="13dp"
             android:text="@string/no_logros"
             android:visibility="gone"
             android:id="@+id/no_results"/>
@@ -28,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fabBtn"
-            android:layout_gravity="bottom|right"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_market_white"
