@@ -130,6 +130,6 @@ public class ProfileFragment extends Fragment {
     private Integer getLevelProgress(Integer current, Integer next) {
         BigDecimal c = new BigDecimal(current);
         BigDecimal n = new BigDecimal(next);
-        return c.divide(n, BigDecimal.ROUND_DOWN).intValue();
+        return c.divide(n, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).intValue();
     }
 }

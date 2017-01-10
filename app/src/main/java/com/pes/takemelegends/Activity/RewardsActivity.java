@@ -125,7 +125,7 @@ public class RewardsActivity extends AppCompatActivity {
                         recyclerView.addItemDecoration(dividerItemDecoration);
 
                         MarketPerLevelAdapter perLvlAdapter = new MarketPerLevelAdapter(rewards, instance);
-
+                        perLvlAdapter.notifyDataSetChanged();
                         recyclerView.setAdapter(perLvlAdapter);
 
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -136,6 +136,39 @@ public class RewardsActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error al descargar las recompensas.", Toast.LENGTH_SHORT).show();
                     }
                 },getApplicationContext());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), getString(R.string.profile_error), Toast.LENGTH_SHORT).show();
+            }
+        }, getApplicationContext(), shared.getUserId(), shared.getUserProvider());
+    }
+
+    public void refreshUserInfo() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Obteniendo datos");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        userController.getUserData(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONObject user = response.getJSONObject("user");
+                    Integer level = user.getInt("level");
+                    userTV.setText(shared.getUsername());
+                    lvlTV.setText("Nivel "+level);
+                    takesTV.setText(user.getInt("takes") + " takes");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
             }
 
             @Override

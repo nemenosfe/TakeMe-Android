@@ -137,7 +137,7 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
                             new Handler(Looper.getMainLooper()).post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    activity.refresh();
+                                    activity.refreshUserInfo();
                                 }
                             });
                         }
