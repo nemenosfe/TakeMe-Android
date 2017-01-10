@@ -16,12 +16,14 @@
         android:background="@drawable/white_circle"
         android:layout_margin="7dp">
 
-        <ImageView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:id="@+id/amount"
             android:gravity="center"
-            android:src="@drawable/ic_arrow_right"
-            android:id="@+id/imageReward"/>
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 

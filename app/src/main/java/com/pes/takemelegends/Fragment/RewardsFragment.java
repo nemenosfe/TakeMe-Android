@@ -95,7 +95,8 @@ public class RewardsFragment extends Fragment {
                         String name = achievement.getString("name");
                         String description = achievement.getString("description");
                         String takes = achievement.getString("takes");
-                        rewards.add(new String[]{name, description, takes});
+                        int amount = achievement.getInt("amount");
+                        rewards.add(new String[]{name, description, takes, String.valueOf(amount)});
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

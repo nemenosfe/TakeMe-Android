@@ -94,7 +94,7 @@ public class ProfileFragment extends Fragment {
                     Integer level = user.getInt("level");
                     currentLvl.setText("Nivel " + level);
                     nextLvl.setText("Nivel " + (level+1));
-                    nExp.setText(user.getInt("experience") + "/" + "next level exp" + " xp");
+                    nExp.setText(user.getInt("experience") + "/" + user.getInt("experience_of_next_level") + " xp");
                     totalEvents.setText(user.getInt("number_checkins") + "\nevento(s)");
                     totalTakes.setText(user.getInt("takes") + "\ntakes");
                     expBar.setProgress(77);

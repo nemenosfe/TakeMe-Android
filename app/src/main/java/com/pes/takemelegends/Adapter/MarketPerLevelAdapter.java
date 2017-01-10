@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,9 +44,11 @@ import cz.msebera.android.httpclient.Header;
 public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAdapter.ViewHolder> {
 
     private ArrayList<JSONObject> itemsData;
+    private RewardsActivity activity;
 
-    public MarketPerLevelAdapter(ArrayList<JSONObject> itemsData) {
+    public MarketPerLevelAdapter(ArrayList<JSONObject> itemsData, RewardsActivity rewardsActivity) {
         this.itemsData = itemsData;
+        activity = rewardsActivity;
     }
 
     @Override
@@ -72,7 +76,7 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
         return itemsData.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView productName, productDesc, productTakes;
         public ImageView productImage;
@@ -129,6 +133,12 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
                                 e.printStackTrace();
                             }
                             dialog.dismiss();
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    activity.refresh();
+                                }
+                            });
                         }
 
                         @Override
