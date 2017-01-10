@@ -260,13 +260,13 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                                     if (selectedCities.get(i).equals(selectedItem)) {
                                         itemFound = true;
 
-                                        if (isChecked == false) {
+                                        if (!isChecked) {
                                             selectedCities.remove(i);
                                         }
                                     }
                                     i++;
                                 }
-                                if (isChecked == true && itemFound == false) {
+                                if (isChecked && !itemFound) {
                                     selectedCities.add(selectedItem);
                                 }
                             }
@@ -322,13 +322,13 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                                     if (selectedPreferences.get(i).equals(selectedItem)) {
                                         itemFound = true;
 
-                                        if (isChecked == false) {
+                                        if (!isChecked) {
                                             selectedPreferences.remove(i);
                                         }
                                     }
                                     i++;
                                 }
-                                if (isChecked == true && itemFound == false) {
+                                if (isChecked && !itemFound) {
                                     selectedPreferences.add(selectedItem);
                                 }
 
