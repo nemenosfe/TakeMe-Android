@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +48,7 @@ public class MyEventsCheckInFragment extends Fragment {
     private SharedPreferencesManager sharedPreferencesManager;
     public MyEventsHistorialFragment fragmentHistorial;
     private List<String[]> events;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +56,6 @@ public class MyEventsCheckInFragment extends Fragment {
         eventController = ControllerFactory.getInstance().getEventController();
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
     }
-
 
     public void refresh() {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.checkInRecyclerView);
@@ -134,6 +135,18 @@ public class MyEventsCheckInFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_my_events_check_in, container, false);
+
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(R.color.main_ambar);
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
