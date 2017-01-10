@@ -22,6 +22,8 @@ import com.pes.takemelegends.Activity.EventDetailsActivity;
 import com.pes.takemelegends.R;
 import com.squareup.picasso.Picasso;
 
+import org.jsoup.Jsoup;
+
 import java.util.List;
 
 /**
@@ -58,7 +60,7 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
         }
         viewHolder.eventName.setText(data[1]);
         viewHolder.eventName.setEllipsize(TextUtils.TruncateAt.END);
-        viewHolder.eventDesc.setText(data[2]);
+        viewHolder.eventDesc.setText(Jsoup.parse(data[2]).text());
         viewHolder.eventDesc.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDate.setText(data[3]);
         viewHolder.status_hour.setText(data[6]);

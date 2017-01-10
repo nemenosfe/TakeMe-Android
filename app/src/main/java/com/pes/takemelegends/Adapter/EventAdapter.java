@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.pes.takemelegends.Activity.EventDetailsActivity;
 import com.pes.takemelegends.Activity.PreferencesActivity;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.CategoriesParser;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
         viewHolder.typeTV.setEllipsize(TextUtils.TruncateAt.END);
-        viewHolder.typeTV.setText(capitalize(data[0]));
+        viewHolder.typeTV.setText(getCategories(data[0]));
         viewHolder.titleTV.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.titleTV.setText(data[1]);
         viewHolder.location.setText(data[2]);
@@ -80,8 +81,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         viewHolder.takesBtn.setText(spannable2);
     }
 
-    private String capitalize(final String line) {
-        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+    private String getCategories(String categories) {
+        String[] splits = categories.split(",");
+        String category = CategoriesParser.parseCategory(splits[0]);
+        if (splits.length > 1) {
+            for(int i = 1; i < splits.length; i++) {
+                category += ", " + CategoriesParser.parseCategory(splits[i].replace(" ", ""));
+            }
+        }
+        return category;
     }
 
     @Override
