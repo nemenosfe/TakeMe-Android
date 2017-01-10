@@ -112,7 +112,7 @@
 
 
                     <TextView
-                        android:text="@string/preferences_select"
+                        android:text="@string/preferences_select_categories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/selected_preferences"
@@ -193,7 +193,7 @@
 
 
                 <TextView
-                    android:text="@string/preferences_select"
+                    android:text="@string/preferences_select_cities"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/text_selected_cities"

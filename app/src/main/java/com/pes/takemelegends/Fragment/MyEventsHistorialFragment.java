@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Adapter.EventAdapter;
@@ -48,6 +49,7 @@ public class MyEventsHistorialFragment extends Fragment {
     public Boolean needsRefresh = false;
     private SwipeRefreshLayout swipeContainer;
     private EventHistorialAdapter historialAdapter;
+    private TextView noResults;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -132,8 +134,11 @@ public class MyEventsHistorialFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                historialAdapter = new EventHistorialAdapter(events, getActivity());
-                recyclerView.setAdapter(historialAdapter);
+                if (events.size()>0) {
+                    historialAdapter = new EventHistorialAdapter(events, getActivity());
+                    recyclerView.setAdapter(historialAdapter);
+                }
+                else noResults.setVisibility(TextView.VISIBLE);
                 progressDialog.dismiss();
             }
 
@@ -164,6 +169,7 @@ public class MyEventsHistorialFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_my_events_historial, container, false);
 
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        noResults = (TextView) rootView.findViewById(R.id.no_results);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

@@ -5,10 +5,27 @@
     android:id="@+id/swipeContainer"
     tools:context="com.pes.takemelegends.Fragment.AsistireFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/totsRecyclerView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"/>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="13dp"
+            android:textSize="22sp"
+            android:text="@string/no_assitire_events"
+            android:visibility="gone"
+            android:id="@+id/no_results"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/totsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"/>
+
+    </RelativeLayout>
+
 
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -132,6 +132,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
             allPreferences.add(value);
         }
 
+        // download the preferences
         userController = ControllerFactory.getInstance().getUserController();
         userController.getPreferences(new JsonHttpResponseHandler() {
             @Override
@@ -233,9 +234,9 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
 
                 final CharSequence[] dialogList = allCities.toArray(new CharSequence[allCities.size()]);
                 final android.app.AlertDialog.Builder builderDialog = new android.app.AlertDialog.Builder(PreferencesActivity.this);
-                builderDialog.setTitle("Select Item");
+                builderDialog.setTitle("Selecciona las ciudades de tu interés");
                 int count = dialogList.length;
-                boolean[] is_checked = new boolean[count];
+                final boolean[] is_checked = new boolean[count];
 
                 // Select the cities that were previously selected
                 for (int i = 0; i < allCities.size(); i++){
@@ -250,28 +251,31 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                 // Creating multiple selection by using setMutliChoiceItem method
                 builderDialog.setMultiChoiceItems(dialogList, is_checked,
                         new DialogInterface.OnMultiChoiceClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) { }
+                            public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+
+                                String selectedItem = allCities.get(whichButton);
+                                Boolean itemFound = false;
+                                int i = 0;
+                                while (i < selectedCities.size() && !itemFound) {
+                                    if (selectedCities.get(i).equals(selectedItem)) {
+                                        itemFound = true;
+
+                                        if (isChecked == false) {
+                                            selectedCities.remove(i);
+                                        }
+                                    }
+                                    i++;
+                                }
+                                if (isChecked == true && itemFound == false) {
+                                    selectedCities.add(selectedItem);
+                                }
+                            }
                         });
 
                 builderDialog.setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
-                                // select the view containing all the cities
-                                ListView list = ((android.app.AlertDialog) dialog).getListView();
-
-                                selectedCities = new ArrayList<String>();
-
-                                // iterate throught the cities
-                                for (int i = 0; i < list.getChildCount(); i++)
-                                {
-                                    // if the CheckedTextView city is selected is added to selectedCities
-                                    CheckedTextView checkedTextView = (CheckedTextView)list.getChildAt(i);
-                                    if (checkedTextView.isChecked()) {
-                                        selectedCities.add((String) checkedTextView.getText());
-                                    }
-                                }
 
                                 selectedCitiesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedCities));
                                 setListViewHeightBasedOnChildren(selectedCitiesList);
@@ -294,9 +298,9 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
             case R.id.selected_preferences: {
                 final CharSequence[] dialogList = allPreferences.toArray(new CharSequence[allPreferences.size()]);
                 final AlertDialog.Builder builderDialog = new AlertDialog.Builder(PreferencesActivity.this);
-                builderDialog.setTitle("Select Item");
+                builderDialog.setTitle("Selecciona las categorias de tu interés");
                 int count = dialogList.length;
-                boolean[] is_checked = new boolean[count];
+                final boolean[] is_checked = new boolean[count];
 
                 for (int i = 0; i < allPreferences.size(); i++){
                     if (selectedPreferences.contains(allPreferences.get(i))){
@@ -309,7 +313,26 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
 
                 builderDialog.setMultiChoiceItems(dialogList, is_checked,
                         new DialogInterface.OnMultiChoiceClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) { }
+                            public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+
+                                String selectedItem = allPreferences.get(whichButton);
+                                Boolean itemFound = false;
+                                int i = 0;
+                                while (i < selectedPreferences.size() && !itemFound) {
+                                    if (selectedPreferences.get(i).equals(selectedItem)) {
+                                        itemFound = true;
+
+                                        if (isChecked == false) {
+                                            selectedPreferences.remove(i);
+                                        }
+                                    }
+                                    i++;
+                                }
+                                if (isChecked == true && itemFound == false) {
+                                    selectedPreferences.add(selectedItem);
+                                }
+
+                            }
                         });
 
                 builderDialog.setPositiveButton("OK",
@@ -317,17 +340,6 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                ListView list = ((AlertDialog) dialog).getListView();
-
-                                selectedPreferences = new ArrayList<String>();
-
-                                for (int i = 0; i < list.getChildCount(); i++)
-                                {
-                                    CheckedTextView checkedTextView = (CheckedTextView)list.getChildAt(i);
-                                    if (checkedTextView.isChecked()) {
-                                        selectedPreferences.add((String) checkedTextView.getText());
-                                    }
-                                }
                                 selectedPreferencesList.setAdapter(new ArrayAdapter<>(PreferencesActivity.this, android.R.layout.simple_list_item_1, selectedPreferences));
                                 setListViewHeightBasedOnChildren(selectedPreferencesList);
 
@@ -365,6 +377,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                         cities += selectedCities.get(i);
                     }
                 }
+                if (cities == "") cities = "Null";
 
                 // prepare the categories in a string like:   aa||bbbb||asagfdsg
                 String categories = "";
@@ -380,8 +393,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                         categories += key;
                     }
                 }
-
-                // Create the string preferences to send it to the controller:   "{'loc..':'aa||sad||adf', 'categories':'asd||an||ad'}"
+                if (categories == "") categories = "Null";
 
 
                 // POST or PUT

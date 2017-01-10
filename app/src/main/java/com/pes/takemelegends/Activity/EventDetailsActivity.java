@@ -112,8 +112,10 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         JSONObject cat = event.getJSONObject("categories");
                         String category = cat.isNull("category") ? "" : cat.getJSONArray("category").getJSONObject(0).getString("id");
                         address = event.isNull("address") ? "" : event.getString("address");
-                        latitude = Float.valueOf(lat);
-                        longitude = Float.valueOf(lng);
+                        if (!lat.equals(""))latitude = Float.valueOf(lat);
+                        else latitude = -1f;
+                        if (!lng.equals(""))longitude = Float.valueOf(lng);
+                        else longitude = -1f;
                         String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
 
                         String image = "http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg";
@@ -177,10 +179,13 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
             case R.id.mapBtn:
             {
                 Intent intent = new Intent(EventDetailsActivity.this, MapActivity.class);
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("longitude", longitude);
-                intent.putExtra("address", address);
-                startActivity(intent);
+                if (latitude != -1f && longitude != -1f) {
+                    intent.putExtra("latitude", latitude);
+                    intent.putExtra("longitude", longitude);
+                    intent.putExtra("address", address);
+                    startActivity(intent);
+                }
+                else Toast.makeText(EventDetailsActivity.this, "Este evento no ha especificado sus coordenadas", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.buttonAsistire:

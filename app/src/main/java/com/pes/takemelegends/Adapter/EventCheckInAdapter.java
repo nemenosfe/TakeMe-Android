@@ -160,6 +160,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                                 String name = response.getJSONObject("attendance").getJSONObject("achievement").getString("name");
 
                                 new AlertDialog.Builder(context).setTitle("¡Enhorabuena! " + description)
+                                        .setIcon(R.drawable.ic_trophy)
                                         .setMessage("Has desbloqueado el siguiente logro: " + name)
                                         .setCancelable(false)
                                         .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
