@@ -20,11 +20,11 @@ public class MyEventPageAdapter extends FragmentStatePagerAdapter{
     private MyEventsHistorialFragment tab1;
     private MyEventsCheckInFragment tab2;
 
-    public MyEventPageAdapter(FragmentManager fm, int numOfTabs) {
+    public MyEventPageAdapter(FragmentManager fm, int numOfTabs, MyEventsHistorialFragment tab1, MyEventsCheckInFragment tab2) {
         super(fm);
         this.numTabs = numOfTabs;
-        tab1 = new MyEventsHistorialFragment();
-        tab2 = new MyEventsCheckInFragment();
+        this.tab1 = tab1;
+        this.tab2 = tab2;
         tab2.fragmentHistorial = tab1;
     }
 

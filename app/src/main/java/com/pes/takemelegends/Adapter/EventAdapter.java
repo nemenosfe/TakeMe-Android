@@ -49,6 +49,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
+        viewHolder.typeTV.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.typeTV.setText(capitalize(data[0]));
         viewHolder.titleTV.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.titleTV.setText(data[1]);
@@ -56,7 +57,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         viewHolder.date.setText(data[3]);
         viewHolder.id.setText(data[4]);
         if(data[5].equals("http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg")){
-            String placeholder = "ph_"+data[0];
+            String[] categories = data[0].split(",");
+            String placeholder = "ph_"+categories[0];
             int id = context.getResources().getIdentifier(placeholder, "drawable", context.getPackageName());
             if (id!=0) viewHolder.eventImage.setImageResource(id);
             else Picasso.with(context).load(data[5]).into(viewHolder.eventImage);
