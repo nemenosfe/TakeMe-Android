@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -28,6 +29,7 @@ import com.pes.takemelegends.Utils.SharedPreferencesManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,7 @@ public class MyEventsCheckInFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     public EventCheckInAdapter eventCheckInAdapter;
     private MyEventsCheckInFragment instance;
+    private TextView noResults;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,8 +120,11 @@ public class MyEventsCheckInFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                eventCheckInAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, instance);
-                recyclerView.setAdapter(eventCheckInAdapter);
+                if (events.size()>0) {
+                    eventCheckInAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, instance);
+                    recyclerView.setAdapter(eventCheckInAdapter);
+                }
+                else noResults.setVisibility(TextView.VISIBLE);
                 progressDialog.dismiss();
             }
 
@@ -138,6 +144,7 @@ public class MyEventsCheckInFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_my_events_check_in, container, false);
 
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        noResults = (TextView) rootView.findViewById(R.id.no_results);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

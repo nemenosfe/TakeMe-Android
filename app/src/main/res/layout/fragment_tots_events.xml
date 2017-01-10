@@ -6,6 +6,15 @@
     android:id="@+id/swipeContainer"
     tools:context="com.pes.takemelegends.Fragment.TotsEventsFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:text="@string/no_tots_events"
+        android:visibility="gone"
+        android:id="@+id/no_results"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/totsRecyclerView"
         android:layout_width="match_parent"

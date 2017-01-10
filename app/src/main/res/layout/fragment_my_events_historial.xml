@@ -6,6 +6,15 @@
     tools:context="com.pes.takemelegends.Fragment.MyEventsHistorialFragment"
     android:id="@+id/swipeContainer">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:text="@string/no_historial_events"
+        android:visibility="gone"
+        android:id="@+id/no_results"/>
+
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/historialRecyclerView"

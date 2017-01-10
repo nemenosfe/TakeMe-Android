@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -26,6 +27,7 @@ import com.pes.takemelegends.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ public class LogrosFragment extends Fragment {
     private FloatingActionButton mFab;
     private AchievementController achievementController;
     private EventController eventController;
+    private TextView noResults;
 
     public LogrosFragment() {
         // Required empty public constructor
@@ -58,6 +61,7 @@ public class LogrosFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.logrosRecyclerView);
         mFab = (FloatingActionButton) rootView.findViewById(R.id.fabBtn);
+        noResults = (TextView) rootView.findViewById(R.id.no_results);
 
         mFab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.main_ambar)));
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +97,11 @@ public class LogrosFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-                LogroAdapter logrosAdapter = new LogroAdapter(getActivity(), logros);
-
-                recyclerView.setAdapter(logrosAdapter);
+                if (logros.size()> 0) {
+                    LogroAdapter logrosAdapter = new LogroAdapter(getActivity(), logros);
+                    recyclerView.setAdapter(logrosAdapter);
+                }
+                else noResults.setVisibility(TextView.VISIBLE);
                 progressDialog.dismiss();
             }
 

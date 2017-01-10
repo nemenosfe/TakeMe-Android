@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Activity.LoginActivity;
@@ -49,6 +50,7 @@ public class RewardsFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private FloatingActionButton mFab;
     private RewardController rewardController;
+    private TextView noResults;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class RewardsFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.logrosRecyclerView);
         mFab = (FloatingActionButton) rootView.findViewById(R.id.fabBtn);
+        noResults = (TextView) rootView.findViewById(R.id.no_results);
 
         mFab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.main_ambar)));
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +104,11 @@ public class RewardsFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-                RewardsAdapter rewardsAdapter = new RewardsAdapter(getActivity(), rewards);
-                recyclerView.setAdapter(rewardsAdapter);
+                if (rewards.size()>0) {
+                    RewardsAdapter rewardsAdapter = new RewardsAdapter(getActivity(), rewards);
+                    recyclerView.setAdapter(rewardsAdapter);
+                }
+                else noResults.setVisibility(TextView.VISIBLE);
                 progressDialog.dismiss();
             }
 
