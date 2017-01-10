@@ -117,6 +117,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
             SignInButton signInButton = (SignInButton) findViewById(R.id.google_login_button);
             signInButton.setSize(SignInButton.SIZE_WIDE);
             setGooglePlusButtonText(signInButton);
+
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,6 +125,59 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
 
                 }
             });
+
+
+            //facebook button
+            buttonFacebook = (LoginButton) findViewById(R.id.button_facebook);
+            buttonFacebook.setReadPermissions("public_profile");
+
+            // Callback registration
+            buttonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(final LoginResult loginResult) {
+
+
+                    GraphRequest request = GraphRequest.newMeRequest(
+                            loginResult.getAccessToken(),
+                            new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject object, GraphResponse response) {
+                                    Log.v("LoginActivity", response.toString());
+
+                                    // Application code
+                                    String name = "";
+                                    try {
+                                        name = object.getString("name");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    String msg = "@" + name + " logged in! (#" + loginResult.getAccessToken().getUserId() + ")";
+                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                    CreateUser(loginResult.getAccessToken().getUserId(), "Facebook", name);
+                                }
+                            });
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "name");
+                    request.setParameters(parameters);
+                    request.executeAsync();
+
+
+                }
+
+                @Override
+                public void onCancel() {
+                    Toast.makeText(getApplicationContext(), "facebook cancel", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                    Toast.makeText(getApplicationContext(), "facebook error", Toast.LENGTH_LONG).show();
+                    Log.e("error de facebook", exception.toString());
+                }
+            });
+
+
+
         }
         else {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
