@@ -39,6 +39,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     private List<String[]> itemsData;
     private Context context;
     private static GoogleApiClient mGoogleApiClient;
+    private SharedPreferencesManager shared;
 
     static final double _eQuatorialEarthRadius = 6378.1370D;
     static final double _d2r = (Math.PI / 180D);
@@ -48,6 +49,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         this.itemsData = itemsData;
         this.context = context;
         EventCheckInAdapter.mGoogleApiClient = mGoogleApiClient;
+        shared = new SharedPreferencesManager(context);
     }
 
     @Override
@@ -59,17 +61,21 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         String[] data = itemsData.get(position);
-        if (!data[0].equals("Present")) {
-            viewHolder.btnCheckIn.setBackgroundColor(context.getResources().getColor(R.color.green));
+        if (data[0].equals("Present") || shared.getDistance()>500) {
+            viewHolder.btnCheckIn.setClickable(true);
+            viewHolder.btnCheckIn.setBackgroundColor(context.getResources().getColor(R.color.lime));
         }
-        else viewHolder.btnCheckIn.setClickable(false);
+        else {
+            viewHolder.btnCheckIn.setBackgroundColor(context.getResources().getColor(R.color.red));
+            viewHolder.btnCheckIn.setAlpha(0.4f);
+            viewHolder.btnCheckIn.setClickable(false);
+        }
         viewHolder.eventName.setText(data[1]);
         viewHolder.eventName.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDesc.setText(Jsoup.parse(data[2]).text());
         viewHolder.eventDesc.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.eventDate.setText(data[3]);
         viewHolder.takes.setText(data[4]+"\ntakes");
-        viewHolder.hours.setText(data[5]);
         viewHolder.id.setText(data[6]);
         viewHolder.lat = Double.parseDouble(data[7]);
         viewHolder.lng = Double.parseDouble(data[8]);
@@ -81,7 +87,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView takes, hours, eventName, eventDesc, eventDate, id;
+        TextView takes, eventName, eventDesc, eventDate, id;
         Button btnCheckIn;
         LinearLayout details;
         public double lat, lng;
@@ -95,7 +101,6 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
             this.context = itemLayoutView.getContext();
             btnCheckIn = (Button) this.itemLayoutView.findViewById(R.id.btnCheckIn);
             takes = (TextView) itemLayoutView.findViewById(R.id.takes);
-            hours = (TextView) itemLayoutView.findViewById(R.id.hours);
             eventName = (TextView) itemLayoutView.findViewById(R.id.eventName);
             eventDesc = (TextView) itemLayoutView.findViewById(R.id.eventDesc);
             eventDate = (TextView) itemLayoutView.findViewById(R.id.eventDate);
