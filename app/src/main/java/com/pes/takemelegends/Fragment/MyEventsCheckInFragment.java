@@ -50,7 +50,7 @@ public class MyEventsCheckInFragment extends Fragment {
     public MyEventsHistorialFragment fragmentHistorial;
     private List<String[]> events;
     private SwipeRefreshLayout swipeContainer;
-    public EventCheckInAdapter eventCheckInAdapter;
+    private EventCheckInAdapter eventCheckInAdapter;
     private MyEventsCheckInFragment instance;
     private TextView noResults;
 
@@ -120,10 +120,12 @@ public class MyEventsCheckInFragment extends Fragment {
                     e.printStackTrace();
                 }
 
+                eventCheckInAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, instance);
+                eventCheckInAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(eventCheckInAdapter);
+
                 if (events.size()>0) {
-                    eventCheckInAdapter = new EventCheckInAdapter(events, getActivity(), mGoogleApiClient, instance);
-                    eventCheckInAdapter.notifyDataSetChanged();
-                    recyclerView.setAdapter(eventCheckInAdapter);
+                    noResults.setVisibility(View.GONE);
                 }
                 else noResults.setVisibility(TextView.VISIBLE);
                 progressDialog.dismiss();

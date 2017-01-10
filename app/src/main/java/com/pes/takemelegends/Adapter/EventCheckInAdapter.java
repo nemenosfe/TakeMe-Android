@@ -151,7 +151,6 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
                 eventController.doCheckIn(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        sharedPreferencesManager.setRefreshCheckin(true);
                         sharedPreferencesManager.setRefreshHistorial(true);
                         sharedPreferencesManager.increaseCheckInEvents();
                         try {
