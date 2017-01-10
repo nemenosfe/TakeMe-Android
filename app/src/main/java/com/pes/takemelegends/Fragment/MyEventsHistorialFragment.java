@@ -76,12 +76,13 @@ public class MyEventsHistorialFragment extends Fragment {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
                             String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            String time_checkin = event.isNull("time_checkin") ? "--:--" : event.getString("time_checkin");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "No description" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                             String id = event.getString("id");
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                            if (checkin_done.equals("1")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id});
+                            if (checkin_done.equals("1")) events.add(new String[]{"Present", checkin_done, title, description, startTime, takes, id, time_checkin});
                         }
                     }
                 } catch (JSONException e) {
@@ -95,6 +96,7 @@ public class MyEventsHistorialFragment extends Fragment {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
                             String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            String time_checkin = event.isNull("time_checkin") ? "--:--" : event.getString("time_checkin");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
@@ -114,12 +116,13 @@ public class MyEventsHistorialFragment extends Fragment {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
                             String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
+                            String time_checkin = event.isNull("time_checkin") ? "--:--" : event.getString("time_checkin");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                             String id = event.getString("id");
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                            if (checkin_done.equals("1")) events.add(new String[]{checkin_done, title, description, startTime, takes, id});
+                            if (checkin_done.equals("1")) events.add(new String[]{checkin_done, title, description, startTime, takes, id, time_checkin});
                         }
                     }
                 } catch (JSONException e) {

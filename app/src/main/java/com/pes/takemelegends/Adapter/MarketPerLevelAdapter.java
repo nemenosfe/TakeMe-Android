@@ -23,6 +23,7 @@ import com.pes.takemelegends.Activity.RewardsActivity;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.RewardController;
 import com.pes.takemelegends.R;
+import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,10 +79,12 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
         public ImageButton productBtn;
         private final Context context;
         private RewardController rewardController;
+        private SharedPreferencesManager shared;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             context = itemLayoutView.getContext();
+            shared = new SharedPreferencesManager(context);
             rewardController = ControllerFactory.getInstance().getRewardController();
             productName = (TextView) itemLayoutView.findViewById(R.id.productName);
             productDesc = (TextView) itemLayoutView.findViewById(R.id.productDescription);
@@ -121,7 +124,7 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             try {
                                 String takes = response.getJSONObject("purchase").getString("takes_left");
-                                productTakes.setText(takes+" takes");
+                                shared.setTotalTakes(Integer.valueOf(takes));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

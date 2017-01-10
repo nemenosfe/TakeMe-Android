@@ -90,9 +90,7 @@ public class EventController {
             body.put("provider", provider);
             StringEntity entity = new StringEntity(body.toString());
             client.post(context, URLResources.EVENTS_URL+"/user", entity, "application/json", responseHandler);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (JSONException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -104,7 +102,7 @@ public class EventController {
         String provider = sharedPreferences.getUserProvider();
         JSONObject body = new JSONObject();
         StringEntity entity = null;
-        String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String currentDateandTime = new SimpleDateFormat("HH:mm").format(new Date());
 
         try {
             body.put("uid", uid);
