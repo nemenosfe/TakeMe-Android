@@ -3,6 +3,7 @@ package com.pes.takemelegends.Adapter;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -144,6 +145,14 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
                         @Override
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                             dialog.dismiss();
+                            new AlertDialog.Builder(context).setTitle("Error")
+                                    .setMessage("No tienes suficientes takes.")
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    }).create().show();
                         }
                     }, context, productName.getText().toString());
                 }
