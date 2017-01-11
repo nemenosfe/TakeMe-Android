@@ -69,7 +69,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
         @Override
         public void onClick(View view) {
             sharedPreferences = new SharedPreferencesManager(context);
-            if (sharedPreferences.getCurrentLevel()>=this.getLayoutPosition()) {
+            if (sharedPreferences.getCurrentLevel()>=this.getLayoutPosition()+1) {
                 Intent intent = new Intent(context, RewardsActivity.class);
                 intent.putExtra("level", getLayoutPosition() + 1);
                 context.startActivity(intent);

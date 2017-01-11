@@ -42,6 +42,23 @@
         app:itemIconTint="@drawable/drawer_item"
         app:background="@color/main_ambar">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:id="@+id/disconnectContainer"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/disconnect"
+                android:src="@drawable/ic_logout"
+                android:background="#00000000"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
     </android.support.design.widget.NavigationView>
 
 

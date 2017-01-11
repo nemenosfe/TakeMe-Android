@@ -17,6 +17,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.pes.takemelegends.Fragment.EventsViewPagerFragment;
 import com.pes.takemelegends.Fragment.MarketFragment;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment feed, profile, market, myEvents;
     private SharedPreferencesManager sharedPreferences;
     private static final int RECORD_REQUEST_CODE = 101;
+    private ImageButton disconnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,20 @@ public class MainActivity extends AppCompatActivity
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_ambar));
 
         sharedPreferences = new SharedPreferencesManager(this);
+        disconnect = (ImageButton) findViewById(R.id.disconnect);
+
+        disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sharedPreferences.setUserId("");
+                sharedPreferences.setUserProvider("");
+                sharedPreferences.setUserToken("");
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
