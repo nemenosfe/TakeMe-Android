@@ -4,12 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -190,7 +192,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
             }
             case R.id.buttonAsistire:
                 final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("");
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setIndeterminate(true);
                 progressDialog.show();
@@ -199,14 +200,20 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                 if(atendance) eventController.deleteAsistire(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        Toast.makeText(EventDetailsActivity.this, "Que lástima no puedas venir.", Toast.LENGTH_SHORT).show();
                         enableAttendance();
                         progressDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        Toast.makeText(EventDetailsActivity.this, getString(R.string.failure_asistire), Toast.LENGTH_SHORT).show();
+                        new AlertDialog.Builder(EventDetailsActivity.this).setTitle("Error")
+                                .setMessage(getString(R.string.cant_delete))
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                }).create().show();
                         progressDialog.dismiss();
                     }
                 },this, event_id);
@@ -216,7 +223,6 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
                         sharedPreferences.setAttendanceUpdate(true);
                         sharedPreferences.setTodosUpdate(true);
                         sharedPreferences.setRecomendadosUpdate(true);
-                        Toast.makeText(EventDetailsActivity.this, getString(R.string.success_asistire), Toast.LENGTH_SHORT).show();
                         disableAttendance();
                         progressDialog.dismiss();
                     }
@@ -232,14 +238,10 @@ public class EventDetailsActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void disableAttendance() {
-        asistire.setAlpha(0.25f);
-        asistire.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_not, 0, 0, 0);
         asistire.setText("No asistiré");
         atendance = true;
     }
     private void enableAttendance() {
-        asistire.setAlpha(1.0f);
-        asistire.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_circle, 0, 0, 0);
         asistire.setText("Asistiré");
         atendance = false;
     }

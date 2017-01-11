@@ -90,54 +90,43 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:elevation="6dp">
-                    <RelativeLayout
-                        android:background="@drawable/button_detail"
-                        android:layout_marginRight="5dp"
+                    android:layout_height="60dp"
+
+                    android:padding="10dp"
+                    android:clipToPadding="false">
+
+                    <ImageButton
+                        android:id="@+id/mapBtn"
+                        android:background="@color/main_ambar"
+                        android:src="@drawable/ic_map"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
+                        android:elevation="4dp"/>
+                    <ImageButton
+                        android:id="@+id/buttonShare"
+                        android:background="@color/main_ambar"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/ic_share"
                         android:layout_width="50dp"
-                        android:layout_height="match_parent">
-                        <ImageButton
-                            android:id="@+id/mapBtn"
-                            android:background="?attr/selectableItemBackground"
-                            android:src="@drawable/ic_how_to_arrive"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent" />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:background="@drawable/button_detail"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent">
-                        <ImageButton
-                            android:id="@+id/buttonShare"
-                            android:background="?attr/selectableItemBackground"
-                            android:src="@drawable/ic_share_green"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent" />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_marginLeft="5dp"
+                        android:layout_height="match_parent"
+                        android:elevation="4dp"
+                        android:layout_toRightOf="@+id/mapBtn"/>
+                    <Button
+                        android:id="@+id/buttonAsistire"
+                        android:textColor="#696969"
+                        android:background="@color/white"
+                        android:text="@string/asistire"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/button_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:id="@+id/buttonAsistire"
-                            android:drawableStart="@drawable/ic_add_circle"
-                            android:paddingLeft="20dp"
-                            android:paddingRight="20dp"
-                            android:background="?attr/selectableItemBackground"
-                            android:text="@string/asistire"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </RelativeLayout>
-                </LinearLayout>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:elevation="4dp"
+                        android:layout_toRightOf="@+id/buttonShare"/>
+                </RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -147,8 +136,7 @@
                     android:paddingBottom="20dp"
                     android:gravity="center"
                     android:id="@+id/textEventName"
-                    style="@style/h1"
-                    />
+                    style="@style/h1"/>
             </LinearLayout>
 
             <ScrollView
