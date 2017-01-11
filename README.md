@@ -55,12 +55,14 @@
   >
   > A la fitxa de totes les pestanyes surt la informació de l'esdeveniment (Nom, ubicació, categoria, dia i hora), també una imatge que fa referencia a l'esdeveniment, el nombre d'assistents i takes. Si l'API d'eventful ens retorna una imatge per l'esdeveniment és la que s'utilitza per mostrar a l'usuari, en cas que no ens la facilitin es posa una imatge que fa referencia a la categoria. Totes les categories tenen una imatge associada.
   
+## Evento
+  > Es veu la informació completa dels esdeveniments, començant per una imatge que de la mateixa manera com al feed, si no es troba una imatge des de l'API de eventful es posa la imatge que representa la seva categoria. A la cantonada superior dreta de la imatge apareix el número de takes dintre d'un cercle.
+  >
+  > A continuació es troben 3 botons, el primer es tracta d'un botó amb la icona d'un mapa i que si és pressiona obra una activitat on et mostra la ubicació de l'esdeveniment i també es pot veure la teva ubicació actual. A la dreta es pot trobar el botó de "share", aquest botó permet compartir per xarxes socials, correu o altres aplicacions de missatgeria l'esdeveniment que s'està consultant. I la resta de l'espai es troba el botó de "Assistiré/No-Assistiré" al fer clic en assistiré es marca com esdeveniment a assistir i s'actualitza el esdeveniment i el botó passa a la seva negació, si es fa clic en el moment que indica "No-Assistiré" es desmarca i és desactualitza. Important: No es podrà marcar "No-Assistir" a un esdeveniment si ja s'ha fet el check-in. Al assistir a un esdeveniment es passa automàticament al llistat d'esdeveniments que es poden fer check-in.
+  
 ## Mi perfil
-  > Pantalla molt informativa amb 0 navegabilitat. Es mostra el nom d'usuari, nom de la persona, els takes i 
-  > events totals, el nivell actual i el següent i la barra d'experiencia.
+  > En aquesta pantalla es pot veure el número de takes de l'usuari, el nombre d'esdeveniments als quals s'ha fet check-in, amb el nom d'usuari i el seu nivell actual també representat per una barra d'experiència. A la segona part del perfil es troba els logros aconseguits i les recompenses obtingudes.
   >
-  > Sota aquesta informació es podran veure els "logros" que s'han aconseguit (En color rosat els logros aconseguits,
-  > en gris els encara no realitzats).
+  > Logros: Es veuen els logros que ha completat l'usuari, es pot veure el nom i la descripció del logro. Els logros que no s'han aconseguit, no hi ha forma de veurel's, així es fomenta la visita a esdeveniments.
   >
-  > Hi ha un botó circular a prop de la cantonada inferior dreta que permet amb un únic clic accedir a la
-  > pantalla d'intercanviar takes.
+  > Recompenses: Es pot veure totes les recompenses que s'han aconseguit a través dels takes obtinguts, a part del nom de la recompensa i de la descripció també es pot veure el nombre de recompenses que has obtingut per cada un dels objectes.
