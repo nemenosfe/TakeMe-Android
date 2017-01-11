@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.pes.takemelegends.Fragment.EventsViewPagerFragment;
 import com.pes.takemelegends.Fragment.MarketFragment;
 import com.pes.takemelegends.Fragment.MyEventsFragment;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         sharedPreferences.setUserId("");
         sharedPreferences.setUserProvider("");
         sharedPreferences.setUserToken("");
+        LoginManager.getInstance().logOut();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
