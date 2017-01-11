@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private static final int RECORD_REQUEST_CODE = 101;
     private ImageButton disconnect;
     private boolean doubleBackToExitPressedOnce = false;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -157,6 +158,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         this.doubleBackToExitPressedOnce = true;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
         exitToast.show();
 
         new Handler().postDelayed(new Runnable() {
