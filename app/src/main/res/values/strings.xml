@@ -110,6 +110,7 @@
     <string name="no_historial_events">No has acudido a ningún evento.</string>
     <string name="no_logros">Aún has conseguido ningún logro.</string>
     <string name="no_rewards">No has canjeado ninguna recompensa.</string>
+    <string name="logout_app">Vuelve a pulsar atrás para desconectarte</string>
 
     <string name="text_lorem">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</string>
     <!-- TODO: Remove or change this placeholder text -->

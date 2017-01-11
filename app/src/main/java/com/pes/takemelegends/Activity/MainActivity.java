@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.pes.takemelegends.Fragment.EventsViewPagerFragment;
 import com.pes.takemelegends.Fragment.MarketFragment;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferencesManager sharedPreferences;
     private static final int RECORD_REQUEST_CODE = 101;
     private ImageButton disconnect;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +52,7 @@ public class MainActivity extends AppCompatActivity
         disconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sharedPreferences.setUserId("");
-                sharedPreferences.setUserProvider("");
-                sharedPreferences.setUserToken("");
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                logout();
             }
         });
 
@@ -80,6 +77,16 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    private void logout() {
+        sharedPreferences.setUserId("");
+        sharedPreferences.setUserProvider("");
+        sharedPreferences.setUserToken("");
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     public void checkPermissions() {
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -94,19 +101,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-
-
-    @SuppressWarnings("StatementWithEmptyBody")
+        @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -148,5 +143,28 @@ public class MainActivity extends AppCompatActivity
         transaction.replace(R.id.fragment_container,market);
         transaction.addToBackStack("market");
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Toast exitToast = Toast.makeText(this, getString(R.string.logout_app), Toast.LENGTH_SHORT);
+        if (doubleBackToExitPressedOnce) {
+            exitToast.cancel();
+            super.onBackPressed();
+            logout();
+            finish();
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        exitToast.show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
