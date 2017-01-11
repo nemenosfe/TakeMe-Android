@@ -93,9 +93,10 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:elevation="6dp">
                     <RelativeLayout
-                        android:background="@drawable/orange_border_bottom"
+                        android:background="@drawable/button_detail"
                         android:layout_marginRight="5dp"
                         android:layout_marginLeft="10dp"
                         android:layout_width="50dp"
@@ -108,7 +109,7 @@
                             android:layout_height="match_parent" />
                     </RelativeLayout>
                     <RelativeLayout
-                        android:background="@drawable/orange_border_bottom"
+                        android:background="@drawable/button_detail"
                         android:layout_marginRight="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_width="50dp"
@@ -123,7 +124,7 @@
                     <RelativeLayout
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/orange_border_bottom"
+                        android:background="@drawable/button_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <Button
