@@ -44,6 +44,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     double lat, lng;
     private String address;
 
+    public MapFragment() {}
+
     public MapFragment(float latitude, float longitude, String address) {
         lat = latitude;
         lng = longitude;

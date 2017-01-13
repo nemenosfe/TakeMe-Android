@@ -98,6 +98,7 @@
 
     <string name="login">Log In</string>
     <string name="event_details">Detalles del evento</string>
+    <string name="filters_text">Filters</string>
 
     <string name="facebook_app_id">306462863070758</string>
 
@@ -112,6 +113,11 @@
     <string name="no_rewards">No has canjeado ninguna recompensa.</string>
     <string name="logout_app">Vuelve a pulsar atrás para desconectarte</string>
     <string name="cant_delete">No puedes haces esta acción si ya se ha hecho check-in al evento.</string>
+    <string name="reward_exchange">Canjear recompensa</string>
+    <string name="rewards">Recompensas</string>
+    <string name="reward_cost">Coste:</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 
     <string name="text_lorem">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</string>
     <!-- TODO: Remove or change this placeholder text -->

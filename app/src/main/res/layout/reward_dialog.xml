@@ -19,7 +19,7 @@
             android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:text="Canjear recompensa?"/>
+            android:text="@string/reward_exchange"/>
 
         <LinearLayout
             android:layout_marginTop="20dp"
@@ -61,7 +61,7 @@
                 android:paddingRight="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Coste:"/>
+                android:text="@string/reward_cost"/>
             <TextView
                 android:layout_weight="1"
                 android:textSize="16sp"
@@ -70,8 +70,7 @@
                 android:textColor="@color/red"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/price"
-                android:text="777 takes"/>
+                android:id="@+id/price"/>
         </LinearLayout>
 
 
@@ -92,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_cancel"
-            android:text="Cancel"/>
+            android:text="@string/cancel"/>
 
         <Button
             android:textColor="@color/greenblue"
@@ -101,6 +100,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_confirm"
-            android:text="Ok"/>
+            android:text="@string/ok"/>
     </LinearLayout>
 </RelativeLayout>
