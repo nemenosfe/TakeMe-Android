@@ -13,11 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Activity.MainActivity;
-import com.pes.takemelegends.Adapter.EventAdapter;
 import com.pes.takemelegends.Adapter.LogroAdapter;
 import com.pes.takemelegends.Controller.AchievementController;
 import com.pes.takemelegends.Controller.ControllerFactory;
@@ -27,7 +25,6 @@ import com.pes.takemelegends.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;

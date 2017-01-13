@@ -8,12 +8,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Adapter.EventAdapter;
@@ -106,7 +104,7 @@ public class TotsEventsFragment extends Fragment {
                         JSONObject cat = event.getJSONObject("categories");
                         String category = "";
                         JSONArray categories = cat.isNull("category") ? null : cat.getJSONArray("category");
-                        if (categories.length()>0) category = categories.getJSONObject(0).getString("id");
+                        if ((categories != null ? categories.length() : 0) >0) category = categories.getJSONObject(0).getString("id");
                         for (int j = 1; j < categories.length(); ++j) {
                             category += ", "+categories.getJSONObject(j).getString("id");
                         }                        String title = event.isNull("title") ? "" : event.getString("title");

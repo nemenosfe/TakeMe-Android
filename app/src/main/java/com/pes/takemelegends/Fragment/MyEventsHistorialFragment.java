@@ -2,23 +2,19 @@ package com.pes.takemelegends.Fragment;
 
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.pes.takemelegends.Adapter.EventAdapter;
 import com.pes.takemelegends.Adapter.EventHistorialAdapter;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
@@ -101,7 +97,6 @@ public class MyEventsHistorialFragment extends Fragment {
                         JSONObject event = eventArray.getJSONObject(i).getJSONObject("event");
                         if (event != null) {
                             String checkin_done = event.isNull("checkin_done") ? "" : event.getString("checkin_done");
-                            String time_checkin = event.isNull("time_checkin") ? "--:--" : event.getString("time_checkin");
                             String title = event.isNull("title") ? "" : event.getString("title");
                             String description = event.isNull("description") ? "" : event.getString("description");
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");

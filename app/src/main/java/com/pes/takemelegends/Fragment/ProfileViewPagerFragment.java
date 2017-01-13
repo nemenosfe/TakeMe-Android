@@ -8,12 +8,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pes.takemelegends.Adapter.EventPageAdapter;
 import com.pes.takemelegends.Adapter.ProfileAdapter;
 import com.pes.takemelegends.R;
 

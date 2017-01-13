@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -13,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -37,7 +34,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 public class PreferencesActivity extends Activity implements View.OnClickListener {
 
@@ -162,14 +159,14 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                 for (int i=0; i< categories.size(); i++) {
                     String key = categories.get(i);
                     String value = mapCategories.get(key);
-                    if (value != null && value != "null") {
+                    if (value != null && !Objects.equals(value, "null")) {
                         selectedPreferences.add(value);
                     }
                 }
 
                 for (int i=0; i< locations.size(); i++) {
                     String value = locations.get(i);
-                    if (value != null && value != "null") {
+                    if (value != null && !Objects.equals(value, "null")) {
                         selectedCities.add(value);
                     }
                 }
@@ -377,7 +374,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                         cities += selectedCities.get(i);
                     }
                 }
-                if (cities == "") cities = "Null";
+                if (Objects.equals(cities, "")) cities = "Null";
 
                 // prepare the categories in a string like:   aa||bbbb||asagfdsg
                 String categories = "";
@@ -393,7 +390,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                         categories += key;
                     }
                 }
-                if (categories == "") categories = "Null";
+                if (Objects.equals(categories, "")) categories = "Null";
 
 
                 // POST or PUT

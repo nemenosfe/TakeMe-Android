@@ -2,7 +2,6 @@ package com.pes.takemelegends.Fragment;
 
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,11 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.pes.takemelegends.Activity.LoginActivity;
 import com.pes.takemelegends.Activity.MainActivity;
-import com.pes.takemelegends.Activity.PreferencesActivity;
-import com.pes.takemelegends.Activity.RewardsActivity;
-import com.pes.takemelegends.Adapter.LogroAdapter;
 import com.pes.takemelegends.Adapter.RewardsAdapter;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.RewardController;

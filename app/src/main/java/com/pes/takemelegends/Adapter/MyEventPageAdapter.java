@@ -4,16 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.pes.takemelegends.Fragment.AsistireFragment;
 import com.pes.takemelegends.Fragment.MyEventsCheckInFragment;
-import com.pes.takemelegends.Fragment.MyEventsFragment;
 import com.pes.takemelegends.Fragment.MyEventsHistorialFragment;
-import com.pes.takemelegends.Fragment.RecomenatsFragment;
-import com.pes.takemelegends.Fragment.TotsEventsFragment;
-
-/**
- * Created by Oscar on 22/10/2016.
- */
 
 public class MyEventPageAdapter extends FragmentStatePagerAdapter{
     private int numTabs;

@@ -2,34 +2,24 @@ package com.pes.takemelegends.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.AbsoluteSizeSpan;
 import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pes.takemelegends.Activity.EventDetailsActivity;
-import com.pes.takemelegends.Activity.PreferencesActivity;
 import com.pes.takemelegends.R;
 import com.pes.takemelegends.Utils.CategoriesParser;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-/**
- * Created by Oscar on 22/10/2016.
- */
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 

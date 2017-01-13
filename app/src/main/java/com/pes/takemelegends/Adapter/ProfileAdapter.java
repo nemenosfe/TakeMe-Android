@@ -4,15 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.pes.takemelegends.Fragment.AsistireFragment;
 import com.pes.takemelegends.Fragment.LogrosFragment;
-import com.pes.takemelegends.Fragment.RecomenatsFragment;
 import com.pes.takemelegends.Fragment.RewardsFragment;
-import com.pes.takemelegends.Fragment.TotsEventsFragment;
-
-/**
- * Created by Oscar on 15/11/2016.
- */
 
 public class ProfileAdapter extends FragmentStatePagerAdapter {
     private int numTabs;

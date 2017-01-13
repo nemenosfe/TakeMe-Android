@@ -2,22 +2,14 @@ package com.pes.takemelegends.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pes.takemelegends.R;
 
 import java.util.List;
-
-/**
- * Created by Oscar on 24/10/2016.
- */
 
 public class LogroAdapter extends RecyclerView.Adapter<LogroAdapter.ViewHolder> {
 

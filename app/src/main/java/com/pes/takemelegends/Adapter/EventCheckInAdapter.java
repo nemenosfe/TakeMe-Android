@@ -143,7 +143,7 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
         @Override
         public void onClick(View view) {
             Location l = getLocation();
-            double distance = HaversineInKM(l.getLatitude(), l.getLongitude(), lat, lng);
+            double distance = HaversineInKM(l != null ? l.getLatitude() : 0, l.getLongitude(), lat, lng);
             final SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
             Integer minDistance = sharedPreferencesManager.getDistance();
             if (distance < minDistance) {

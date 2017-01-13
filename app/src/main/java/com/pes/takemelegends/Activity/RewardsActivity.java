@@ -1,15 +1,11 @@
 package com.pes.takemelegends.Activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,7 +19,6 @@ import com.pes.takemelegends.Controller.RewardController;
 import com.pes.takemelegends.Controller.UserController;
 import com.pes.takemelegends.R;
 import com.pes.takemelegends.Utils.SharedPreferencesManager;
-import com.twitter.sdk.android.core.models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +26,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 
 import cz.msebera.android.httpclient.Header;
 

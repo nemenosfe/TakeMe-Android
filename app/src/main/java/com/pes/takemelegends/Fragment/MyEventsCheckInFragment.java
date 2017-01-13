@@ -2,7 +2,6 @@ package com.pes.takemelegends.Fragment;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,23 +12,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pes.takemelegends.Adapter.EventCheckInAdapter;
-import com.pes.takemelegends.Adapter.EventHistorialAdapter;
 import com.pes.takemelegends.Controller.ControllerFactory;
 import com.pes.takemelegends.Controller.EventController;
 import com.pes.takemelegends.R;
-import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,8 +85,8 @@ public class MyEventsCheckInFragment extends Fragment {
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                             String id = event.getString("id");
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                            Double lat = event.isNull("latitude") ? 0 : Double.valueOf(event.getDouble("latitude"));
-                            Double lng = event.isNull("longitude") ? 0 : Double.valueOf(event.getDouble("longitude"));
+                            Double lat = event.isNull("latitude") ? 0 : event.getDouble("latitude");
+                            Double lng = event.isNull("longitude") ? 0 : event.getDouble("longitude");
                             if (checkin_done == 0) events.add(new String[]{"Present", String.valueOf(checkin_done), title, description, startTime, takes, id, String.valueOf(lat), String.valueOf(lng)});
                         }
                     }
@@ -111,8 +106,8 @@ public class MyEventsCheckInFragment extends Fragment {
                             String startTime = event.isNull("start_time") ? "" : event.getString("start_time");
                             String id = event.getString("id");
                             String takes = event.isNull("takes") ? "0" : String.valueOf(event.getInt("takes"));
-                            Double lat = event.isNull("latitude") ? 0 : Double.valueOf(event.getDouble("latitude"));
-                            Double lng = event.isNull("longitude") ? 0 : Double.valueOf(event.getDouble("longitude"));
+                            Double lat = event.isNull("latitude") ? 0 : event.getDouble("latitude");
+                            Double lng = event.isNull("longitude") ? 0 : event.getDouble("longitude");
                             if (checkin_done == 0) events.add(new String[]{"Future", title, description, startTime, takes, "Not yet", id, String.valueOf(lat), String.valueOf(lng)});
                         }
                     }

@@ -8,10 +8,6 @@ import com.pes.takemelegends.Fragment.AsistireFragment;
 import com.pes.takemelegends.Fragment.RecomenatsFragment;
 import com.pes.takemelegends.Fragment.TotsEventsFragment;
 
-/**
- * Created by Oscar on 22/10/2016.
- */
-
 public class EventPageAdapter extends FragmentStatePagerAdapter{
     private int numTabs;
 

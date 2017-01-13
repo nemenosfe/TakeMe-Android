@@ -9,13 +9,7 @@ import android.widget.TextView;
 
 import com.pes.takemelegends.R;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
-
-/**
- * Created by Oscar on 15/11/2016.
- */
 
 public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHolder> {
 
