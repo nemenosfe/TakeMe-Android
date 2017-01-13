@@ -39,14 +39,14 @@ import java.util.List;
 
 public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapter.ViewHolder> {
 
-    private List<String[]> itemsData;
-    private Context context;
+    private final List<String[]> itemsData;
+    private final Context context;
     private static GoogleApiClient mGoogleApiClient;
-    private SharedPreferencesManager shared;
-    private MyEventsCheckInFragment checkInFragment;
+    private final SharedPreferencesManager shared;
+    private final MyEventsCheckInFragment checkInFragment;
 
-    static final double _eQuatorialEarthRadius = 6378.1370D;
-    static final double _d2r = (Math.PI / 180D);
+    private static final double _eQuatorialEarthRadius = 6378.1370D;
+    private static final double _d2r = (Math.PI / 180D);
 
 
     public EventCheckInAdapter(List<String[]> itemsData, Context context, GoogleApiClient mGoogleApiClient, MyEventsCheckInFragment fragment) {
@@ -92,11 +92,15 @@ public class EventCheckInAdapter extends RecyclerView.Adapter<EventCheckInAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView takes, eventName, eventDesc, eventDate, id;
-        Button btnCheckIn;
-        LinearLayout details;
+        final TextView takes;
+        final TextView eventName;
+        final TextView eventDesc;
+        final TextView eventDate;
+        final TextView id;
+        final Button btnCheckIn;
+        final LinearLayout details;
         public double lat, lng;
-        private View itemLayoutView;
+        private final View itemLayoutView;
         private final Context context;
 
         ViewHolder(View itemLayoutView) {

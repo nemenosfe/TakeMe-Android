@@ -10,12 +10,7 @@ import com.pes.takemelegends.Utils.URLResources;
 
 public class AchievementController {
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
-
-    public void getAllAchievements(AsyncHttpResponseHandler responseHandler) {
-        RequestParams params = new RequestParams("appkey", URLResources.APP_KEY);
-        client.get(URLResources.ACHIEVEMENTS_URL, params, responseHandler);
-    }
+    private static final AsyncHttpClient client = new AsyncHttpClient();
 
     public void getUserAchievements(AsyncHttpResponseHandler responseHandler, Context context) {
         SharedPreferencesManager sharedPreferences = new SharedPreferencesManager(context);

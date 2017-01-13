@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    public void checkPermissions() {
+    private void checkPermissions() {
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {

@@ -13,8 +13,8 @@ import java.util.List;
 
 public class LogroAdapter extends RecyclerView.Adapter<LogroAdapter.ViewHolder> {
 
-    private List<String[]> itemsData;
-    private Context context;
+    private final List<String[]> itemsData;
+    private final Context context;
 
     public LogroAdapter(Context context, List<String[]> itemsData) {
         this.context = context;
@@ -24,8 +24,7 @@ public class LogroAdapter extends RecyclerView.Adapter<LogroAdapter.ViewHolder> 
     @Override
     public LogroAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.logro_row, parent, false);
-        LogroAdapter.ViewHolder viewHolder = new LogroAdapter.ViewHolder(itemLayoutView);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
@@ -43,7 +42,9 @@ public class LogroAdapter extends RecyclerView.Adapter<LogroAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView numOfTakes, titleLogro, descriptionLogro;
+        public final TextView numOfTakes;
+        public final TextView titleLogro;
+        public final TextView descriptionLogro;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);

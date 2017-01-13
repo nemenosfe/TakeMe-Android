@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class UserController {
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    private static final AsyncHttpClient client = new AsyncHttpClient();
     private SharedPreferencesManager sharedPreferences;
 
     public void getPreferences(AsyncHttpResponseHandler responseHandler, Context context) {

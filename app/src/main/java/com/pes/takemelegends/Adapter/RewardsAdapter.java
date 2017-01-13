@@ -13,8 +13,8 @@ import java.util.List;
 
 public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHolder> {
 
-    private List<String[]> itemsData;
-    private Context context;
+    private final List<String[]> itemsData;
+    private final Context context;
 
     public RewardsAdapter(Context context, List<String[]> itemsData) {
         this.context = context;
@@ -24,8 +24,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHold
     @Override
     public RewardsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.reward_row, parent, false);
-        RewardsAdapter.ViewHolder viewHolder = new RewardsAdapter.ViewHolder(itemLayoutView);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
@@ -44,7 +43,10 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView rewardName, rewardDesc, rewardTakes, amount;
+        private final TextView rewardName;
+        private final TextView rewardDesc;
+        private final TextView rewardTakes;
+        private final TextView amount;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);

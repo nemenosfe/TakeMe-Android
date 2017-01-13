@@ -15,8 +15,8 @@ import com.pes.takemelegends.Utils.SharedPreferencesManager;
 
 public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder>  {
 
-    private Integer[] itemsData;
-    private int currentLvl;
+    private final Integer[] itemsData;
+    private final int currentLvl;
 
     public MarketAdapter(Integer[] itemsData, int lvl) {
         this.itemsData = itemsData;
@@ -26,8 +26,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
     @Override
     public MarketAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.level_row, parent, false);
-        MarketAdapter.ViewHolder viewHolder = new MarketAdapter.ViewHolder(itemLayoutView);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
@@ -50,8 +49,8 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView level;
-        public ImageView lock;
+        public final TextView level;
+        public final ImageView lock;
         private final Context context;
         private SharedPreferencesManager sharedPreferences;
 

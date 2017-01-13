@@ -71,7 +71,7 @@ public class RewardsActivity extends AppCompatActivity {
         refresh();
     }
 
-    public void refresh() {
+    private void refresh() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Obteniendo datos");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

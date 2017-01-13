@@ -34,7 +34,7 @@ public class MarketFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SharedPreferencesManager shared;
-    private UserController userController;
+    private final UserController userController;
 
     public MarketFragment() {
         userController = ControllerFactory.getInstance().getUserController();

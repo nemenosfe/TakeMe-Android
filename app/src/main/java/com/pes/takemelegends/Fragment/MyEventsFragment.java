@@ -20,8 +20,8 @@ import com.pes.takemelegends.Utils.SharedPreferencesManager;
  */
 public class MyEventsFragment extends Fragment {
 
-    private MyEventsCheckInFragment checkInFragment;
-    private MyEventsHistorialFragment historialFragment;
+    private final MyEventsCheckInFragment checkInFragment;
+    private final MyEventsHistorialFragment historialFragment;
     private SharedPreferencesManager sharedPreferencesManager;
 
     public MyEventsFragment() {

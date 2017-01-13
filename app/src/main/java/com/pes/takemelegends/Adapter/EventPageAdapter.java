@@ -9,7 +9,7 @@ import com.pes.takemelegends.Fragment.RecomenatsFragment;
 import com.pes.takemelegends.Fragment.TotsEventsFragment;
 
 public class EventPageAdapter extends FragmentStatePagerAdapter{
-    private int numTabs;
+    private final int numTabs;
 
     public EventPageAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
@@ -25,14 +25,11 @@ public class EventPageAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                TotsEventsFragment tab1 = new TotsEventsFragment();
-                return tab1;
+                return new TotsEventsFragment();
             case 1:
-                AsistireFragment tab2 = new AsistireFragment();
-                return tab2;
+                return new AsistireFragment();
             case 2:
-                RecomenatsFragment tab3 = new RecomenatsFragment();
-                return tab3;
+                return new RecomenatsFragment();
             default:
                 return null;
         }

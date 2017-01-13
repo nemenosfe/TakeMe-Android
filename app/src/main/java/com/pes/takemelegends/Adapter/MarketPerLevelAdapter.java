@@ -31,8 +31,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAdapter.ViewHolder> {
 
-    private ArrayList<JSONObject> itemsData;
-    private RewardsActivity activity;
+    private final ArrayList<JSONObject> itemsData;
+    private final RewardsActivity activity;
 
     public MarketPerLevelAdapter(ArrayList<JSONObject> itemsData, RewardsActivity rewardsActivity) {
         this.itemsData = itemsData;
@@ -42,8 +42,7 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
     @Override
     public MarketPerLevelAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.market_per_lvl_row, parent, false);
-        MarketPerLevelAdapter.ViewHolder viewHolder = new MarketPerLevelAdapter.ViewHolder(itemLayoutView);
-        return viewHolder;
+        return new ViewHolder(itemLayoutView);
     }
 
     @Override
@@ -66,12 +65,14 @@ public class MarketPerLevelAdapter extends RecyclerView.Adapter<MarketPerLevelAd
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView productName, productDesc, productTakes;
-        public ImageView productImage;
-        public ImageButton productBtn;
+        public final TextView productName;
+        public final TextView productDesc;
+        public final TextView productTakes;
+        public final ImageView productImage;
+        public final ImageButton productBtn;
         private final Context context;
-        private RewardController rewardController;
-        private SharedPreferencesManager shared;
+        private final RewardController rewardController;
+        private final SharedPreferencesManager shared;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);

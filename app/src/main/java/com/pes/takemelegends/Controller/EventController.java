@@ -19,7 +19,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class EventController {
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    private static final AsyncHttpClient client = new AsyncHttpClient();
 
     public void getAllEvents(AsyncHttpResponseHandler responseHandler, String category, String keywords, String date, String location,
         String within, String page_size, String page_number) {

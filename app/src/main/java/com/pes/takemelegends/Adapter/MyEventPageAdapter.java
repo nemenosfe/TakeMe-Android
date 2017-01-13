@@ -8,9 +8,9 @@ import com.pes.takemelegends.Fragment.MyEventsCheckInFragment;
 import com.pes.takemelegends.Fragment.MyEventsHistorialFragment;
 
 public class MyEventPageAdapter extends FragmentStatePagerAdapter{
-    private int numTabs;
-    private MyEventsHistorialFragment tab1;
-    private MyEventsCheckInFragment tab2;
+    private final int numTabs;
+    private final MyEventsHistorialFragment tab1;
+    private final MyEventsCheckInFragment tab2;
 
     public MyEventPageAdapter(FragmentManager fm, int numOfTabs, MyEventsHistorialFragment tab1, MyEventsCheckInFragment tab2) {
         super(fm);

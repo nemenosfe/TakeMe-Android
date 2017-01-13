@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar expBar;
     private ProfileViewPagerFragment logros;
     private SharedPreferencesManager shared;
-    private UserController userController;
+    private final UserController userController;
 
     public ProfileFragment() {
         userController = ControllerFactory.getInstance().getUserController();

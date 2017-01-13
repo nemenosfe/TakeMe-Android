@@ -42,7 +42,7 @@ public class MyEventsHistorialFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private EventController eventController;
     private View rootView;
-    public Boolean needsRefresh = false;
+    private Boolean needsRefresh = false;
     private SwipeRefreshLayout swipeContainer;
     private EventHistorialAdapter historialAdapter;
     private TextView noResults;

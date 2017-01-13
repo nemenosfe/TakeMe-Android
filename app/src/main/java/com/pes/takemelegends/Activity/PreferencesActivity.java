@@ -186,7 +186,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
     }
 
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    private static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             return;
@@ -213,7 +213,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
     }
 
 
-    public static Object getKeyFromValue(Map hm, Object value) {
+    private static Object getKeyFromValue(Map hm, Object value) {
         for (Object o : hm.keySet()) {
             if (hm.get(o).equals(value)) {
                 return o;
@@ -237,12 +237,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
 
                 // Select the cities that were previously selected
                 for (int i = 0; i < allCities.size(); i++){
-                    if (selectedCities.contains(allCities.get(i))){
-                        is_checked[i] = true;
-                    }
-                    else {
-                        is_checked[i] = false;
-                    }
+                    is_checked[i] = selectedCities.contains(allCities.get(i));
                 }
 
                 // Creating multiple selection by using setMutliChoiceItem method
@@ -300,12 +295,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
                 final boolean[] is_checked = new boolean[count];
 
                 for (int i = 0; i < allPreferences.size(); i++){
-                    if (selectedPreferences.contains(allPreferences.get(i))){
-                        is_checked[i] = true;
-                    }
-                    else {
-                        is_checked[i] = false;
-                    }
+                    is_checked[i] = selectedPreferences.contains(allPreferences.get(i));
                 }
 
                 builderDialog.setMultiChoiceItems(dialogList, is_checked,

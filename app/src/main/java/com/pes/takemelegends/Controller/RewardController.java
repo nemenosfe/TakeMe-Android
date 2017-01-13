@@ -23,7 +23,7 @@ POST 	/rewards/user/ 	appkey + token 	Compra d'una recompensa per un usuari
 
 public class RewardController {
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    private static final AsyncHttpClient client = new AsyncHttpClient();
 
     public void getRewardsByLvl(AsyncHttpResponseHandler responseHandler, Context context){
         RequestParams params = new RequestParams();

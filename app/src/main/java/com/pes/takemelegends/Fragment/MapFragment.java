@@ -35,7 +35,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     private GoogleApiClient mGoogleApiClient;
     private SupportMapFragment mapFragment;
     // palau sant jordi
-    double lat, lng;
+    private double lat;
+    private double lng;
     private String address;
 
     public MapFragment() {}

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class SharedPreferencesManager {
 
-    public static final String PREFS_NAME = "TakeMeLegends";
+    private static final String PREFS_NAME = "TakeMeLegends";
 
     private static String userUid = "";
     private static String userToken = "";
@@ -24,7 +24,7 @@ public class SharedPreferencesManager {
     private static Boolean refreshCheckin = false;
     private static Boolean refreshHistorial = false;
     private static Integer distance = 500;
-    SharedPreferences sp;
+    private final SharedPreferences sp;
 
 
 
@@ -56,19 +56,19 @@ public class SharedPreferencesManager {
 
     public Integer getDistance() { return distance; }
     public void setDistance(Integer distance) {
-        this.distance = distance;
+        SharedPreferencesManager.distance = distance;
         setValue("distance", distance);
     }
 
     public Boolean getRefreshCheckin() { return refreshCheckin; }
     public void setRefreshCheckin(Boolean b) {
-        this.refreshCheckin = b;
+        refreshCheckin = b;
         setValue("refreshCheckin", b);
     }
 
     public Boolean getRefreshHistorial() { return refreshHistorial; }
     public void setRefreshHistorial(Boolean b) {
-        this.refreshHistorial = b;
+        refreshHistorial = b;
         setValue("refreshHistorial", b);
     }
 
@@ -94,7 +94,7 @@ public class SharedPreferencesManager {
         return hasPreferences;
     }
     public void setHasPreferences(Boolean hasPreferences) {
-        this.hasPreferences = hasPreferences;
+        SharedPreferencesManager.hasPreferences = hasPreferences;
         setValue("hasPreferences", hasPreferences);
     }
 
@@ -159,7 +159,7 @@ public class SharedPreferencesManager {
 
     public int getNumberOfChekins(){return numberOfCheckins;}
     public void setNumberOfCheckins(int numberOfCheckins) {
-        this.numberOfCheckins = numberOfCheckins;
+        SharedPreferencesManager.numberOfCheckins = numberOfCheckins;
         setValue("numberOfCheckins", numberOfCheckins);
     }
 
@@ -169,7 +169,7 @@ public class SharedPreferencesManager {
 
     public Float getExperienceToNextLevel(){return experienceToNextLevel;}
     public void setExperienceToNextLevel(float experienceOfTheNextLevel) {
-        this.experienceToNextLevel = experienceOfTheNextLevel;
+        experienceToNextLevel = experienceOfTheNextLevel;
         setValue("experienceToNextLevel", experienceOfTheNextLevel);
     }
 

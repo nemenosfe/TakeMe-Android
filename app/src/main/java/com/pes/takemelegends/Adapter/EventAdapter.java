@@ -23,8 +23,8 @@ import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
-    private List<String[]> itemsData;
-    private Context context;
+    private final List<String[]> itemsData;
+    private final Context context;
 
     public EventAdapter(List<String[]> itemsData, Context context) {
         this.itemsData = itemsData;
@@ -89,9 +89,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView typeTV, titleTV, takesBtn, asistentsBtn, location, date, id;
+        final TextView typeTV;
+        final TextView titleTV;
+        final TextView takesBtn;
+        final TextView asistentsBtn;
+        final TextView location;
+        final TextView date;
+        final TextView id;
         ImageButton shareBtn;
-        ImageView eventImage;
+        final ImageView eventImage;
         private final Context context;
 
         ViewHolder(View itemLayoutView) {

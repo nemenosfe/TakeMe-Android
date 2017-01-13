@@ -57,7 +57,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
     private TwitterLoginButton loginButton;
     private LoginButton buttonFacebook;
     private GoogleApiClient mGoogleApiClient;
-    private UserController uc = ControllerFactory.getInstance().getUserController();
+    private final UserController uc = ControllerFactory.getInstance().getUserController();
     private SharedPreferencesManager sharedPreferences;
     private CallbackManager callbackManager;
 
@@ -287,7 +287,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.OnConnect
         }
     }
 
-    protected void setGooglePlusButtonText(SignInButton signInButton) {
+    private void setGooglePlusButtonText(SignInButton signInButton) {
         // Find the TextView that is inside of the SignInButton and set its text
         for (int i = 0; i < signInButton.getChildCount(); i++) {
             View v = signInButton.getChildAt(i);

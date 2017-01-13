@@ -18,8 +18,8 @@ import java.util.List;
 
 public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAdapter.ViewHolder> {
 
-    private List<String[]> itemsData;
-    private Context context;
+    private final List<String[]> itemsData;
+    private final Context context;
 
     public EventHistorialAdapter(List<String[]>  itemsData, Context context) {
 
@@ -60,7 +60,13 @@ public class EventHistorialAdapter extends RecyclerView.Adapter<EventHistorialAd
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView takes, status, status_hour, eventName, eventDesc, eventDate, id;
+        final TextView takes;
+        final TextView status;
+        final TextView status_hour;
+        final TextView eventName;
+        final TextView eventDesc;
+        final TextView eventDate;
+        final TextView id;
         private final Context context;
 
         ViewHolder(View itemLayoutView) {
