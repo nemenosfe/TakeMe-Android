@@ -84,6 +84,6 @@
   > A la que es faci un check-in vàlid l'esdeveniment en qüestió desapareixerà del llistat i passarà a l'historial.
   
 # Aclaracions
-  > Hi ha un **"GODMODE"** que permet forçar la distància i les hores per poder fer check-in, per poder fer check-in, ja que en ser esdeveniments reals és molt difícil que coincideixi amb un esdeveniment tan proper. Per poder accedir a aquest mode només cal prémer el nom d'usuari en el perfil, el username es modificarà i apareixerà un "*" al final, per deshabilitar-lo només és necessari fer el mateix procediment.
+  > Hi ha un **"GODMODE"** que permet forçar la distància i les hores per poder fer check-in, per poder fer check-in, ja que en ser esdeveniments reals és molt difícil que coincideixi amb un esdeveniment tan proper. Per poder accedir a aquest mode només cal prémer el nom d'usuari en el perfil, el username es modificarà i apareixerà un ```*``` al final, per deshabilitar-lo només és necessari fer el mateix procediment.
   > Totalment obligatori connectar-se des de la **universitat o amb VPN**.
   > Si no hi ha cap resultat a les RecyclerViews, es mostra un missatge que informa que no hi ha resultats.
